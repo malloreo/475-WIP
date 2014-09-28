@@ -1,0 +1,166 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	background: #f9f8e5;
+	margin: 0px;
+	height: 100%;
+	/*overflow: hidden;*/
+}
+
+a{
+	text-decoration: none;
+}
+
+a:visited{
+	text-decoration: none;
+}
+
+
+/*------------------------------- MENU ------------------------------*/
+
+.menu {
+	font-size: 20px;
+	color: white;
+	background: #33828f;
+	height: 50px;
+	width: 100%;
+	display: block;
+	float: left;
+}
+
+#username{
+	float: right;
+	padding: 10px;
+}
+
+#title{
+	font-family: 'Pacifico', cursive;
+	font-size: 30px;
+	text-align: center;
+	width: 100px;
+	padding: auto auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#title a, #title a:visited{
+	color: white;
+}
+
+#settings{
+	float: left;
+	display: block;
+}
+
+#logout{
+	font-size: 15px;
+	float: right;
+	padding-right: 10px;
+}
+
+#logout a, #logout a:visited{
+	color: #79cfd3;
+}
+
+.wrapper{
+	display: inline-block;
+}
+
+/*------------------------------- SIDEBAR ------------------------------*/
+.sidebar{
+	display: block;
+	background: #422a42;
+	width: 50px;
+	height: 800px;
+	float: left;
+	text-align: center;
+}
+
+.sidebar img{
+	width: 45px;
+	padding-top: 5px;
+	cursor: pointer;
+}
+
+/*------------------------------- CONTENT ------------------------------*/
+
+h1{
+	display: inline-block;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.content-dash{
+	display: block;
+	float: left;
+	margin: 40px;
+	/*width: 100%;*/
+}
+
+.dash-box{
+	width: 300px;
+	height: 350px;
+	background: #efe9a5;
+	margin: 10px;
+	margin-left: 0px;
+	padding: 15px;
+}
+
+#dash-heading{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+/*--------------------- CONTENT --------------------*/
+
+#chores-tbl table{
+	width: 600px;
+}
+
+#chores-tbl th{
+	text-align: left;
+}
+
+#chores-tbl td{
+	width: 200px;
+	vertical-align: top;
+}
+
+
+/*------------------------------- SETTINGS ------------------------------*/
+#settings{
+}
+
+#settings #left, #settings #right{
+	float: left;
+	width: 50%;
+	margin-top: 20px;
+}
+
+#settings h1{
+	padding: 0px;
+	margin: 0px;
+}
+
+#settings h2{
+	padding-top: 0px;
+}
+
+#settings table{
+	width: 500px;
+}
+
+#settings td{
+	width: 50%;
+	vertical-align: bottom;
+}
+
+
+#settings a, #settings a:visited{
+	text-decoration: none;
+	color: gray;
+}
+
+#settings-prof{
+	width: 40px;
+	padding-right: 10px;
+}

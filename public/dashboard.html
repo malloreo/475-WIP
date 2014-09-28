@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Housemates App</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="menu">
+      <div id="settings">
+        <a href="/settings"><img src="images/icon_settings.png" width="50px"></a>
+      </div>
+      <div id="username">
+        username
+      </div> <!-- username -->
+      <div id="title">
+        <a href="/dashboard">Homies</a>
+      </div> <!-- title -->
+    </div> <!-- menu -->
+
+    <div class="wrapper">
+      <div class="sidebar">
+        <a href="chores.html"><img src="images/sidebar-icon_chores.png"></a>
+        <a href="bills.html"><img src="images/sidebar-icon_bills.png"></a>
+        <a href="calendar.html"><img src="images/sidebar-icon_cal.png"></a>
+        <a href="chat.html"><img src="images/sidebar-icon_chat.png"></a>
+      </div> <!-- sidebar -->
+
+
+      <div class="content-dash">
+        <img src="images/temp.jpg" width="50px"><h1>Hello, USER NAME</h1>
+        <i>EMAIL</i>
+        <table>
+          <tr>
+            <td><div class="dash-box" id="chores">
+              <div id="dash-heading">CHORES</div>
+              <br>
+              <i> There are currently no chores for you to do. Celebrate with some TV. </i>
+            </div></td>
+            <td><div class="dash-box" id="bills">
+              <div id="dash-heading">BILLS</div>
+              <br>
+              <i> There are currently no bills for you to pay. Hooray! </i>
+            </div></td>
+            <td><div class="dash-box" id="grocery">
+              <div id="dash-heading">GROCERIES</div>
+              <br>
+              <i> There are currently no groceries for you to buy. Go eat something. </i>
+            </div></td>
+        <!-- <form class="form" method="get" action="/auth/google">
+          <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
+        </form> -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+      </div> <!-- content-dash -->
+    </div> <!-- wrapper -->
+  </body>
+</html>

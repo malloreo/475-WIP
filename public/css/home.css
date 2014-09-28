@@ -1,0 +1,55 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	background: #33828f;
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	color: white;
+	padding-top: 30px;
+}
+
+h1{
+	font-family: 'Pacifico', cursive;
+	margin-bottom: 0px;
+}
+
+#login-box{
+	background: #096f7a;
+	width: 300px;
+	height: 250px;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+
+#login-username, #login-password{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: none;
+	padding: 2px;
+	padding-left: 8px;
+	width: 200px;
+	height: 30px;
+	font-size: 15px;
+	background: #044e56;
+	border-radius: 10px;
+	color: white;
+}
+
+#button1{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: none;
+	background: #33828f;
+	border-radius: 10px;
+	width: 50px;
+	height: 30px;
+	font-size: 15px;
+	color: white;
+	opacity: 0.7;
+}
