@@ -5,6 +5,8 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
+    util = require('util'),
+    url = require('url'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     gcal = require('google-calendar'),
     configAuth = require('./auth');
@@ -53,6 +55,8 @@ var groupme_user = {
 var GOOGLE_CLIENT_ID = configAuth.googleAuth.clientID,
   GOOGLE_CLIENT_SECRET = configAuth.googleAuth.clientSecret,
   GOOGLE_CALLBACK_URL = configAuth.googleAuth.callbackURL;
+
+var calendars = {};
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -155,11 +159,15 @@ app.get('/dashboard', function(req, res){
   });
 })
 
+//-------------------- CHORES --------------------//
+
 app.get('/chores', function(req, res){
   res.render('chore', {
     user: this_user
   });
 })
+
+//-------------------- BILLS --------------------//
 
 app.get('/bills', function(req, res){
   res.render('bills', {
@@ -167,17 +175,35 @@ app.get('/bills', function(req, res){
   });
 })
 
+//-------------------- CALENDAR --------------------//
+
 app.get('/calendar', function(req, res){
   res.render('calendar', {
     user: this_user
   });
 })
 
+app.get('/calendar/addevent', function(req, res){
+  var query = url.parse(req.url, true).query;
+  var event_name = query.event_name;
+  console.log("QUERY: ", query);
+  console.log('POOOOOOOOOOOP.. start_date: ', query.start_date, +", end_date: "+ query.end_date);
+  var start_date = new Date();
+  var end_date = new Date();
+  end_date.setHours(end_date.getHours() + 1);
+  console.log("RANDOM EVENT: start_date: ", start_date, +", end_date: "+end_date);
+  createEvent(req, req, event_name, start_date, end_date);
+})
+
+//-------------------- GROCERY --------------------//
+
 app.get('/grocery', function(req, res){
   res.render('grocery', {
     user: this_user
   });
 })
+
+//-------------------- CHAT --------------------//
 
 app.get('/chat', function(req, res){
   res.render('chat', {
@@ -189,7 +215,8 @@ app.get('/chat', function(req, res){
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
                                             'https://www.googleapis.com/auth/userinfo.email',
-                                            'https://www.googleapis.com/auth/calendar'] }),
+                                            'https://www.googleapis.com/auth/calendar',
+                                            'https://www.googleapis.com/auth/calendar.readonly'] }),
   function(req, res){
     // The request will be redirected to Google for authentication, so this
     // function will not be called.
@@ -200,14 +227,33 @@ app.get('/auth/google/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     // res.redirect('/');
-    res.redirect('/settings');
-    // getCalendarInformation(req, res);
+    // res.redirect('/settings'); << uncomment this
+    getCalendarInformation(req, res);
   });
 
 
 app.listen(44444);
 console.log("Express server listening on port 44444");
 
+
+function localLogin(username, name, password, req, res){
+  res.redirect('/dashboard');
+}
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
+
+
+
+//------------------------------ CALENDAR FUNCTIONS ------------------------------//
 
 function getCalendarInformation(req, res){
   var accessToken = google_user.accessToken;
@@ -218,9 +264,10 @@ function getCalendarInformation(req, res){
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(23);
   tomorrow.setMinutes(59);
-  var cal_items = [];google_calendar.calendarList.list(function(err, calendarList) {
+  var cal_items = [];
+  google_calendar.calendarList.list(function(err, calendarList) {
     //Use this for just their personal calendar
-    cal_items = [{"id": google_user.email}];
+    cal_items = [{"id": google_user.email}]; //google_user.email}];
 
     console.log("----Cal Items----: ", cal_items);
     google_calendar.events.list(google_user.email, {'timeMin':today}, function(err, data) {
@@ -237,14 +284,14 @@ function getCalendarInformation(req, res){
       {},
       function(err, data){
         // console.log(google_user);
-        // console.log("Error: ", err);
-        // console.log("CALENDAR FREEBUSY: ", data);
-        // //Only accounts for the user's personal calendar
-        // console.log('Busy Object', data.calendars[google_user.email].busy);
-        // calendars[google_user.email] = data.calendars[google_user.email].busy;
-        // console.log(google_user);
-        // console.log(calendars);
-        // res.redirect('/settings');
+        console.log("Error: ", err);
+        console.log("CALENDAR FREEBUSY: ", data);
+        //Only accounts for the user's personal calendar
+        console.log('Busy Object', data.calendars[google_user.email].busy);
+        calendars[google_user.email] = data.calendars[google_user.email].busy;
+        console.log(google_user);
+        console.log(calendars);
+        res.redirect('/settings');
       }
     );
 
@@ -257,17 +304,31 @@ function getCalendarInformation(req, res){
     // picture: google_user.picture });
 }
 
-function localLogin(username, name, password, req, res){
-  res.redirect('/dashboard');
-}
+//http://stackoverflow.com/questions/11607465/need-good-example-google-calendar-api-in-javascript/11622475#11622475
 
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+function createEvent(req, res, event_name, start_date, end_date){
+  var accessToken = user.accessToken;
+  var google_calendar = new gcal.GoogleCalendar(accessToken);
 
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
+  var new_event = {
+    "summary": "RANDOM EVENT",
+    "location": "Somewhere",
+    "start": {
+      "dateTime": start_date,
+    },
+    "end": {
+      "dateTime": end_date,
+    }
+  };
+  google_calendar.events.insert({
+    'calendarId': google_user.email,
+    'new_event': new_event
+  });
+  // request.execute(function(resp) {
+  //   console.log(resp);
+  // });
 
-  // if they aren't redirect them to the home page
-  res.redirect('/');
+  console.log("new event: "+new_event);
+
+  // Event createdEvent = service.events().insert('primary', event).execute();
 }
