@@ -10,6 +10,7 @@ var express = require('express'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     gcal = require('google-calendar'),
     configAuth = require('./auth');
+
     // google_calendar = new gcal.GoogleCalendar(accessToken);
 
 // load the auth variables
@@ -162,6 +163,7 @@ app.get('/dashboard', function(req, res){
 //-------------------- CHORES --------------------//
 
 app.get('/chores', function(req, res){
+  getChores(req, res, this_user);
   res.render('chore', {
     user: this_user
   });
@@ -183,7 +185,7 @@ app.get('/calendar', function(req, res){
   });
 })
 
-app.get('/calendar/addevent', function(req, res){
+app.get('/calendar/addevent', isLoggedIntoGoogle, function(req, res){
   var query = url.parse(req.url, true).query;
   var event_name = query.event_name;
   console.log("QUERY: ", query);
@@ -192,7 +194,7 @@ app.get('/calendar/addevent', function(req, res){
   var end_date = new Date();
   end_date.setHours(end_date.getHours() + 1);
   console.log("RANDOM EVENT: start_date: ", start_date, +", end_date: "+end_date);
-  createEvent(req, req, event_name, start_date, end_date);
+  createEvent(req, req, "random event tester", start_date, end_date);
 })
 
 //-------------------- GROCERY --------------------//
@@ -251,6 +253,16 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
+function isLoggedIntoGoogle(req, res, next) {
+
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/login-google');
+}
+
 
 
 //------------------------------ CALENDAR FUNCTIONS ------------------------------//
@@ -304,12 +316,10 @@ function getCalendarInformation(req, res){
     // picture: google_user.picture });
 }
 
-//http://stackoverflow.com/questions/11607465/need-good-example-google-calendar-api-in-javascript/11622475#11622475
 
 function createEvent(req, res, event_name, start_date, end_date){
   var accessToken = user.accessToken;
   var google_calendar = new gcal.GoogleCalendar(accessToken);
-
   var new_event = {
     "summary": "RANDOM EVENT",
     "location": "Somewhere",
@@ -321,14 +331,49 @@ function createEvent(req, res, event_name, start_date, end_date){
     }
   };
   google_calendar.events.insert({
-    'calendarId': google_user.email,
-    'new_event': new_event
-  });
-  // request.execute(function(resp) {
-  //   console.log(resp);
-  // });
+    'calendarId': google_user.email},
+    new_event)
+  .withAuthClient(GoogleStrategy)
+          .execute(function(err, result) {
+            if(err) next(err);
+            else {
+              console.log("Result: " + result);
+              next(null);
+            } 
+          });
 
-  console.log("new event: "+new_event);
 
-  // Event createdEvent = service.events().insert('primary', event).execute();
+    // { 
+    //         start: {
+    //           date: start_date
+    //         }, 
+    //         end: {
+    //           date: end_date
+    //         }, 
+    //         summary: event_name,
+    //         description: "pineapples"
+    //       });
+          // .withAuthClient(jwt)
+          // .execute(function(err, result) {
+          //   if(err) next(err);
+          //   else {
+          //     console.log("Result: " + result);
+          //     next(null);
+          //   } 
+          // });
+
+  console.log("new event: "+new_event.summary);
+  return false;
+}
+
+//------------------------------ CHORE FUNCTIONS ------------------------------//
+
+function getChores(req, res, user){
+ // get all chores
+ // if for this_user, add to left side of table
+    //get time of event
+    //check if time is in google calendar
+        //if not: "add to calendar"
+        //if yes: "view in calendar"
+
 }
