@@ -159,10 +159,10 @@ app.get('/login-google', function(req, res){
 });
 
 // route for logging out
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
+// app.get('/logout', function(req, res) {
+//   req.logout();
+//   res.redirect('/');
+// });
 
 // app.get('/dashboard', isLoggedIn, function(req, res){
 // app.get('/dashboard', function(req, res){
@@ -236,7 +236,7 @@ app.get('/auth/google',
   });
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/login-google' }),
   function(req, res) {
     // Successful authentication, redirect home.
     // res.redirect('/');

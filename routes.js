@@ -1,7 +1,8 @@
 
 module.exports = function(app,passport){
 	app.get('/', function(req,res){
-		res.render('home.ejs', {title: 'Hello Express'});
+		message = req.flash('loginMessage');
+		res.render('home.ejs', {message: message});
 	});
 	// =====================================
 	// LOGIN ===============================
@@ -14,10 +15,9 @@ module.exports = function(app,passport){
 	});
 
 	// process the login form
-	// app.post('/login', do all our passport stuff here);
 	app.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/dashboard', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the signup page if there is an error
+		failureRedirect : '/', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 
