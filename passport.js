@@ -38,7 +38,7 @@ module.exports = function(passport) {
         usernameField : 'email',
         passwordField : 'password',
         // nameField : 'name',
-        picture: 'images/no_user.png',
+        // picture: 'images/no_user.png',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {

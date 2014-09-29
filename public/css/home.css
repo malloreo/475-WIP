@@ -27,7 +27,7 @@ h1{
     text-align: center;
 }
 
-#login-username, #login-password{
+#login-email, #login-password, #signup-email, #signup-password{
 	margin-top: 10px;
 	margin-bottom: 10px;
 	border: none;
