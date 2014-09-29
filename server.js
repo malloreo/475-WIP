@@ -9,7 +9,20 @@ var express = require('express'),
     url = require('url'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     gcal = require('google-calendar'),
-    configAuth = require('./auth');
+    configAuth = require('./auth'),
+    //for local authentication
+    mongoose = require('mongoose'),
+    flash    = require('connect-flash'),
+    morgan       = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser   = require('body-parser'),
+    session      = require('express-session');
+
+db_url='mongodb://localhost:27017/housemates'
+// configuration ===============================================================
+mongoose.connect(db_url); // connect to our database
+
+require('./passport')(passport); // pass passport for configuration
 
     // google_calendar = new gcal.GoogleCalendar(accessToken);
 
@@ -108,27 +121,25 @@ app.configure(function(){
   // app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
   app.use(passport.initialize());
   app.use(passport.session()); // persistent login sessions
-  // app.use(flash()); // use connect-flash for flash messages stored in session
+  app.use(flash()); // use connect-flash for flash messages stored in session
 
   app.use(app.router); // Do the routes defined below
   app.use(express.static(path.join(__dirname, 'public')));  // Process static files
 
-
+  app.use(morgan('dev')); // log every request to the console
 });
 
-app.get('/', routes.pathless);  
-// app.get('/users', user.list);   
-// app.post('/request', update.doPost);  // example handling of a POST request 
-// app.put('/request', update.doPut);      // example handling of a PUT request
+require('./routes.js')(app,passport);
+// app.get('/', routes.pathless);
 
-app.post('/login', function(req, res){
-  res.render('dashboard', { user: req.body.user });
-});
+// app.post('/login', function(req, res){
+//   res.render('dashboard', { user: req.body.user });
+// });
 
-app.get('/localLogin', function(req, res){
-  console.log('req: '+req, " res: "+res);
-  localLogin("ThisIsMyUsername", "Chanamon Ratanalert", "", req, res);
-})
+// app.get('/localLogin', function(req, res){
+//   console.log('req: '+req, " res: "+res);
+//   localLogin("ThisIsMyUsername", "Chanamon Ratanalert", "", req, res);
+// })
 
 app.get('/settings', function(req, res){
   res.render('settings', {
@@ -154,11 +165,11 @@ app.get('/logout', function(req, res) {
 });
 
 // app.get('/dashboard', isLoggedIn, function(req, res){
-app.get('/dashboard', function(req, res){
-  res.render('dashboard', {
-    user: this_user
-  });
-})
+// app.get('/dashboard', function(req, res){
+//   res.render('dashboard', {
+//     user: this_user
+//   });
+// })
 
 //-------------------- CHORES --------------------//
 

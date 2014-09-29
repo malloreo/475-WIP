@@ -1,12 +1,8 @@
 {
-  "name": "M2C-SimpleStaticServer",
+  "name": "475 Team 14 server",
   "version": "1.0.0",
-  "description": "M2C Simple Static Server",
-  "author": {
-    "name": "Joe mertz",
-    "email": "JoeMertz@cmu.edu",
-    "url": "http://www.andrew.cmu.edu/course/67-328"
-  },
+  "description": "475 project",
+  
   "repository": {
     "type": "git",
     "url": "https://github.com/openshift/origin-server"
@@ -16,11 +12,21 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "express": "4.8",
+    "express": "3.4.8",
+    "ejs": "*",
     "morgan": "1.2",
     "passport": ">= 0.0.0",
+    "passport-local" : "~0.1.6", 
     "passport-google-oauth": ">= 0.0.0",
-    "google-calendar": ">= 0.0.0"
+    "google-calendar": ">= 0.0.0",
+    "mongoose": "~3.8.16",
+    "connect-flash" : "~0.1.1",   
+    "bcrypt-nodejs" : "latest",
+    "morgan": "~1.0.0",
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.0",
+    "method-override": "~1.0.0",
+    "express-session": "~1.0.0"   
   },
   "devDependencies": {},
   "bundleDependencies": [],
