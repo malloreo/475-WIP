@@ -43,10 +43,15 @@
         <a href="/chat"><img src="images/sidebar-icon_chat.png"></a>
       </div> <!-- sidebar -->
 
+      <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+      <% } %>
 
       <div class="content-dash">
         <img src="<%= user.picture %>" width="50px"><h1>Hello, <%= user.first_name %></h1>
-        <i><%= user.email %></i>
+        <i><%= user.email %></i><% if (message.length > 0) { %>
+                                  <div class="alert alert-danger"><%= message %></div>
+                                <% } %>
         <table>
           <tr>
             <td><div class="dash-box" id="chores">
