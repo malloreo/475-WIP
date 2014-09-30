@@ -19,9 +19,11 @@ $('#signup-form').submit(function(){
 		});
 		return false;	
 	}
+});
 
 
-// $("#chore_form").submit(addChore);
+// $("#chore-form").submit(addChore);
+$('#chore-formb').click(addChore);
 	
 });
 
@@ -32,6 +34,8 @@ function checkIfEmail(word){
 
 
 function addChore(){
+	console.log("----  IN ADD CHORE SCRIPT FXN ---- ")
+
 	$.ajax({
 			url: "addChore",
 			type: "put",
@@ -41,7 +45,10 @@ function addChore(){
 				due_date: $("#chore_date").val()
 			},
 			success: function(data) {
-				// $('#div1').html(data);
+				date = $("#chore_date").val()
+				date = date.substring(5,date.length);
+				message = $("#chore_name").val() + " for " + $("#chore_user").val() + " to do by " + date + " has been added!"
+				$('#test').html(message);
 				$('#chore_name').val("");
 				$('#chore_user').val("");
 				$('#chore_date').val("");
@@ -49,11 +56,3 @@ function addChore(){
 	});
 	return false;	
 }
-
-
-
-
-
-
-
-});

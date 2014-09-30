@@ -45,13 +45,20 @@
 
 
       <div class="content-dash">
-        <form id="chore_form"class="form" method="put" action="/addChore">
-          Chore Name: <input id="chore_name" type="text" placeholder="Mopping"/><br>
-          Assign to: <input id="chore_user" type="text" placeholder="Name"/><br>
-          Due Date: <input id="chore_date" type="date" placeholder=""/><br>
-          <input id="button1"  type="submit" value="Go"/>
-        </form>
+        <!-- <form id="chore_form" class="form" method="put" action="/addChore"> -->
+        <!-- <form id="chore-form" method="post"> -->
+        <!-- <form id="chore-form"> -->
+          Chore Name: <input id="chore_name" type="text" placeholder="Mopping" required="required"/><br>
+          Assign to: <input id="chore_user" type="text" placeholder="Name" required="required"/><br>
+          Due Date: <input id="chore_date" type="date" placeholder="" required="required"/><br>
+          <!-- <input type="hidden" name="_method" value="put"> -->
+          <input id="chore-formb"  type="submit" value="Go"/>
+        <!-- </form> -->
 
+        <div id="test" style="color:blue">.</div>
+
+        <br><br>
+      <a href="/chores">Back to Chore Management</a>
       </div> <!-- content-dash -->
     </div> <!-- wrapper -->
   </body>

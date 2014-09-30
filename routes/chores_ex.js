@@ -1,4 +1,5 @@
-var chores = require("../models/mymongo.js");
+var chores = require("../models/mymongo.js"),
+    this_user = require('../auth').this_user;
 
 exports.addChore = function(req, res){
 	var newChore = {
@@ -12,9 +13,10 @@ exports.addChore = function(req, res){
     	"chores",
     	newChore,
     	function(model) {
-			res.render('make', {
+			res.render('chore', {
+                user: this_user,
 				chore_name : newChore.chore_name,
-				user : newChore.user,
+				chore_user : newChore.user,
 				due_date: newChore.due_date
 			});
 		}

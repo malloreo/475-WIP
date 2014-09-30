@@ -2,6 +2,7 @@ var express = require('express'),
     routes = require('./routes/slash'),
     user = require('./routes/user'),
     update = require('./routes/update'),
+    chorejs = require('./routes/chores_ex'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
@@ -147,19 +148,23 @@ app.post('/addchore', isLoggedIn, function(req, res){
   });
 })
 
-app.get('/addchore', isLoggedIn, function(req, res){
-  // getChores(req, res, this_user);
-  // res.render('addChore', {
-  //   user: this_user
-  // });
-	res.render('chore', {user: this_user});
-})
+// app.get('/addchore', isLoggedIn, function(req, res){
+//   // getChores(req, res, this_user);
+//   // res.render('addChore', {
+//   //   user: this_user
+//   // });
+// 	// res.render('chore', {user: this_user});
+// 	console.log("------ GET /ADDCHORE redirect ------");
+// 	res.redirect('/newchore');
+// })
 
-app.put('/addchore', isLoggedIn, function(req, res){
-	console.log("req.body: ",req.body);
-	console.log("req.body.chore_name: ",req.body.chore_name);
-	console.log("body.chore_date: ",req.body.chore_date);
-})
+app.put('/addchore', chorejs.addChore);
+
+// app.put('/addchore', isLoggedIn, function(req, res){
+// 	console.log("req.body: ",req.body);
+// 	console.log("req.body.chore_name: ",req.body.chore_name);
+// 	console.log("body.chore_date: ",req.body.chore_date);
+// })
 
 //-------------------- BILLS --------------------//
 
