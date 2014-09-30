@@ -100,6 +100,8 @@ app.get('/auth/google/callback',
 // LOGOUT ==============================
 // =====================================
 app.get('/logout', function(req, res) {
+	resetUsers();
+
 	req.logout();
 	res.redirect('/');
 });
@@ -357,4 +359,12 @@ function getChores(req, res, user){
         //if not: "add to calendar"
         //if yes: "view in calendar"
 
+}
+
+function resetUsers(){
+	this_user.email = "";
+	this_user.name = "";
+	this_user.first_name = "";
+	this_user.last_name = "";
+	this_user.picture = "";
 }
