@@ -1,7 +1,32 @@
+var express = require('express'),
+    routes = require('./routes/slash'),
+    user = require('./routes/user'),
+    update = require('./routes/update'),
+    http = require('http'),
+    path = require('path'),
+    passport = require('passport'),
+    util = require('util'),
+    url = require('url'),
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+    gcal = require('google-calendar'),
+    configAuth = require('./auth'),
+    //for local authentication
+    mongoose = require('mongoose'),
+    flash    = require('connect-flash'),
+    morgan       = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser   = require('body-parser'),
+    session      = require('express-session'),
+    
+    // load the auth variables
+    this_user = require('./auth').this_user,
+    google_user = require('./auth').google_user,
+    venmo_user = require('./auth').venmo_user,
+    groupme_user = require('./auth').groupme_user;
+
 
 module.exports = function(app,passport){
 app.get('/', function(req,res){
-	console.log("login error: ",req.flash('loginMessage'));
 	message = req.flash('loginMessage');
 	res.render('home.ejs', {message: message});
 });
@@ -12,7 +37,6 @@ app.get('/', function(req,res){
 // show the signup form
 app.get('/signup', function(req, res) {
 	// render the page and pass in any flash data if it exists
-	console.log("signup error: ",req.flash('signupMessage'));
 	res.render('signup.ejs', { message: req.flash('signupMessage') });
 });
 
@@ -28,7 +52,6 @@ app.post('/signup', passport.authenticate('local-signup', {
 // =====================================
 // show the login form
 app.get('/login', function(req, res) {
-	console.log("login error: ",req.flash('loginMessage'));
 	// render the page and pass in any flash data if it exists
 	res.render('login.ejs', { message: req.flash('loginMessage') }); 
 });
@@ -84,13 +107,21 @@ app.get('/logout', function(req, res) {
 // DASHBOARD AND SETTINGS ==============
 // =====================================
 app.get('/dashboard', isLoggedIn, function(req, res) {
+	if (this_user.email == ""){
+		this_user.email = req.user.local.email;
+		this_user.first_name = req.user.local.firstname;
+		this_user.last_name = req.user.local.lastname;
+		this_user.name = req.user.local.firstname + " " + req.user.local.lastname;
+		this_user.picture = req.user.local.picture;
+	}
 	res.render('dashboard.ejs', {
-		user : req.user // get the user out of session and pass to template
+		user : this_user // get the user out of session and pass to template
 	});
 });
 
-app.get('/settings', function(req, res){
-  res.render('settings', {
+app.get('/settings', isLoggedIn, function(req, res){
+	console.log(this_user);
+	res.render('settings', {
     user: this_user,
     google_user: google_user,
     venmo_user: venmo_user,
@@ -102,16 +133,37 @@ app.get('/settings', function(req, res){
 
 //-------------------- CHORES --------------------//
 
-app.get('/chores', function(req, res){
+app.get('/chores', isLoggedIn, function(req, res){
   getChores(req, res, this_user);
   res.render('chore', {
     user: this_user
   });
 })
 
+app.post('/addchore', isLoggedIn, function(req, res){
+  // getChores(req, res, this_user);
+  res.render('addChore', {
+    user: this_user
+  });
+})
+
+app.get('/addchore', isLoggedIn, function(req, res){
+  // getChores(req, res, this_user);
+  // res.render('addChore', {
+  //   user: this_user
+  // });
+	res.render('chore', {user: this_user});
+})
+
+app.put('/addchore', isLoggedIn, function(req, res){
+	console.log("req.body: ",req.body);
+	console.log("req.body.chore_name: ",req.body.chore_name);
+	console.log("body.chore_date: ",req.body.chore_date);
+})
+
 //-------------------- BILLS --------------------//
 
-app.get('/bills', function(req, res){
+app.get('/bills', isLoggedIn, function(req, res){
   res.render('bills', {
     user: this_user
   });
@@ -119,13 +171,13 @@ app.get('/bills', function(req, res){
 
 //-------------------- CALENDAR --------------------//
 
-app.get('/calendar', function(req, res){
+app.get('/calendar', isLoggedIn, function(req, res){
   res.render('calendar', {
     user: this_user
   });
 })
 
-app.get('/calendar/addevent', isLoggedIntoGoogle, function(req, res){
+app.get('/calendar/addevent', isLoggedIn, isLoggedIntoGoogle, function(req, res){
   var query = url.parse(req.url, true).query;
   var event_name = query.event_name;
   console.log("QUERY: ", query);
@@ -139,7 +191,7 @@ app.get('/calendar/addevent', isLoggedIntoGoogle, function(req, res){
 
 //-------------------- GROCERY --------------------//
 
-app.get('/grocery', function(req, res){
+app.get('/grocery', isLoggedIn, function(req, res){
   res.render('grocery', {
     user: this_user
   });
@@ -147,7 +199,7 @@ app.get('/grocery', function(req, res){
 
 //-------------------- CHAT --------------------//
 
-app.get('/chat', function(req, res){
+app.get('/chat', isLoggedIn, function(req, res){
   res.render('chat', {
     user: this_user
   });

@@ -27,7 +27,7 @@
       </div>
       <div id="logout"><a href="/logout"><i>Logout</i></a></div>
       <div id="username">
-        <%= user.name %>
+        <%= user.email %>
       </div> <!-- username -->
       <div id="title">
         <a href="/dashboard">Homies</a>
@@ -42,10 +42,6 @@
         <a href="/grocery"><img src="images/sidebar-icon_grocery.png"></a>
         <a href="/chat"><img src="images/sidebar-icon_chat.png"></a>
       </div> <!-- sidebar -->
-
-      <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-      <% } %>
 
       <div class="content-dash">
         <img src="<%= user.picture %>" width="50px"><h1>Hello, <%= user.first_name %></h1>
