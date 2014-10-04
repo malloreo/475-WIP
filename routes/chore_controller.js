@@ -1,5 +1,5 @@
 var chores = require("../models/mymongo.js"),
-    this_user = require('../auth').this_user;
+    this_user = require('../models/auth').this_user;
 
 exports.addChore = function(req, res){
 	var newChore = {

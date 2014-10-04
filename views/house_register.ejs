@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>Housemates App</title>
+    	<link rel="icon" type="image/ico" href="images/logo.ico"/>
+    	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,400' rel='stylesheet' type='text/css'>
+   		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    	<link rel="stylesheet" href="css/form.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   		<script src="js/bootstrap.min.js"></script>
+   		<script src="js/script.js"></script>
+	</head>
+	<body>
+	    <div id="form-box">
+			<h2>Register</h2>
+
+			<% if (message.length > 0) { %>
+	          <div class="alert alert-danger"><%= message %></div>
+	        <% } %>
+	        
+			<!-- REGISTRATION FORM -->
+			<form action="/house" method="post">
+				<input id="housename" type="text" placeholder="Name" name="housename"/><br>
+	        	<input id="street" type="text" placeholder="Address" name="street"/><br>
+				<input id="city" type="text" placeholder="City" name="city"/><br>
+				<input id="state" type="text" placeholder="State" name="state"/><br>
+				<input id="zip" type="text" placeholder="Zip Code" name="zip"/><br>
+
+	        	<input id="button1"  type="submit" value="Register"/>
+			</form>
+
+		</div>
+	</div>
+	</body>
+</html>

@@ -1,8 +1,12 @@
 var express = require('express'),
+
+    //controllers
     routes = require('./routes/slash'),
-    user = require('./routes/user'),
     update = require('./routes/update'),
-    chorejs = require('./routes/chores_ex'),
+    chore_controller = require('./routes/chore_controller'),
+    house_controller = require('./routes/house_controller'),
+
+    //
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
@@ -10,7 +14,8 @@ var express = require('express'),
     url = require('url'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     gcal = require('google-calendar'),
-    configAuth = require('./auth'),
+    configAuth = require('./models/auth'),
+
     //for local authentication
     mongoose = require('mongoose'),
     flash    = require('connect-flash'),
@@ -20,10 +25,10 @@ var express = require('express'),
     session      = require('express-session'),
     
     // load the auth variables
-    this_user = require('./auth').this_user,
-    google_user = require('./auth').google_user,
-    venmo_user = require('./auth').venmo_user,
-    groupme_user = require('./auth').groupme_user;
+    this_user = configAuth.this_user,
+    google_user = configAuth.google_user,
+    venmo_user = configAuth.venmo_user,
+    groupme_user = configAuth.groupme_user;
 
 
 module.exports = function(app,passport){
@@ -31,6 +36,24 @@ app.get('/', function(req,res){
 	message = req.flash('loginMessage');
 	res.render('home.ejs', {message: message});
 });
+
+/* ===== TABLE OF CONTENTS =====
+
+- SIGNUP
+- LOGIN
+- GOOGLE
+- LOGOUT
+- DASHBOARD AND SETTINGS
+- HOUSE
+- CHORES
+- BILLS
+- CALENDAR
+- GROCERY
+- CHAT
+
+- FUNCTIONS
+
+   ===== Please update as you go ===== */
 
 // =====================================
 // SIGNUP ==============================
@@ -133,8 +156,23 @@ app.get('/settings', isLoggedIn, function(req, res){
 })
 
 
+// =====================================
+// HOUSE ===============================
+// =====================================
 
-//-------------------- CHORES --------------------//
+// show house registration form
+app.get('/house', function(req, res) {
+  res.render('house_register.ejs', { message: req.flash('signupMessage') });
+});
+
+//makes new House object is Houses collection
+app.post('/house', house_controller.post);
+
+
+
+// =====================================
+// CHORES ==============================
+// =====================================
 
 app.get('/chores', isLoggedIn, function(req, res){
   getChores(req, res, this_user);
@@ -160,7 +198,7 @@ app.post('/addchore', isLoggedIn, function(req, res){
 // 	res.redirect('/newchore');
 // })
 
-app.put('/addchore', chorejs.addChore);
+app.put('/addchore', chore_controller.addChore);
 
 // app.put('/addchore', isLoggedIn, function(req, res){
 // 	console.log("req.body: ",req.body);
@@ -168,7 +206,10 @@ app.put('/addchore', chorejs.addChore);
 // 	console.log("body.chore_date: ",req.body.chore_date);
 // })
 
-//-------------------- BILLS --------------------//
+
+// =====================================
+// BILLS ===============================
+// =====================================
 
 app.get('/bills', isLoggedIn, function(req, res){
   res.render('bills', {
@@ -176,7 +217,10 @@ app.get('/bills', isLoggedIn, function(req, res){
   });
 })
 
-//-------------------- CALENDAR --------------------//
+
+// =====================================
+// CALENDAR ============================
+// =====================================
 
 app.get('/calendar', isLoggedIn, function(req, res){
   res.render('calendar', {
@@ -196,7 +240,10 @@ app.get('/calendar/addevent', isLoggedIn, isLoggedIntoGoogle, function(req, res)
   createEvent(req, req, "random event tester", start_date, end_date);
 })
 
-//-------------------- GROCERY --------------------//
+
+// =====================================
+// GROCERY =============================
+// =====================================
 
 app.get('/grocery', isLoggedIn, function(req, res){
   res.render('grocery', {
@@ -204,7 +251,10 @@ app.get('/grocery', isLoggedIn, function(req, res){
   });
 })
 
-//-------------------- CHAT --------------------//
+
+// =====================================
+// CHAT ================================
+// =====================================
 
 app.get('/chat', isLoggedIn, function(req, res){
   res.render('chat', {
@@ -248,7 +298,8 @@ function isLoggedIntoGoogle(req, res, next) {
 
 
 
-//------------------------------ CALENDAR FUNCTIONS ------------------------------//
+//============================== CALENDAR FUNCTIONS ==============================//
+//================================================================================//
 
 function getCalendarInformation(req, res){
   var accessToken = google_user.accessToken;
@@ -349,7 +400,9 @@ function createEvent(req, res, event_name, start_date, end_date){
   return false;
 }
 
-//------------------------------ CHORE FUNCTIONS ------------------------------//
+
+//============================== CHORE FUNCTIONS ==============================//
+//=============================================================================//
 
 function getChores(req, res, user){
  // get all chores
@@ -360,6 +413,9 @@ function getChores(req, res, user){
         //if yes: "view in calendar"
 
 }
+
+//============================== EXTRA FUNCTIONS ==============================//
+//=============================================================================//
 
 function resetUsers(){
 	this_user.email = "";

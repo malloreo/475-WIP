@@ -45,9 +45,10 @@
 
       <div class="content-dash">
         <img src="<%= user.picture %>" width="50px"><h1>Hello, <%= user.first_name %></h1>
-        <i><%= user.email %></i><% if (message.length > 0) { %>
-                                  <div class="alert alert-danger"><%= message %></div>
-                                <% } %>
+        <i><%= user.email %></i>
+        <!-- <% if (message.length > 0) { %>
+          <div class="alert alert-danger"><%= message %></div>
+        <% } %> -->
         <table>
           <tr>
             <td><div class="dash-box" id="chores">
@@ -67,6 +68,9 @@
             </div></td>
           </tr>
         </table>
+
+        
+
         <!-- <form class="form" method="get" action="/auth/google">
           <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
         </form> -->

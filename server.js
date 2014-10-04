@@ -1,15 +1,11 @@
 var express = require('express'),
-    routes = require('./routes/slash'),
-    user = require('./routes/user'),
-    update = require('./routes/update'),
-    http = require('http'),
     path = require('path'),
     passport = require('passport'),
-    util = require('util'),
-    url = require('url'),
+    // util = require('util'),
+    // url = require('url'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     gcal = require('google-calendar'),
-    configAuth = require('./auth'),
+    configAuth = require('./models/auth'),
     //for local authentication
     mongoose = require('mongoose'),
     flash    = require('connect-flash'),
@@ -19,17 +15,16 @@ var express = require('express'),
     session      = require('express-session'),
     
     // load the auth variables
-    this_user = require('./auth').this_user,
-    google_user = require('./auth').google_user,
-    venmo_user = require('./auth').venmo_user,
-    groupme_user = require('./auth').groupme_user;
+    this_user = configAuth.this_user,
+    google_user = configAuth.google_user,
+    venmo_user = configAuth.venmo_user,
+    groupme_user = configAuth.groupme_user;
 
 db_url='mongodb://localhost:27017/housemates'
 // configuration ===============================================================
 mongoose.connect(db_url); // connect to our database
 
 require('./passport')(passport); // pass passport for configuration
-
     // google_calendar = new gcal.GoogleCalendar(accessToken);
 
 
@@ -97,32 +92,6 @@ app.configure(function(){
 });
 
 require('./routes.js')(app,passport);
-// app.get('/', routes.pathless);
-
-// app.post('/login', function(req, res){
-//   res.render('dashboard', { user: req.body.user });
-// });
-
-// app.get('/localLogin', function(req, res){
-//   console.log('req: '+req, " res: "+res);
-//   localLogin("ThisIsMyUsername", "Chanamon Ratanalert", "", req, res);
-// })
-
-
-
-// route for logging out
-// app.get('/logout', function(req, res) {
-//   req.logout();
-//   res.redirect('/');
-// });
-
-// app.get('/dashboard', isLoggedIn, function(req, res){
-// app.get('/dashboard', function(req, res){
-//   res.render('dashboard', {
-//     user: this_user
-//   });
-// })
-
 
 
 
