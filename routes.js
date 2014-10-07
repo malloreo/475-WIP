@@ -161,12 +161,12 @@ app.get('/settings', isLoggedIn, function(req, res){
 // =====================================
 
 // show house registration form
-app.get('/house', function(req, res) {
+app.get('/house_register', function(req, res) {
   res.render('house_register.ejs', { message: req.flash('signupMessage') });
 });
 
 //makes new House object is Houses collection
-app.post('/house', house_controller.post);
+app.post('/house_register', house_controller.post);
 
 
 
