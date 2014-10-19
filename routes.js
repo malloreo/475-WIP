@@ -165,7 +165,7 @@ app.get('/house_register', function(req, res) {
   res.render('house_register.ejs', { message: req.flash('signupMessage') });
 });
 
-//makes new House object is Houses collection
+//makes new House object in Houses collection
 app.post('/house_register', house_controller.post);
 
 
@@ -174,6 +174,7 @@ app.post('/house_register', house_controller.post);
 // CHORES ==============================
 // =====================================
 
+// show Chore page
 app.get('/chores', isLoggedIn, function(req, res){
   getChores(req, res, this_user);
   res.render('chore', {
@@ -181,30 +182,33 @@ app.get('/chores', isLoggedIn, function(req, res){
   });
 })
 
-app.post('/addchore', isLoggedIn, function(req, res){
+// show addChore page
+app.post('/chore_add_pg', isLoggedIn, function(req, res){
   // getChores(req, res, this_user);
-  res.render('addChore', {
+  res.render('chore_add', {
     user: this_user
   });
 })
 
-// app.get('/addchore', isLoggedIn, function(req, res){
-//   // getChores(req, res, this_user);
-//   // res.render('addChore', {
-//   //   user: this_user
-//   // });
-// 	// res.render('chore', {user: this_user});
-// 	console.log("------ GET /ADDCHORE redirect ------");
-// 	res.redirect('/newchore');
-// })
+// makes new Chore object in Chores collection
+// makes new Assignment object in Assignments collection linking
+// a given user and this Chore
+// app.post('/chore_add', isLoggedIn, function(req, res){
+//   // make Chore
+//   chore_controller.post;
+//   console.log("-------MADE CHORE-------");
+// });
 
-app.put('/addchore', chore_controller.addChore);
+app.post('/chore_add', chore_controller.post);
 
-// app.put('/addchore', isLoggedIn, function(req, res){
-// 	console.log("req.body: ",req.body);
-// 	console.log("req.body.chore_name: ",req.body.chore_name);
-// 	console.log("body.chore_date: ",req.body.chore_date);
-// })
+// redirect here from chore_controller.post after creating chore
+app.get('/assign_add', function(req, res){
+  console.log("---- IN ASSIGN ADD ----");
+  console.log("---- assign_add req: ", req)
+})
+
+
+// app.put('/addchore', chore_controller.addChore);
 
 
 // =====================================

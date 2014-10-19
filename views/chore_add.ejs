@@ -48,12 +48,20 @@
         <!-- <form id="chore_form" class="form" method="put" action="/addChore"> -->
         <!-- <form id="chore-form" method="post"> -->
         <!-- <form id="chore-form"> -->
-          Chore Name: <input id="chore_name" type="text" placeholder="Mopping" required="required"/><br>
-          Assign to: <input id="chore_user" type="text" placeholder="Name" required="required"/><br>
+
+          <!-- Chore Name: <input id="chore_name" type="text" placeholder="Mopping" required="required"/><br>
+          Assign to: <input id="assign_user" type="text" placeholder="Name" required="required"/><br>
           Due Date: <input id="chore_date" type="date" placeholder="" required="required"/><br>
-          <!-- <input type="hidden" name="_method" value="put"> -->
-          <input id="chore-formb"  type="submit" value="Go"/>
+          <input id="chore-formb"  type="submit" value="Go"/> -->
+
         <!-- </form> -->
+
+        <!-- ADD CHORE FORM -->
+        <form action="/chore_add" method="post">
+          <input id="chore_name" name="chore_name" type="text" placeholder="Chore Name"/><br>
+          <input id="description" name="description" type="text" placeholder="Description" name="street"/>
+          <input id="button1"  type="submit" value="Add Chore"/>
+        </form>
 
         <div id="test" style="color:blue">.</div>
 
