@@ -12,7 +12,8 @@ module.exports = {
 	  name: "",
 	  first_name: "",
 	  last_name: "",
-	  picture: ""
+	  picture: "",
+	  uid: ""
 	},
 
 	'google_user' : {

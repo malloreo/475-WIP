@@ -5,6 +5,10 @@ var express = require('express'),
     update = require('./routes/update'),
     chore_controller = require('./routes/chore_controller'),
     house_controller = require('./routes/house_controller'),
+    lease_controller = require('./routes/lease_controller'),
+
+
+    Database = require("./models/mymongo.js"),
 
     //
     http = require('http'),
@@ -139,7 +143,14 @@ app.get('/dashboard', isLoggedIn, function(req, res) {
 		this_user.last_name = req.user.local.lastname;
 		this_user.name = req.user.local.firstname + " " + req.user.local.lastname;
 		this_user.picture = req.user.local.picture;
-	}
+
+    user_query = { "local.email": this_user.email };
+    Database.find("housemates","users", user_query, function(model){
+      // console.log("model...."+model[0]._id);
+      this_user.uid = model[0]._id;
+    });
+
+	};
 	res.render('dashboard.ejs', {
 		user : this_user // get the user out of session and pass to template
 	});
@@ -182,13 +193,77 @@ app.get('/chores', isLoggedIn, function(req, res){
   });
 })
 
+//gets housemates for getHousematesAsDropdown function in script_chore_add.js
+app.get('/getHousemates', lease_controller.this_user_house);
+
 // show addChore page
 app.post('/chore_add_pg', isLoggedIn, function(req, res){
+  //find house for this_user
+  user_id = this_user.uid.toString();
+  lease_query1 = { user_id: user_id };
+  house_id = "";
+  members_id = []; //array of objects
+  members_name = [];
+
+  Database.find(
+    "housemates", "leases", lease_query1,
+    function(model){
+      house_id = model[0].house_id;
+      console.log("house_id...", house_id);
+  });
+
+  // while (members_name.length == 0){
+      
+  //     console.log("house_id...", house_id);
+
+  //   //find user_ids of members of house
+  //   if (house_id != ""){
+  //     lease_query2 = { house_id: house_id };
+  //     Database.find(
+  //       "housemates", "leases", lease_query2,
+  //       function(model){
+  //         console.log("members model...", model);
+  //         model.forEach(function(lease){
+  //           members_id.push(lease.user_id);
+  //         });
+  //     });
+  //     console.log("members_id...", members_id);
+  //   }
+
+  //   //find names of members of house
+  //   if (members_id != []){
+  //     members_id.forEach(function(member_id){
+  //       user_query = { _id: member_id }
+  //       Database.find(
+  //         "housemates", "users", user_query,
+  //         function(model){
+  //           model.forEach(function(user){
+  //             members_name.push(user.firstname+user.lastname);
+  //           })
+  //         });
+  //     });
+  //     console.log("members_name...", members_name);
+  //   }
+  // }
+
   // getChores(req, res, this_user);
   res.render('chore_add', {
-    user: this_user
+    user: this_user,
+    house_id: house_id,
+    members: members_name
   });
+
+  console.log();
 })
+
+// // show addChore page
+// app.post('/chore_add_pg', isLoggedIn, function(req, res){
+//   // getChores(req, res, this_user);
+//   res.render('chore_add', {
+//     user: this_user,
+//     members: members,
+//   });
+// })
 
 // makes new Chore object in Chores collection
 // makes new Assignment object in Assignments collection linking
@@ -427,4 +502,5 @@ function resetUsers(){
 	this_user.first_name = "";
 	this_user.last_name = "";
 	this_user.picture = "";
+  this_user.uid = "";
 }

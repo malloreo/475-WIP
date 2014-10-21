@@ -1,3 +1,4 @@
+var Database = require("../models/mymongo.js");
 var House = require('../models/house.js');
 var Lease = require('../models/lease.js');
 var User = require('../user.js')
@@ -24,6 +25,24 @@ exports.post = function(req, res){
 	});	
 };
 
+exports.list = function(req, res){
+	// console.log("listing////");
+	Database.find(
+		"housemates", "houses", "", //find all
+		function(model){
+			// console.log(model)
+			var table = "<table id='scores-table'><tr><td width='600px'><b>Results</b></td><td width='100px' ><b>Date</b></td></tr>";
+			var num = 1;
+			model.forEach(function(score){
+				table += "<tr><td>"+num+"</td>";
+				table += "<td>"+score.housename;
+				num++
+			});
+			table += "</table>"
+			res.send(table);
+		}
+	);
+}
 
 
 // var 
