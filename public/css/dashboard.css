@@ -1,6 +1,7 @@
 body {
 	font-family: 'Open Sans', sans-serif;
-	background: #f9f8e5;
+	/*background: #f9f8e5;*/
+	background: #fbfaee;
 	margin: 0px;
 	height: 100%;
 	/*overflow: hidden;*/
@@ -68,7 +69,8 @@ a:visited{
 /*------------------------------- SIDEBAR ------------------------------*/
 .sidebar{
 	display: block;
-	background: #422a42;
+	/*background: #422a42;*/
+	background: #452145;
 	width: 50px;
 	height: 800px;
 	float: left;
@@ -80,6 +82,56 @@ a:visited{
 	padding-top: 5px;
 	cursor: pointer;
 }
+
+.tooltip{
+	display: inline;
+    position: relative;
+}
+
+.tooltip:hover:after {
+	/*background: #111;
+    background: rgba(0,0,0,.8);
+    border-radius: .5em;
+    bottom: 1.35em;
+    color: #fff;
+    content: attr(title);
+    display: block;
+    left: 1em;
+    padding: .3em 1em;
+    position: absolute;
+    text-shadow: 0 1px 0 #000;
+    white-space: nowrap;
+    z-index: 98;*/
+    display: block;
+    content: attr(title);
+    position: absolute;
+    width: 73px;
+    height: 15px;
+    line-height: 15px;
+    padding: 5px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.85);
+    top: -20px;
+    left: 50px;
+    color: white;
+}
+
+/*.tooltip:hover:before {
+    border: solid;
+    border-color: #111 transparent;
+    border-color: rgba(0,0,0,.8) transparent;
+    border-width: .4em .4em 0 .4em;
+    bottom: 1em;
+    content: "";
+    display: block;
+    left: 2em;
+    position: absolute;
+    z-index: 99;
+}*/
 
 /*------------------------------- CONTENT ------------------------------*/
 
@@ -99,7 +151,8 @@ h1{
 .dash-box{
 	width: 300px;
 	height: 350px;
-	background: #efe9a5;
+	/*background: #efe9a5;*/
+	background: #f2daab;
 	margin: 10px;
 	margin-left: 0px;
 	padding: 15px;

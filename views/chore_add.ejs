@@ -37,11 +37,11 @@
 
     <div class="wrapper">
       <div class="sidebar">
-        <a href="/chores"><img src="images/sidebar-icon_chores.png"></a>
-        <a href="/bills"><img src="images/sidebar-icon_bills.png"></a>
-        <a href="/calendar"><img src="images/sidebar-icon_cal.png"></a>
-        <a href="/grocery"><img src="images/sidebar-icon_grocery.png"></a>
-        <a href="/chat"><img src="images/sidebar-icon_chat.png"></a>
+        <a href="/chores" class="tooltip" title="CHORES"><img src="images/sidebar-icon_chores.png" title=""></a>
+        <a href="/bills" class="tooltip" title="BILLS"><img src="images/sidebar-icon_bills.png" title=""></a>
+        <a href="/calendar" class="tooltip" title="CALENDAR"><img src="images/sidebar-icon_cal.png" title=""></a>
+        <a href="/grocery" class="tooltip" title="GROCERY"><img src="images/sidebar-icon_grocery.png" title=""></a>
+        <a href="/chat" class="tooltip" title="CHAT"><img src="images/sidebar-icon_chat.png" title=""></a>
       </div> <!-- sidebar -->
 
 
@@ -63,8 +63,8 @@
           <input id="description" name="description" type="text" placeholder="Description"/><br>
           <select id="assignee" name="assignee">
             <% for(var i=0; i<members.length; i++) {%>
-             <option value="<%= members[i] %>"> <%= members[i] %> </option>
-          <% } %>
+              <option value="<%= members[i] %>"> <%= members[i] %> </option>
+            <% } %>
           </select><br>
           <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
           <input id="button1"  type="submit" value="Add Chore"/>
