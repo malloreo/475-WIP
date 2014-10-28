@@ -18,7 +18,6 @@
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/grocery_script.js"></script>
   </head>
   <body>
@@ -46,27 +45,19 @@
 
 
       <div class="content-dash">
-        <table>
-          <tr>
-            <td><div class="dash-box" id="grocery">
-              <div id="dash-heading">GROCERIES</div>
-              <br>
-              <div id="grocery-item">
-                <i> There are currently no groceries for you to buy. Go eat something. </i>
-              </div>
-            </div></td>
-            <td>Other things can go here </td>
-          </tr>
-        </table>
-        <form class="form" id="getgrocery-form" method="post" action="/grocery_add">
-          <button type="submit" class="btn btn-primary">Add Grocery</button>
-        </form>
-         <input id="grocery-remove"  type="submit" value="Remove Grocery Item"/>
-        <!-- <form class="form" method="get" action="/auth/google">
-          <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
-        </form> -->
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- <form id="grocery_form" class="form" method="post" action="/addGrocery"> -->
+        <!-- <form id="chore-form" method="post"> -->
+        <!-- <form id="chore-form"> -->
+          Grocery Name: <input id="name" type="text" placeholder="item name" required="required"/><br>
+          Quantity: <input id="quantity" type="text" placeholder="" required="required"/><br>
+          <!-- <input type="hidden" name="_method" value="put"> -->
+          <input id="grocery-formb"  type="submit" value="Add"/>
+        <!-- </form> -->
 
+        <div id="test" style="color:blue">.</div>
+
+        <br><br>
+      <a href="/grocery">Back to Grocery Management</a>
       </div> <!-- content-dash -->
     </div> <!-- wrapper -->
   </body>

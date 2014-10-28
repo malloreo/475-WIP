@@ -6,6 +6,7 @@ var express = require('express'),
     chore_controller = require('./routes/chore_controller'),
     house_controller = require('./routes/house_controller'),
     lease_controller = require('./routes/lease_controller'),
+    grocery_controller = require('./routes/grocery_controller'),
 
 
     Database = require("./models/mymongo.js"),
@@ -311,6 +312,18 @@ app.get('/grocery', isLoggedIn, function(req, res){
     user: this_user
   });
 })
+
+app.post('/grocery_add', isLoggedIn, function(req, res){
+  // getChores(req, res, this_user);
+  res.render('grocery_add', {
+    user: this_user
+  });
+})
+
+app.put('/grocery_add', grocery_controller.addGrocery);
+
+app.get('/deleteGrocery/:id', grocery_controller.deleteGrocery);
+app.get('/getGrocerylist', grocery_controller.getGroceries);
 
 
 // =====================================
