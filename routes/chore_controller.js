@@ -10,12 +10,24 @@
 //     }).save();
 //     res.redirect('assign_add');
 // };
-
+var Database = require('../models/mymongo.js');
 var Chore = require('../models/chore.js');
 var Assign = require('../models/assign.js');
 var User = require('../user.js')
 this_user = require('../models/auth').this_user
-exports.post = function(req, res){
+
+exports.getAllChores = function(req, res){
+    console.log("GETTING ALL CHORES..");
+    data = [];
+    Database.find("housemates","chores","", function(model){
+        model.forEach(function(chore){
+            data.push(chore.chore_name);
+        })
+        res.send(data)
+    })
+}
+
+exports.addNew = function(req, res){
     console.log("REQ.BODY..", req.body);
     new Chore({
         chore_name:req.body.chore_name,

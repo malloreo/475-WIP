@@ -1,5 +1,5 @@
 $(function() {   // when document is ready
-
+	getChores();
 	// $("#add_chore_b").click(function(){
 	// 	console.log("clicked");
 	// 	// $("#add_chore_div").fadeIn();
@@ -8,6 +8,24 @@ $(function() {   // when document is ready
 	// });
 
 }); //document ready
+
+function getChores(){ // function to populate drop down list with all users in db (in a house)
+	console.log("running getChores in script_chore_add.js");
+	$.ajax({
+			url: "getChores",
+			type: "get",
+			data: {},
+			success: function(data) {
+				message = "";
+				data.forEach(function(chore){
+					select = "<option value='"+chore+"'>"+chore+"</option>";
+					message += select;
+				})
+				$('#select_chore_name').html(message);
+			}
+	});
+	return false;
+}
 
 // //gets housemates and displays them as values in a dropdown menu
 // function getHousematesAsDropdown(){

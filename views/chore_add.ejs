@@ -18,8 +18,7 @@
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/script_chore_add
-    .js"></script>
+    <script src="js/script_chore_add.js"></script>
   </head>
   <body>
     <div class="menu">
@@ -57,8 +56,9 @@
 
         <!-- </form> -->
 
-        <!-- ADD CHORE FORM -->
-        <form action="/chore_add" method="post">
+        <!-- ADD NEW CHORE FORM -->
+        Add New Chore
+        <form action="/chore_add_new" method="post">
           <input id="chore_name" name="chore_name" type="text" placeholder="Chore Name"/><br>
           <input id="description" name="description" type="text" placeholder="Description"/><br>
           <select id="assignee" name="assignee">
@@ -71,6 +71,21 @@
         </form>
 
         <div id="test" style="color:blue">.</div>
+        <br><br>
+        OR
+        <br><br>
+        Assign Existing Chore
+        <form action="/chore_add_existing" method="post">
+          <select id="select_chore_name" name="chore_name">
+          </select><br>
+          <select id="assignee" name="assignee">
+            <% for(var i=0; i<members.length; i++) {%>
+              <option value="<%= members[i] %>"> <%= members[i] %> </option>
+            <% } %>
+          </select><br>
+          <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
+          <input id="button1"  type="submit" value="Add Chore"/>
+        </form>
 
         <br><br>
       <a href="/chores">Back to Chore Management</a>

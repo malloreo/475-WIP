@@ -4,6 +4,7 @@ var express = require('express'),
     routes = require('./routes/slash'),
     update = require('./routes/update'),
     chore_controller = require('./routes/chore_controller'),
+    assign_controller = require('./routes/assign_controller'),
     house_controller = require('./routes/house_controller'),
     lease_controller = require('./routes/lease_controller'),
     grocery_controller = require('./routes/grocery_controller'),
@@ -219,9 +220,10 @@ app.post('/house_register', house_controller.post);
 // CHORES ==============================
 // =====================================
 
+app.get('/getChores', chore_controller.getAllChores);
+
 // show Chore page
 app.get('/chores', isLoggedIn, function(req, res){
-  getChores(req, res, this_user);
   res.render('chore', {
     user: this_user
   });
@@ -257,7 +259,8 @@ app.post('/chore_add_pg', isLoggedIn, function(req, res){
 //   console.log("-------MADE CHORE-------");
 // });
 
-app.post('/chore_add', chore_controller.post);
+app.post('/chore_add_new', chore_controller.addNew);
+app.post('/chore_add_existing', assign_controller.asgnExisting);
 
 // redirect here from chore_controller.post after creating chore
 app.get('/assign_add', function(req, res){
