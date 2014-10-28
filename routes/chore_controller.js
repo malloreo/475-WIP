@@ -30,7 +30,7 @@ exports.post = function(req, res){
                 chore_id:Chore._id,
                 user_id:obj.id
             }).save();
-            res.redirect('chore');
+            res.redirect('chores');
             })
     }); 
 };
