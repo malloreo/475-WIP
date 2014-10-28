@@ -154,7 +154,7 @@ app.get('/setupThisUser0', isLoggedIn, function(req, res){
   };
 })
 //finds ID of this_user's house, redirects to setupThisUser1
-app.get('/setupThisUser1', lease_controller.this_user_house);
+// app.get('/setupThisUser1', lease_controller.this_user_house);
 
 //finds user_ids of members of house
 // app.get('/setupThisUser2', lease_controller.this_house_members_id);
@@ -163,7 +163,7 @@ app.get('/setupThisUser1', lease_controller.this_user_house);
 //would have to use lease_controller.this_house_members_id then
 //have a lease_controller module that found all the names associated with the IDs
 //when implementing fully
-app.get('/setupThisUser2', isLoggedIn, function(req, res){
+app.get('/setupThisUser1', isLoggedIn, function(req, res){
   members_name = [];
     Database.find(
     "housemates", "users", "", //finds all users
