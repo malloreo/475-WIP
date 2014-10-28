@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var assignSchema = new mongoose.Schema({
-	chore_id   :String,
-	user_id  :String
+	chore_name   :String,
+	user_name  :String
 });
 
 module.exports = mongoose.model('Assign', assignSchema);
