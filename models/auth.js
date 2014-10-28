@@ -13,7 +13,9 @@ module.exports = {
 	  first_name: "",
 	  last_name: "",
 	  picture: "",
-	  uid: ""
+	  uid: "",
+	  house_id: "",
+	  members: []
 	},
 
 	'google_user' : {

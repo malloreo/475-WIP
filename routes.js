@@ -70,7 +70,7 @@ app.get('/signup', function(req, res) {
 
 // process the signup form
 app.post('/signup', passport.authenticate('local-signup', {
-	successRedirect : '/dashboard', // redirect to the secure profile section
+	successRedirect : '/setupThisUser0', // redirect to the secure profile section
 	failureRedirect : '/signup', // redirect back to the signup page if there is an error
 	failureFlash : true // allow flash messages
 }));
@@ -86,7 +86,7 @@ app.get('/login', function(req, res) {
 
 // process the login form
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect : '/dashboard', // redirect to the secure profile section
+	successRedirect : '/setupThisUser0', // redirect to the secure profile section
 	failureRedirect : '/', // redirect back to the signup page if there is an error
 	failureFlash : true // allow flash messages
 }));
@@ -134,23 +134,55 @@ app.get('/logout', function(req, res) {
 });
 
 // =====================================
-// DASHBOARD AND SETTINGS ==============
+// THIS_USER ATTRIBUTES ================
 // =====================================
-app.get('/dashboard', isLoggedIn, function(req, res) {
-	if (this_user.email == ""){
-		this_user.email = req.user.local.email;
-		this_user.first_name = req.user.local.firstname;
-		this_user.last_name = req.user.local.lastname;
-		this_user.name = req.user.local.firstname + " " + req.user.local.lastname;
-		this_user.picture = req.user.local.picture;
+//sets up attributes for this_user in auth.js
+app.get('/setupThisUser0', isLoggedIn, function(req, res){
+  if (this_user.email == ""){
+    this_user.email = req.user.local.email;
+    this_user.first_name = req.user.local.firstname;
+    this_user.last_name = req.user.local.lastname;
+    this_user.name = req.user.local.firstname + " " + req.user.local.lastname;
+    this_user.picture = req.user.local.picture;
 
     user_query = { "local.email": this_user.email };
     Database.find("housemates","users", user_query, function(model){
-      // console.log("model...."+model[0]._id);
+      console.log("model...."+model[0]._id);
       this_user.uid = model[0]._id;
+      res.redirect('/setupThisUser1');
     });
+  };
+})
+//finds ID of this_user's house, redirects to setupThisUser1
+app.get('/setupThisUser1', lease_controller.this_user_house);
 
-	};
+//finds user_ids of members of house
+// app.get('/setupThisUser2', lease_controller.this_house_members_id);
+
+//finds names of members of house by going through all users
+//would have to use lease_controller.this_house_members_id then
+//have a lease_controller module that found all the names associated with the IDs
+//when implementing fully
+app.get('/setupThisUser2', isLoggedIn, function(req, res){
+  members_name = [];
+    Database.find(
+    "housemates", "users", "", //finds all users
+    function(model){
+      // console.log("members model...", model);
+      model.forEach(function(user){
+        member = user.local.firstname + " " + user.local.lastname;
+        members_name.push(member);
+      });
+      this_user.members = members_name;
+      res.redirect('/dashboard');
+    });
+});
+
+// =====================================
+// DASHBOARD AND SETTINGS ==============
+// =====================================
+app.get('/dashboard', isLoggedIn, function(req, res) {
+	console.log("MEMBERS:", this_user.members);
 	res.render('dashboard.ejs', {
 		user : this_user // get the user out of session and pass to template
 	});
@@ -194,7 +226,7 @@ app.get('/chores', isLoggedIn, function(req, res){
 })
 
 //gets housemates for getHousematesAsDropdown function in script_chore_add.js
-app.get('/getHousemates', lease_controller.this_user_house);
+// app.get('/getHousemates', lease_controller.this_user_house);
 
 // show addChore page
 app.post('/chore_add_pg', isLoggedIn, function(req, res){
