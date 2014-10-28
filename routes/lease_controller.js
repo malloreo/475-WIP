@@ -22,16 +22,20 @@ exports.this_user_house = function(req, res){
 exports.this_house_members_id = function(req, res){
 	lease_query = { house_id: this_user.house_id.toString() };
 	members_id = [];
-  	Database.find(
-	  "housemates", "leases", lease_query,
-	  function(model){
-	    console.log("members model...", model);
-	    model.forEach(function(lease){
-	    	members_id.push(lease.user_id);
-    		// console.log("members_id...", members_id);
-	  	});
-    	// res.redirect('/setupThisUser3');
-	});
+	try {
+	  	Database.find(
+		  "housemates", "leases", lease_query,
+		  function(model){
+		    console.log("members model...", model);
+		    model.forEach(function(lease){
+		    	members_id.push(lease.user_id);
+	    		// console.log("members_id...", members_id);
+		  	});
+	    	// res.redirect('/setupThisUser3');
+		});
+	} catch(error){
+		console.log("There are no leases yet made.. do something about it if you care");
+	}
 }
 
 exports.this_house_members_name = function(req, res){
