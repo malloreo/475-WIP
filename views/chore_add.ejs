@@ -61,12 +61,12 @@
         <form action="/chore_add" method="post">
           <input id="chore_name" name="chore_name" type="text" placeholder="Chore Name"/><br>
           <input id="description" name="description" type="text" placeholder="Description"/><br>
-          <select id="assignee">
+          <select id="assignee" name="assignee">
             <% for(var i=0; i<members.length; i++) {%>
-             <option><%= members[i] %></option>
+             <option value="<%= members[i] %>"> <%= members[i] %> </option>
           <% } %>
           </select><br>
-          <input id="duedate" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
+          <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
           <input id="button1"  type="submit" value="Add Chore"/>
         </form>
 

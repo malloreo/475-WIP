@@ -171,6 +171,7 @@ app.get('/setupThisUser1', isLoggedIn, function(req, res){
       // console.log("members model...", model);
       model.forEach(function(user){
         member = user.local.firstname + " " + user.local.lastname;
+        console.log("MEMBER IS:", member);
         members_name.push(member);
       });
       this_user.members = members_name;
