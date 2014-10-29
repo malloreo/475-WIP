@@ -18,7 +18,7 @@ function getChores(){ // function to populate drop down list with all users in d
 			success: function(data) {
 				message = "";
 				data.forEach(function(chore){
-					select = "<option value='"+chore+"'>"+chore+"</option>";
+					select = "<option value='"+chore.chore_name+"'>"+chore.chore_name+"</option>";
 					message += select;
 				})
 				$('#select_chore_name').html(message);

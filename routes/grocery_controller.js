@@ -46,7 +46,7 @@ exports.getGroceries = function(req, res){
             else
             {
             // check to see if theres already a user with that email
-            if (grocery) {
+            if (grocery.length != 0) {
                 console.log(grocery[0]); //returns undefined
                 for( var i =0;i< grocery.length;i++ ) {
                 var item = grocery[i];
@@ -57,7 +57,7 @@ exports.getGroceries = function(req, res){
             } 
             else
             {
-                res.send('no data');
+                res.send('There are currently no groceries for you to buy. Go eat something.');
             }
             }
         });    
@@ -84,7 +84,7 @@ exports.getGroceriesbyid = function(req, res){
             } 
             else
             {
-                res.send('no data');
+                res.send("no data");
             }
             }
         });    

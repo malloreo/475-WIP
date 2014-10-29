@@ -133,6 +133,20 @@ a:visited{
     z-index: 99;
 }*/
 
+/*------------------------------- GENERAL ------------------------------*/
+button{
+	background: #c1a880;
+	border: solid;
+	border-width: 0px;
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 5px;
+	padding-left: 8px;
+	padding-right: 8px;
+	font-size: 11px;
+	line-height: 14px;
+}
+
 /*------------------------------- CONTENT ------------------------------*/
 
 h1{
@@ -163,7 +177,7 @@ h1{
 	font-weight: bold;
 }
 
-/*--------------------- CONTENT --------------------*/
+/*--------------------- CHORES --------------------*/
 
 #chores-tbl table{
 	width: 600px;

@@ -20,10 +20,11 @@ exports.getAllChores = function(req, res){
     console.log("GETTING ALL CHORES..");
     data = [];
     Database.find("housemates","chores","", function(model){
-        model.forEach(function(chore){
-            data.push(chore.chore_name);
-        })
-        res.send(data)
+        // model.forEach(function(chore){
+        //     data.push(chore.chore_name);
+        // })
+        // res.send(data)
+        res.send(model)
     })
 }
 

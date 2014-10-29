@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/script_dashboard.js"></script>
   </head>
   <body>
     <div class="menu">
@@ -54,7 +55,9 @@
             <td><div class="dash-box" id="chores">
               <div id="dash-heading">CHORES</div>
               <br>
-              <i> There are currently no chores for you to do. Celebrate with some TV. </i>
+              <div id="my-chores">
+                <i> There are currently no chores for you to do. Celebrate with some TV. </i>
+              </div> <!-- my-chores -->
             </div></td>
             <td><div class="dash-box" id="bills">
               <div id="dash-heading">BILLS</div>
@@ -64,7 +67,9 @@
             <td><div class="dash-box" id="grocery">
               <div id="dash-heading">GROCERIES</div>
               <br>
-              <i> There are currently no groceries for you to buy. Go eat something. </i>
+              <div id="grocery-item">
+                <i> There are currently no groceries for you to buy. Go eat something. </i>
+              </div> <!-- grocery-item -->
             </div></td>
           </tr>
         </table>

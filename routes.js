@@ -268,9 +268,9 @@ app.get('/assign_add', function(req, res){
   console.log("---- assign_add req: ", req)
 })
 
+app.get('/getAssigns', assign_controller.getAssignments)
 
 // app.put('/addchore', chore_controller.addChore);
-
 
 // =====================================
 // BILLS ===============================
