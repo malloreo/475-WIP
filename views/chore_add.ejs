@@ -87,6 +87,27 @@
           <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
           <input id="button1"  type="submit" value="Assign Chore"/>
         </form>
+        <br><br>
+        OR
+        <br><br>
+        <!-- ADD ASSIGNMENT TO EXISTING CHORE -->
+        ROTATING CHORES
+        <form action="/chore_add_existing" method="post">
+          <select id="select_chore_name" name="chore_name">
+          </select><br>
+          <select id="chore_type" name="chore_type">
+            <option value="onetime">One Time</option>
+            <option value="rotating">Rotating</option>
+          </select></br>
+          <select id="assignee" name="assignee">
+            <% for(var i=0; i<members.length; i++) {%>
+              <option value="<%= members[i] %>"> <%= members[i] %> </option>
+            <% } %>
+          </select><br>
+          <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
+          <input id="button1"  type="submit" value="Assign Chore"/>
+        </form>
+
 
         <br><br>
       <a href="/chores">Back to Chore Management</a>

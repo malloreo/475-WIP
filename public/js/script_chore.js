@@ -56,7 +56,9 @@ function parseAssignments( assigns , chores ){
 		console.log(a)
 		chores.forEach(function(chore){
 			if (chore.chore_name == chore_name ){
-				due_date = new Date(chore.due_date).toDateString()
+				due_date = new Date(a.due_date);
+				due_date.setDate(due_date.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
+				due_date = due_date.toDateString();
 				message += a.user_name +" is assigned to do " + chore.chore_name + " due on " + due_date + "<br>"
 			}
 		})
