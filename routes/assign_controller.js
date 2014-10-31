@@ -5,7 +5,8 @@ var Database = require('../models/mymongo.js'),
 exports.asgnExisting = function(req, res){
     var newAssign = {
         chore_name: req.body.chore_name,
-        user_name: req.body.assignee
+        user_name: req.body.assignee,
+        due_date: req.body.due_date
     };
     Database.insert(
         "housemates",

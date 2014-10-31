@@ -45,7 +45,8 @@ exports.addNew = function(req, res){
         // }).findOne( function(err,obj) {
             new Assign({
                 chore_name: req.body.chore_name,
-                user_name: req.body.assignee
+                user_name: req.body.assignee,
+                due_date: req.body.due_date
                 // chore_id:Chore._id,
                 // user_id:obj.id
             }).save();
