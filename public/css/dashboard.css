@@ -86,6 +86,7 @@ a:visited{
 .tooltip{
 	display: inline;
     position: relative;
+    z-index: 1000;
 }
 
 .tooltip:hover:after {
@@ -159,6 +160,8 @@ h1{
 	display: block;
 	float: left;
 	margin: 40px;
+	position: absolute;
+	left: 40px;
 	/*width: 100%;*/
 }
 
