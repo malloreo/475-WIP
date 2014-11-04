@@ -110,8 +110,8 @@ app.get('/auth/google/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     // res.redirect('/');
-    // res.redirect('/settings'); << uncomment this
-    getCalendarInformation(req, res);
+    res.redirect('/settings'); //<< uncomment this
+    // getCalendarInformation(req, res);
   });
 
 

@@ -28,7 +28,7 @@
       </div>
       <div id="logout"><a href="/logout"><i>Logout</i></a></div>
       <div id="username">
-        <%= user.email %>
+        <%= user.first_name %>
       </div> <!-- username -->
       <div id="title">
         <a href="/dashboard">Homies</a>
@@ -37,6 +37,7 @@
 
     <div class="wrapper">
       <div class="sidebar">
+        <a href="/dashboard" class="tooltip" title="DASHBOARD"><img src="images/sidebar-icon_house.png" title=""></a>
         <a href="/chores" class="tooltip" title="CHORES"><img src="images/sidebar-icon_chores.png" title=""></a>
         <a href="/bills" class="tooltip" title="BILLS"><img src="images/sidebar-icon_bills.png" title=""></a>
         <a href="/calendar" class="tooltip" title="CALENDAR"><img src="images/sidebar-icon_cal.png" title=""></a>

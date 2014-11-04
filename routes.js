@@ -105,24 +105,24 @@ app.get('/login-google', function(req, res){
   // } 
 });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-                                            'https://www.googleapis.com/auth/userinfo.email',
-                                            'https://www.googleapis.com/auth/calendar',
-                                            'https://www.googleapis.com/auth/calendar.readonly'] }),
-  function(req, res){
-    // The request will be redirected to Google for authentication, so this
-    // function will not be called.
-});
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+//                                             'https://www.googleapis.com/auth/userinfo.email',
+//                                             'https://www.googleapis.com/auth/calendar',
+//                                             'https://www.googleapis.com/auth/calendar.readonly'] }),
+//   function(req, res){
+//     // The request will be redirected to Google for authentication, so this
+//     // function will not be called.
+// });
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login-google' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    // res.redirect('/');
-    // res.redirect('/settings'); << uncomment this
-    getCalendarInformation(req, res);
-});
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login-google' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     // res.redirect('/');
+//     res.redirect('/settings'); //<< uncomment this
+//     // getCalendarInformation(req, res);
+// });
 
 
 // =====================================

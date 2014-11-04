@@ -30,27 +30,34 @@ exports.getAllChores = function(req, res){
 
 exports.addNew = function(req, res){
     console.log("REQ.BODY..", req.body);
-    new Chore({
-        chore_name:req.body.chore_name,
-        description:req.body.description,
-        active:true
-    }).save(function(err,House){
-        // name = req.body.assignee.split(" ");
-        // first_name = name[0];
-        // last_name = name[1];
-        // User.where({
-        //     'local.firstname':first_name,
-        //     'local.lastname':last_name
-        // }).findOne( function(err,obj) {
-            new Assign({
-                chore_name: req.body.chore_name,
-                user_name: req.body.assignee,
-                due_date: req.body.due_date
-                // chore_id:Chore._id,
-                // user_id:obj.id
-            }).save();
-            res.redirect('chores');
-            // })
-    }); 
+    if (req.body.type == "onetime"){
+        new Chore({
+            chore_name:req.body.chore_name,
+            description:req.body.description,
+            active:true
+        }).save(function(err,House){
+            // name = req.body.assignee.split(" ");
+            // first_name = name[0];
+            // last_name = name[1];
+            // User.where({
+            //     'local.firstname':first_name,
+            //     'local.lastname':last_name
+            // }).findOne( function(err,obj) {
+                new Assign({
+                    chore_name: req.body.chore_name,
+                    user_name: req.body.assignee,
+                    due_date: req.body.due_date
+                    // chore_id:Chore._id,
+                    // user_id:obj.id
+                }).save();
+                res.redirect('chores');
+                // })
+        }); 
+    } else if (req.body.type == "rotating"){ 
+
+    } else { //repeating
+
+    }
+    
 };
 
