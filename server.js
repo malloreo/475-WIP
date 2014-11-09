@@ -106,11 +106,11 @@ app.get('/auth/google',
   });
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login-google' }),
+  passport.authenticate('google', { failureRedirect: '/settings' }),
   function(req, res) {
     // Successful authentication, redirect home.
     // res.redirect('/');
-    res.redirect('/settings'); //<< uncomment this
+    res.redirect('/chores'); //<< uncomment this
     // getCalendarInformation(req, res);
   });
 
