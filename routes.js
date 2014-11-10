@@ -8,6 +8,9 @@ var express = require('express'),
     house_controller = require('./routes/house_controller'),
     lease_controller = require('./routes/lease_controller'),
     grocery_controller = require('./routes/grocery_controller'),
+    bill_controller = require('./routes/bill_controller'),
+    pay_controller = require('./routes/pay_controller'),
+    chat_controller = require('./routes/chat_controller'),
 
 
     Database = require("./models/mymongo.js"),
@@ -276,11 +279,32 @@ app.get('/getAssigns', assign_controller.getAssignments)
 // BILLS ===============================
 // =====================================
 
+app.get('/getBills', bill_controller.getAllBills);
+
 app.get('/bills', isLoggedIn, function(req, res){
   res.render('bills', {
     user: this_user
   });
 })
+
+app.post('/bill_add_pg', isLoggedIn, function(req, res) {
+  res.render('bill_add', {
+    user: this_user,
+    members: this_user.members
+  });
+})
+
+app.post('/bill_add_new', bill_controller.addNew);
+app.post('/bill_add_existing', pay_controller.asgnExistingBill);
+
+app.get('/pay_add', function(req, res) {
+  console.log("---- IN PAY ADD ----");
+  console.log("---- pay_add req: ", req) 
+})
+
+app.get('/getPays', pay_controller.getPays);
+app.get('/completeBill/:id', bill_controller.completeBill);
+app.get('/completePay/:id', pay_controller.completePay);
 
 
 // =====================================
@@ -326,7 +350,11 @@ app.post('/grocery_add', isLoggedIn, function(req, res){
 app.put('/grocery_add', grocery_controller.addGrocery);
 
 app.get('/deleteGrocery/:id', grocery_controller.deleteGrocery);
+app.get('/updateGroceryAsBought/:id', grocery_controller.updateGroceryAsBought);
+app.get('/reactivateGroceryList/:id', grocery_controller.reactivateGrocery);
 app.get('/getGrocerylist', grocery_controller.getGroceries);
+app.get('/getGroceryListNotBought', grocery_controller.getGroceriesNotBought);
+app.get('/getGroceryListBought', grocery_controller.getGroceriesBought);
 
 
 // =====================================
@@ -339,6 +367,8 @@ app.get('/chat', isLoggedIn, function(req, res){
   });
 })
 
+app.put('/addMessage', chat_controller.addMessage);
+app.get('/getChats', chat_controller.getChats)
 
 };
 

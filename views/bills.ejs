@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/script_bill.js"></script>
   </head>
   <body>
     <div class="menu">
@@ -47,129 +48,29 @@
 
       <div class="content-dash">
         <h1>Bill Management</h1>
-        <h2>Current Balances</h2> 
-        <table id="bills-tbl">
-          <tr> 
-            <th>Homies</th>
-            <th>Balance</th>
-          </tr>
-          <tr>
-            <td>Chanamon</td>
-            <td><font color="FF0000">-$580.32</font></td>
-          </tr>
-          <tr>
-            <td>Katie</td>
-            <td><font color="FF0000">-$719.93</font></td>
-          </tr>
-          <tr> 
-            <td>Sam</td>
-            <td><font color="336600">$1300.25</font></td>
-          </tr>
-        </table>
+        <form class="form" method="post" action="/bill_add_pg">
+          <button type="submit" class="btn btn-primary"> Add Bill</button>
+        </form>
 
-        <h2>Active Payments Due</h2>
-          <table id="bills-tbl">
-            <tr>
-              <th>Description</th>
-              <th>Homie</th>
-              <th>Total Cost</th>
-              <th>Your Cost</th>
-              <th>Paid?</th>
-            </tr>
-            <tr> 
-              <td>Toilet Paper (6 rolls)</td>
-              <td>Katie</td>
-              <td>$4.20</td>
-              <td>$1.40</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td>August Rent</td>
-              <td>Sam</td>
-              <td>$1800.00</td>
-              <td>$500.00</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td>August Electricity</td>
-              <td>Sam</td>
-              <td>$176.76</td>
-              <td>$58.92</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td>August Internet and Cable</td>
-              <td>Sam</td>
-              <td>$60.00</td>
-              <td>$20.00</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td><font color= "#989898">Trash Bags (100ct)</font></td>
-              <td><font color= "#989898">Sam</font></td>
-              <td><font color= "#989898">$6.09<font></td>
-              <td><font color= "#989898">$2.03</font></td>
-              <td><font color= "#989898">Yes</font></td>
-            </tr>
-            <tr>
-              <td><font color= "#989898">Lightbulbs (2 ct)</font></td>
-              <td><font color= "#989898">Chanamon</font></td>
-              <td><font color= "#989898">$15.09<font></td>
-              <td><font color= "#989898">$5.03</font></td>
-              <td><font color= "#989898">Yes</font></td>
-            </tr>
-            <tr>
-              <td><font color= "#989898">Dish Rack</font></td>
-              <td><font color= "#989898">Chanamon</font></td>
-              <td><font color= "#989898">$12.00<font></td>
-              <td><font color= "#989898">$4.00</font></td>
-              <td><font color= "#989898">Yes</font></td>
-            </tr>
-            <tr>
-              <td><font color= "#989898">Febreeze</font></td>
-              <td><font color= "#989898">Chanamon</font></td>
-              <td><font color= "#989898">$6.99<font></td>
-              <td><font color= "#989898">$2.33</font></td>
-              <td><font color= "#989898">Yes</font></td>
-            </tr>
-          </table>
-        <br><br>
-        <div class="button-column">
-          <button type="Add Bill" value="Add Bill">Add Bill</button><br>
-          <button type="Venmo" value="Venmo">Pay a Bill -> Venmo</button><br>
+        <h2>Current Balances</h2> 
+        <div id="all-bills">
+          <h3>My Current Payments</h3>
+          <div id="my-payments"></div>
+          <br>
+          <h3>My Past Payments</h3>
+          <div id="my-past-payments"></div>
+          <br>
+          <h3>Pay to Me</h3>
+          <div id="pay-to-me"></div>
+          <br>
+          <h3>Their Payments</h3>
+          <div id="their-payments"></div>
         </div>
 
-          <!--
-          <tr>
-            <td><div class="dash-box" id="bills">
-              <div id="dash-heading">BILLS</div>
-              <br>
-              <table id="bills-table">
-                <tr>
-                  <th width>Description</th>
-                  <th>Owner</th>
-                  <th>Your Cost</th>
-                </tr>
-                <tr> 
-                  <td width>Toilet Paper (6 rolls)</td>
-                  <td>Katie</td>
-                  <td>$1.40</td>
-                </tr>
-                <tr>
-                  <td width>Trash Bags (100ct)</td>
-                  <td>Sam</td>
-                  <td>$2.03</td>
-                </tr>
-              </table>
-            </div></td> 
-            <td> 
-              <div class="button-column">
-                <button type="Add Bill" value="Add Bill">Add Bill</button><br>
-                <button type="Venmo" value="Venmo">Pay a Bill -> Venmo</button><br>
-              </div>
-            </td>
-          </tr>
-        -->
+        <br><br>
+        <div class="button-column">
+          <button type="Venmo" value="Venmo">Pay a Bill -> Venmo</button><br>
+        </div>
 
         <!-- <form class="form" method="get" action="/auth/google">
           <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>

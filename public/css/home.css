@@ -21,6 +21,10 @@ h1{
 	margin-bottom: 0px;
 }
 
+input:focus{ /* removes highlight when clicking on input */
+	outline: none;
+}
+
 #login-box{
 	background: #096f7a;
 	width: 300px;

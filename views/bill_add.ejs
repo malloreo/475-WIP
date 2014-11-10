@@ -19,7 +19,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/script_dashboard.js"></script>
+    <script src="js/script_bill_add.js"></script>
+
   </head>
   <body>
     <div class="menu">
@@ -28,7 +29,7 @@
       </div>
       <div id="logout"><a href="/logout"><i>Logout</i></a></div>
       <div id="username">
-        <%= user.first_name %>
+        <%= user.name %>
       </div> <!-- username -->
       <div id="title">
         <a href="/dashboard">Homies</a>
@@ -37,7 +38,7 @@
 
     <div class="wrapper">
       <div class="sidebar">
-        <a href="/dashboard" class="tooltip" title="DASHBOARD"><img src="images/sidebar-icon_house.png" title=""></a>
+         <a href="/dashboard" class="tooltip" title="DASHBOARD"><img src="images/sidebar-icon_house.png" title=""></a>
         <a href="/chores" class="tooltip" title="CHORES"><img src="images/sidebar-icon_chores.png" title=""></a>
         <a href="/bills" class="tooltip" title="BILLS"><img src="images/sidebar-icon_bills.png" title=""></a>
         <a href="/calendar" class="tooltip" title="CALENDAR"><img src="images/sidebar-icon_cal.png" title=""></a>
@@ -45,47 +46,31 @@
         <a href="/chat" class="tooltip" title="CHAT"><img src="images/sidebar-icon_chat.png" title=""></a>
       </div> <!-- sidebar -->
 
+
       <div class="content-dash">
-        <img src="<%= user.picture %>" width="50px"><h1>Hello, <%= user.first_name %></h1>
-        <i><%= user.email %></i>
-        <!-- <% if (message.length > 0) { %>
-          <div class="alert alert-danger"><%= message %></div>
-        <% } %> -->
-        <table>
-          <tr>
-            <td><div class="dash-box" id="chores">
-              <div id="dash-heading">CHORES</div>
-              <br>
-              <div id="my-chores">
-                <i> There are currently no chores for you to do. Celebrate with some TV. </i>
-              </div> <!-- my-chores -->
-            </div></td>
-            <td><div class="dash-box" id="bills">
-              <div id="dash-heading">BILLS</div>
-              <h4>Bills I have to pay:</h4>
-              <div id="my-payments">
-              </div>
-              <h4>Bills I expect to receive:</h4>
-              <div id="pay-to-me">
-              </div>
-            </div></td>
-            <td><div class="dash-box" id="grocery">
-              <div id="dash-heading">GROCERIES</div>
-              <br>
-              <div id="grocery-not-bought">
-                <!-- <i> There are currently no groceries for you to buy. Go eat something. </i> -->
-              </div> <!-- grocery-not-bought -->
-            </div></td>
-          </tr>
-        </table>
+        <form action="/bill_add_new" method="post">
+          <input id="bill_name" name ="bill_name" type="text" placeholder="Bill Name"/><br>
+          <input id="description" name="description" type="text" placeholder="Bill Description"/><br>
+          <input id="amount" name="amount" type="text" placeholder="Amount"/><br>
+          Date: <input id="date" name="date" type="date" placeholder="MM/DD/YYYY"><br>
+          Paid By: <select id="user_name" name="user_name"> 
+            <% for(var i=0; i<members.length; i++) {%>
+             <option value="<%= members[i] %>"> <%= members[i] %> </option>
+          <% } %><br>
+          <select><br>
+          Payer: <select id="payer" name="payer">
+            <% for(var i=0; i<members.length; i++) {%>
+             <option value="<%= members[i] %>"> <%= members[i] %> </option>
+          <% } %>
+          </select><br>
+          <input id="partial_amount" name="partial_amount" type="hidden" placeholder="Partial Amount"/><br>
+          <input id="bill-formb"  type="submit" value="Add Bill"/>
+        </form>
 
-        
+        <div id="test" style="color:blue">.</div>
 
-        <!-- <form class="form" method="get" action="/auth/google">
-          <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
-        </form> -->
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
+        <br><br>
+      <a href="/bills">Back to Bill Management</a>
       </div> <!-- content-dash -->
     </div> <!-- wrapper -->
   </body>

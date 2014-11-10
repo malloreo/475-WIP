@@ -8,19 +8,59 @@ $(document).ready(function(){
 function updateDashboardGroceries(){
 	console.log("----  IN Get Groceries SCRIPT---- ")
 	$.ajax({
-			url: "getGrocerylist",
+			url: "getGroceryListNotBought",
 			type: "get",
 			data: {},
 			success: function(data) {
 				message = data
-				$('#grocery-item').html(message);
+				$('#grocery-not-bought').html(message);
+				updateDashboardChores()
 			}
 	});
+	
 	return false;
 }
 
 function updateDashboardBills(){
-
+	console.log("---- IN Get Bills SCRIPT---- ")
+	$.ajax({
+		url: "getBills",
+		type: "get",
+		data: {},
+		success: function(bills) {
+			if (bills.length == 0) {
+				message1 = "You currently don't owe any money."
+				$("#my-payments").html(message1);
+				message2 = "No one owes you any bill payments."
+				$("#pay-to-me").html(message2);
+			} else {
+				console.log(bills)
+				$.ajax({
+					url: "getPays",
+					type: "get",
+					data: {},
+					success: function(pays){
+						console.log(pays)
+						my_payments = pays["my_payments"]
+						pay_to_me = pays["pay_to_me"]
+						my_message = parseMyPayments(my_payments, bills)
+						ptm_message = parsePTMPayments(pay_to_me, bills)
+						if (my_message.length != "") {
+							$("#my-payments").html(my_message)
+						}else{
+							$("#my-payments").html("You currently don't owe any money.")
+						}
+						if (ptm_message.length != ""){
+							$("#pay-to-me").html(ptm_message)
+						} else{
+							$("#pay-to-me").html("No one owes you any bill payments.")
+						}
+					}
+				})
+			}
+		}
+	}); 
+	return false;
 }
 
 function updateDashboardChores(){
@@ -79,4 +119,34 @@ function parseAssignments( assigns , chores ){
 		})
 	})
 	return message
+}
+
+function parseMyPayments( pays, bills) {
+	message2 = ""
+	console.log(bills)
+	pays.forEach(function(p) {
+		bill_name = p.bill_name
+		bills.forEach(function(bill) {
+			if (bill.bill_name == bill_name) {
+				date = new Date(bill.date).toDateString()
+				message2 += "You owe " + bill.user_name + " $" + p.partial_amount + " for " + bill.bill_name + " bill <br>"
+			}
+		})
+	})
+	return message2
+}
+
+function parsePTMPayments( pays, bills) {
+	message2 = ""
+	console.log(bills)
+	pays.forEach(function(p) {
+		bill_name = p.bill_name
+		bills.forEach(function(bill) {
+			if (bill.bill_name == bill_name) {
+				date = new Date(bill.date).toDateString()
+				message2 += p.payer +" owes you $" + p.partial_amount + " for " + bill.bill_name + " bill <br>"
+			}
+		})
+	})
+	return message2
 }

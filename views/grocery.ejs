@@ -47,27 +47,19 @@
 
 
       <div class="content-dash">
-        <table>
-          <tr>
-            <td><div class="dash-box" id="grocery">
-              <div id="dash-heading">GROCERIES</div>
-              <br>
-              <div id="grocery-item">
-                <i> There are currently no groceries for you to buy. Go eat something. </i>
-              </div>
-            </div></td>
-            <td>Other things can go here </td>
-          </tr>
-        </table>
+        <h1> GROCERIES</h1>
+        <!-- <div id="grocery-item"> -->
+        <div id="all-groceries">
+          <h2> Active Groceries </h2>
+          <div id="grocery-not-bought"></div>
+          <br>
+          <h2> Not Active Groceries </h2>
+          <div id="grocery-bought"></div>
+          <br>
+        </div>
         <form class="form" id="getgrocery-form" method="post" action="/grocery_add">
           <button type="submit" class="btn btn-primary">Add Grocery</button>
         </form>
-         <input id="grocery-remove"  type="submit" value="Remove Grocery Item"/>
-        <!-- <form class="form" method="get" action="/auth/google">
-          <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
-        </form> -->
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
       </div> <!-- content-dash -->
     </div> <!-- wrapper -->
   </body>

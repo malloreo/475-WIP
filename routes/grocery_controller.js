@@ -1,6 +1,7 @@
 var Database = require("../models/mymongo.js"),
     this_user = require('../models/auth').this_user;
-var grocerylist            = require('../models/grocerylist');
+var grocerylist  = require('../models/grocerylist');
+
 exports.addGrocery = function(req, res){
     var newGrocery = {
         name: req.body.name,
@@ -21,6 +22,7 @@ exports.addGrocery = function(req, res){
         }
     );
 }
+
 exports.deleteGrocery = function(req, res){
 console.log("********");
 console.log(req.params.id);
@@ -37,6 +39,42 @@ grocerylist.findByIdAndUpdate({_id: req.params.id},
                  }
              });
 }
+
+exports.updateGroceryAsBought = function(req, res) {
+    console.log("************");
+    console.log(req.params.id);
+    console.log("*********");
+    grocerylist.findByIdAndUpdate({_id: req.params.id},
+        {
+            bought:"BOUGHT"
+        }, function(err, docs){
+            if (err) res.json(err);
+            else
+                { req.params.id
+                    console.log(docs);
+                    res.redirect('/grocery');
+                }
+        }
+        );
+}
+
+exports.reactivateGrocery = function(req, res) {
+    console.log("*******");
+    console.log(req.params.id);
+    console.log("**********");
+    grocerylist.findByIdAndUpdate({_id: req.params.id}, 
+        { 
+            bought: "NOT BOUGHT"
+        }, function(err, docs){
+            if (err) res.json(err);
+            else {
+                req.params.id
+                console.log(docs);
+                res.redirect('/grocery');
+            }
+        });
+}
+
 exports.getGroceries = function(req, res){
             var message ='<ul>';
             grocerylist.find({"obsolete":"1"}, function(err, grocery) {
@@ -50,7 +88,7 @@ exports.getGroceries = function(req, res){
                 console.log(grocery[0]); //returns undefined
                 for( var i =0;i< grocery.length;i++ ) {
                 var item = grocery[i];
-                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/deleteGrocery/' + item._id + '">Remove</a></li>';
+                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/updateGroceryAsBought/' + item._id + '">Deactivate' + '  <a href="/deleteGrocery/' + item._id + '">Remove</a></li>';
                 }
                 message = message +'</ul>';
                 res.send(message);
@@ -62,6 +100,58 @@ exports.getGroceries = function(req, res){
             }
         });    
     
+}
+
+exports.getGroceriesNotBought = function(req, res){
+            var message ='<ul>';
+            grocerylist.find({ $and:[ {"obsolete":"1"}, {"bought":"NOT BOUGHT"} ]}, function(err, grocery) {
+            // if there are any errors, return the error
+            if (err)
+                res.send(err);
+            else
+            {
+            // check to see if theres already a user with that email
+            if (grocery.length != 0) {
+                console.log(grocery[0]); //returns undefined
+                for( var i =0;i< grocery.length;i++ ) {
+                var item = grocery[i];
+                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/updateGroceryAsBought/' + item._id + '">Deactivate' + '  <a href="/deleteGrocery/' + item._id + '">Remove</a></li>';
+                }
+                message = message +'</ul>';
+                res.send(message);
+            } 
+            else
+            {
+                res.send('There are currently no groceries for you to buy. Go eat something.');
+            }
+            }
+        });    
+}
+
+exports.getGroceriesBought = function(req, res){
+            var message ='<ul>';
+            grocerylist.find({ $and:[ {"obsolete":"1"}, {"bought":"BOUGHT"} ]}, function(err, grocery) {
+            // if there are any errors, return the error
+            if (err)
+                res.send(err);
+            else
+            {
+            // check to see if theres already a user with that email
+            if (grocery.length != 0) {
+                console.log(grocery[0]); //returns undefined
+                for( var i =0;i< grocery.length;i++ ) {
+                var item = grocery[i];
+                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/reactivateGroceryList/' + item._id + '">Reactivate</a>' + '  <a href="/deleteGrocery/' + item._id + '">Remove</a></li>';
+                }
+                message = message +'</ul>';
+                res.send(message);
+            } 
+            else
+            {
+                res.send('There are currently no groceries for you to buy. Go eat something.');
+            }
+            }
+        });    
 }
 
 exports.getGroceriesbyid = function(req, res){
