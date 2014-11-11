@@ -23,15 +23,16 @@ exports.asgnExistingBill = function(req, res) {
 
 exports.getPays = function(req, res) {
 	console.log("GETTING ALL PAYMENTS..");
-	data = {
+	var data = {
 		pay_to_me : [],
         my_payments : [],
         my_past : [],
         their_payments : []
     };
-	my_name = this_user.first_name + " " + this_user.last_name
+	my_name = this_user.name
 	Database.find("housemates","pays","", function(model) {
 		model.forEach(function(pay) {
+			console.log("pay_controler line 37, pay..", pay);
 			if(pay.active==true){
 				if (pay.payer == my_name || pay.user_name == my_name) {
 					if(pay.payer == my_name){

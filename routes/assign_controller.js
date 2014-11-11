@@ -20,7 +20,7 @@ exports.asgnExisting = function(req, res){
 
 exports.getAssignments = function(req,res){
     console.log("GETTING ALL Assigments..");
-    data = {
+    var data = {
         my_assignments : [],
         their_assignments : []
     };

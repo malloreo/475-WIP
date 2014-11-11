@@ -6,7 +6,8 @@ exports.addGrocery = function(req, res){
     var newGrocery = {
         name: req.body.name,
         quantity: req.body.quantity,
-        obsolete:"1"
+        obsolete:"1",
+        bought: "NOT BOUGHT"
     };
     Database.insert(
         "housemates",

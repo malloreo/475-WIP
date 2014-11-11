@@ -62,6 +62,9 @@
             <% for(var i=0; i<members.length; i++) {%>
              <option value="<%= members[i] %>"> <%= members[i] %> </option>
           <% } %>
+          </select><br> <!-- commented out for now -->
+          Split Option: <select id="type" name="type">
+            <option value="equal_all"> Split equally with everyone </option>
           </select><br>
           <input id="partial_amount" name="partial_amount" type="hidden" placeholder="Partial Amount"/><br>
           <input id="bill-formb"  type="submit" value="Add Bill"/>
