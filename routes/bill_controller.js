@@ -36,7 +36,7 @@ exports.addNew = function(req, res) {
 						bill_name: req.body.bill_name,
 						user_name: req.body.user_name,
 						payer: some_payer,
-						partial_amount: amount / split,
+						partial_amount: Number(amount / split).toFixed(2),
 						obsolete:"1",
 						active: true
 					}).save();
