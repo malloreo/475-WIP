@@ -65,7 +65,7 @@ function parsePayments( pays, bills) {
 		bill_name = p.bill_name
 		console.log(p)
 		bills.forEach(function(bill) {
-			if (bill.bill_name == bill_name) {
+			if (bill.bill_name == bill_name){
 				date = new Date(bill.date).toDateString()
 				message += '<li>' + p.payer + ' owes ' + p.user_name + ' $' + p.partial_amount + ' for ' + bill.bill_name + ' bill </li>';
 			}

@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 
 var grocerySchema = new mongoose.Schema({
-	name   :String,
+	name      :String,
 	quantity  :String,
-	obsolete :String
+	bought	  :String,
+	obsolete  :String
 });
 
 module.exports = mongoose.model('grocery', grocerySchema);

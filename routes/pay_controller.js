@@ -24,10 +24,10 @@ exports.asgnExistingBill = function(req, res) {
 exports.getPays = function(req, res) {
 	console.log("GETTING ALL PAYMENTS..");
 	var data = {
-		pay_to_me : [],
-        my_payments : [],
-        my_past : [],
-        their_payments : []
+		pay_to_me : [], //what people owe me
+        my_payments : [], //what i am owed
+        my_past : [], //what i used to owe
+        their_payments : [] //what other people owe me or each other
     };
 	my_name = this_user.name
 	Database.find("housemates","pays","", function(model) {

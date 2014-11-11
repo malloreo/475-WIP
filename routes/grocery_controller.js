@@ -1,13 +1,13 @@
 var Database = require("../models/mymongo.js"),
     this_user = require('../models/auth').this_user;
-var grocerylist  = require('../models/grocerylist');
+var grocerylist            = require('../models/grocerylist');
 
 exports.addGrocery = function(req, res){
     var newGrocery = {
         name: req.body.name,
         quantity: req.body.quantity,
-        obsolete:"1",
-        bought: "NOT BOUGHT"
+        bought:"NOT BOUGHT",
+        obsolete:"1"
     };
     Database.insert(
         "housemates",
@@ -18,6 +18,7 @@ exports.addGrocery = function(req, res){
                 user:this_user,
                 name : newGrocery.name,
                 quantity: newGrocery.quantity,
+                bought: newGrocery.bought,
                 obsolete: newGrocery.obsolete
             });
         }
