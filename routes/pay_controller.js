@@ -34,7 +34,7 @@ exports.getPays = function(req, res) {
 		model.forEach(function(pay) {
 			console.log("pay_controler line 37, pay..", pay);
 			if(pay.active==true){
-				if (pay.payer == my_name || pay.user_name == my_name) {
+				if (pay.payer == my_name || pay.user_name == my_name){
 					if(pay.payer == my_name){
 						data["my_payments"].push(pay)
 					}

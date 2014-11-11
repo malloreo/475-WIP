@@ -17,6 +17,7 @@ exports.addNew = function(req, res) {
 	amount = req.body.amount
 	if (req.body.type = "equal_all"){
 		//splitting equally with everyone in house
+		//adds pay for split amount to everyone but the "user_name"
 		new Bill({
 			bill_name: req.body.bill_name,
 			description: req.body.description,
@@ -30,14 +31,16 @@ exports.addNew = function(req, res) {
 			for (var i=0; i<split; i++){
 				some_payer = this_user.members[i];
 				console.log("some payer..", some_payer);
-				new Pay({
-					bill_name: req.body.bill_name,
-					user_name: req.body.user_name,
-					payer: some_payer,
-					partial_amount: amount / split,
-					obsolete:"1",
-					active: true
-				}).save();
+				if (some_payer != req.body.user_name){
+					new Pay({
+						bill_name: req.body.bill_name,
+						user_name: req.body.user_name,
+						payer: some_payer,
+						partial_amount: amount / split,
+						obsolete:"1",
+						active: true
+					}).save();
+				}
 			}
 			
 			res.redirect('bills');
