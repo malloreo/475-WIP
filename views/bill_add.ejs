@@ -49,23 +49,18 @@
 
       <div class="content-dash">
         <form action="/bill_add_new" method="post">
-          <input id="bill_name" name ="bill_name" type="text" placeholder="Bill Name"/><br>
-          <input id="description" name="description" type="text" placeholder="Bill Description"/><br>
-          <input id="amount" name="amount" type="text" placeholder="Amount"/><br>
-          Date: <input id="date" name="date" type="date" placeholder="MM/DD/YYYY"><br>
+          Bill Name: <input id="bill_name" name ="bill_name" type="text" placeholder="Bill Name"/><br>
+          Total Amount of Bill: <input id="amount" name="amount" type="text" placeholder="Amount"/><br>
+          Date Paid: <input id="date" name="date" type="date" placeholder="MM/DD/YYYY"><br>
           Paid By: <select id="user_name" name="user_name"> 
             <% for(var i=0; i<members.length; i++) {%>
              <option value="<%= members[i] %>"> <%= members[i] %> </option>
           <% } %><br>
           </select><br>
-          <!-- Payer: <select id="payer" name="payer">
-            <% for(var i=0; i<members.length; i++) {%>
-             <option value="<%= members[i] %>"> <%= members[i] %> </option>
-          <% } %>
-          </select><br> commented out for now  -->
-          Split Option: <select id="type" name="type">
-            <option value="equal_all"> Split equally with everyone </option>
-          </select><br>
+          Charge To: <br>
+          <% for(var i=0; i<members.length; i++) {%>
+           <input type="checkbox" value="<%= members[i] %>" name="payer" class="payer_class" checked><%= members[i] %> <br>
+          <% } %><br>
           <input id="partial_amount" name="partial_amount" type="hidden" placeholder="Partial Amount"/><br>
           <input id="bill-formb"  type="submit" value="Add Bill"/>
         </form>

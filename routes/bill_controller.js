@@ -20,25 +20,25 @@ exports.addNew = function(req, res) {
 		//adds pay for split amount to everyone but the "user_name"
 		new Bill({
 			bill_name: req.body.bill_name,
-			description: req.body.description,
 			amount: amount,
 			date: req.body.date,
 			user_name: req.body.user_name,
 			obsolete:"1",
 			active:true
 		}).save(function(err,House){
-			split = this_user.members.length
+			split = req.body.payer.length
 			for (var i=0; i<split; i++){
-				some_payer = this_user.members[i];
-				console.log("some payer..", some_payer);
+				some_payer = req.body.payer[i];
 				if (some_payer != req.body.user_name){
+					//if person who paid is included on charge, don't make Pay for that person
 					new Pay({
 						bill_name: req.body.bill_name,
 						user_name: req.body.user_name,
 						payer: some_payer,
 						partial_amount: Number(amount / split).toFixed(2),
 						obsolete:"1",
-						active: true
+						complete: false,
+						check: false
 					}).save();
 				}
 			}
@@ -72,18 +72,18 @@ exports.addNew = function(req, res) {
 	
 };
 
-exports.completeBill = function(req, res) {
-	console.log("********");
-	console.log(req.params.id);
-	console.log("********");
-	Bill.findByIdAndUpdate(
-		{_id: req.params.id}, {active:false}, function(err, docs){
-		if(err)
-			res.json(err);
-		else{
-			req.params.id
-			console.log(docs);
-			res.redirect('bills');
-		}
-	});
-}
+// exports.completeBill = function(req, res) {
+// 	console.log("********");
+// 	console.log(req.params.id);
+// 	console.log("********");
+// 	Bill.findByIdAndUpdate(
+// 		{_id: req.params.id}, {active:false}, function(err, docs){
+// 		if(err)
+// 			res.json(err);
+// 		else{
+// 			req.params.id
+// 			console.log(docs);
+// 			res.redirect('bills');
+// 		}
+// 	});
+// }

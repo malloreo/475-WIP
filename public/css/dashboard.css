@@ -141,7 +141,7 @@ input:focus{ /* removes highlight when clicking on input */
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button{
+button, #complete-b{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
@@ -152,6 +152,12 @@ button{
 	padding-right: 8px;
 	font-size: 11px;
 	line-height: 14px;
+}
+
+#complete-b{
+	padding: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 /*------------------------------- CONTENT ------------------------------*/
@@ -200,6 +206,9 @@ h1{
 	width: 200px;
 	vertical-align: top;
 }
+
+/*--------------------- BILLS --------------------*/
+
 
 
 /*------------------------------- SETTINGS ------------------------------*/
