@@ -1,5 +1,4 @@
 $(function() {   // when document is ready
-console.log("ready");
 //check that username entered is email address
 $('#signup-form').submit(function(){
 	if (checkIfEmail($('#signup-form').val())){
@@ -24,6 +23,7 @@ $('#signup-form').submit(function(){
 // $("#s-chores").tooltip({placement: 'right', title: 'Chores'});
 	
 }); //document ready
+
 
 function checkIfEmail(word){
 	//code here

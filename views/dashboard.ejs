@@ -26,7 +26,7 @@
       <div id="settings">
         <a href="/settings"><img src="images/icon_settings.png" width="50px"></a>
       </div>
-      <div id="logout"><a href="/logout"><i>Logout</i></a></div>
+      <div id="logout"><a href="/logout">Logout</a></div>
       <div id="username">
         <%= user.first_name %>
       </div> <!-- username -->
@@ -54,14 +54,14 @@
         <table>
           <tr>
             <td><div class="dash-box" id="chores">
-              <div id="dash-heading">CHORES</div>
+              <div id="dash-heading"><a href="/chores">CHORES</a></div>
               <br>
               <div id="my-chores">
                 <i> There are currently no chores for you to do. Celebrate with some TV. </i>
               </div> <!-- my-chores -->
             </div></td>
             <td><div class="dash-box" id="bills">
-              <div id="dash-heading">BILLS</div>
+              <div id="dash-heading"><a href="/bills">BILLS</a></div>
               <h4>Bills I have to pay:</h4>
               <div id="my-payments">
               </div>
@@ -70,7 +70,7 @@
               </div>
             </div></td>
             <td><div class="dash-box" id="grocery">
-              <div id="dash-heading">GROCERIES</div>
+              <div id="dash-heading"><a href="/grocery">GROCERIES</a></div>
               <br>
               <div id="grocery-not-bought">
                 <!-- <i> There are currently no groceries for you to buy. Go eat something. </i> -->
