@@ -3,20 +3,96 @@ var Database = require('../models/mymongo.js'),
 	this_user = require('../models/auth').this_user
 
 exports.asgnExisting = function(req, res){
-    var newAssign = {
-        chore_name: req.body.chore_name,
-        user_name: req.body.assignee,
-        due_date: req.body.due_date
-    };
-    Database.insert(
-        "housemates",
-        "assigns",
-        newAssign,
-        function(model) {
-            res.redirect('chores');
+    console.log("asgnExisting");
+    console.log("req.body.chore_type: ", req.body.chore_type);
+    if (req.body.chore_type == "onetime"){
+        var newAssign = {
+            chore_name: req.body.chore_name,
+            user_name: req.body.assignee,
+            due_date: req.body.due_date
+        };
+        Database.insert(
+            "housemates",
+            "assigns",
+            newAssign,
+            function(model) {
+                res.redirect('chores');
+            }
+        );
+    } else if (req.body.chore_type == "repeating"){
+        start_date = new Date(req.body.due_date);
+        on_date = new Date(req.body.due_date);    
+        end_date = new Date(req.body.end_date);
+        dates = [start_date];
+        rate = Number(req.body.rate);
+
+        incrementDate(on_date, req.body.rate_frequency, rate);
+
+        while (on_date <= end_date){
+            console.log("ON DATE..", on_date);
+            push_date = new Date(on_date);
+            dates.push(push_date);
+            incrementDate(on_date, req.body.rate_frequency, rate);
         }
-    );
+        console.log("DATES ARRAY..", dates);
+
+        dates.forEach(function(date){
+            var newAssign = {
+                chore_name: req.body.chore_name,
+                user_name: req.body.assignee,
+                due_date: date
+            };
+            Database.insert(
+                "housemates",
+                "assigns",
+                newAssign,
+                function(model) {
+                    
+                }
+            );
+        });
+        
+
+
+        // while (on_date < end_date){
+        //     //add subsequent date
+        //     var newAssign = {
+        //         chore_name: req.body.chore_name,
+        //         user_name: req.body.assignee,
+        //         due_date: on_date
+        //     };
+        //     Database.insert(
+        //         "housemates",
+        //         "assigns",
+        //         newAssign,
+        //         function(model) {
+                    
+        //         }
+        //     );
+
+        //     incrementDate(on_date, req.body.rate_frequency, rate);
+        // }
+        res.redirect('chores');
+    } else { //rotating
+
+    }
 };
+
+function incrementDate(date, rate_frequency, rate){
+    if (rate_frequency == "daily"){
+        var x = date.getDate()+rate;
+        date.setDate(x);
+        console.log("DATE IS....", date);
+        
+    } else if (rate_frequency == "weekly"){
+
+    } else if (rate_frequency == "monthly"){
+
+    } else { //yearly 
+
+    }
+    return date;
+}
 
 exports.getAssignments = function(req,res){
     console.log("GETTING ALL Assigments..");

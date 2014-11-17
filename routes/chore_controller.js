@@ -30,7 +30,7 @@ exports.getAllChores = function(req, res){
 
 exports.addNew = function(req, res){
     console.log("REQ.BODY..", req.body);
-    if (req.body.type == "onetime"){
+    if (req.body.chore_type == "onetime"){
         new Chore({
             chore_name:req.body.chore_name,
             description:req.body.description,
@@ -53,7 +53,7 @@ exports.addNew = function(req, res){
                 res.redirect('chores');
                 // })
         }); 
-    } else if (req.body.type == "rotating"){ 
+    } else if (req.body.chore_type == "rotating"){ 
 
     } else { //repeating
 

@@ -125,6 +125,8 @@ input:focus{ /* removes highlight when clicking on input */
     top: -20px;
     left: 50px;
     color: white;
+    pointer-events: none;
+
 }
 
 /*.tooltip:hover:before {
@@ -141,7 +143,7 @@ input:focus{ /* removes highlight when clicking on input */
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button, #complete-b{
+button, #complete-b, input[type='submit']{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
