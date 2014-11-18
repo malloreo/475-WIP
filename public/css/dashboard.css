@@ -209,6 +209,14 @@ h1{
 	vertical-align: top;
 }
 
+#chore_add_form {
+	font-size: 14px;
+}
+
+#chore_add_form #rate{
+	width: 30px;
+}
+
 /*--------------------- BILLS --------------------*/
 
 

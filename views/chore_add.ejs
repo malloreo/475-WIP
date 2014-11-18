@@ -77,30 +77,29 @@
         <br><br>
         <!-- ADD ASSIGNMENT TO EXISTING CHORE -->
         ROTATING CHORES
-        <form action="/chore_add_existing" method="post">
-          <select id="select_chore_name" name="chore_name">
+        <form action="/chore_add_existing" method="post" id="chore_add_form">
+          Chore: <select id="select_chore_name" name="chore_name">
           </select><br>
-          <select id=""
-          <select id="assignee" name="assignee">
+          <span id="span_assignee">Assign to:</span> <select id="assignee" name="assignee">
             <% for(var i=0; i<members.length; i++) {%>
               <option value="<%= members[i] %>"> <%= members[i] %> </option>
             <% } %>
           </select><br>
-          <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
-          <select id="chore_type" name="chore_type">
+          On: <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
+          Occurring: <select id="chore_type" name="chore_type">
             <option value="onetime">One Time</option>
             <option value="repeating">Repeating</option>
             <option value="rotating">Rotating</option>
           </select></br>
-          <input type="radio" name="rate_frequency" value="daily" checked>Daily
+          Repeat: <input type="radio" name="rate_frequency" value="daily" checked>Daily
           <input type="radio" name="rate_frequency" value="weekly">Weekly
-          <input type="radio" name="rate_frequency" value="monthly">Monthly
+          <input type="radio" name="rate_frequency" value="monthly">Monthly<br>
           <!-- <select id="rate_frequency" name="rate_frequency">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
           </select></br> -->
-          <input id="rate" name="rate" type="number" value="1"></br>
+          Every <input id="rate" name="rate" type="number" value="1"> <span id="span_rate">day</span>(s)</br>
           Repeat until: <input id="end_date" name="end_date" type="date" placeholder="MM/DD/YYYY"><br>
           <input id="button1"  type="submit" value="Assign Chore"/>
         </form>

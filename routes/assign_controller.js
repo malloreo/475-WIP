@@ -29,12 +29,10 @@ exports.asgnExisting = function(req, res){
         incrementDate(on_date, req.body.rate_frequency, rate);
 
         while (on_date <= end_date){
-            console.log("ON DATE..", on_date);
             push_date = new Date(on_date);
             dates.push(push_date);
             incrementDate(on_date, req.body.rate_frequency, rate);
         }
-        console.log("DATES ARRAY..", dates);
 
         dates.forEach(function(date){
             var newAssign = {
@@ -54,7 +52,57 @@ exports.asgnExisting = function(req, res){
         
         res.redirect('chores');
     } else { //rotating
+        start_date = new Date(req.body.due_date);
+        on_date = new Date(req.body.due_date);    
+        end_date = new Date(req.body.end_date);
+        dates = [start_date];
+        rate = Number(req.body.rate);
+        members = this_user.members;
+
+        //find which index the assignee is
+        on_member = members.indexOf(req.body.assignee);
+        console.log("---starting on_member: ", on_member);
+        rotation = [on_member];
+
+        incrementDate(on_date, req.body.rate_frequency, rate);
+
+        while (on_date <= end_date){
+            push_date = new Date(on_date);
+            dates.push(push_date);
+            incrementDate(on_date, req.body.rate_frequency, rate);
+        }
+
+        for (var i=0; i<dates.length; i++){
+            if (on_member == this_user.members.length-1){
+                on_member = 0;
+            } else {
+                on_member += 1;
+            }
+            push_index = on_member;
+            rotation.push(push_index);
+        }
+        console.log("ROTATION: ", rotation);
+
+        dates.forEach(function(date){
+            console.log("...on member...", on_member);
+
+            var newAssign = {
+                chore_name: req.body.chore_name,
+                user_name: members[rotation[dates.indexOf(date)]],
+                due_date: date
+            };
+            Database.insert(
+                "housemates",
+                "assigns",
+                newAssign,
+                function(model) {
+                    
+                }
+            );
+        });
         
+        
+        res.redirect('chores');
     }
 };
 
