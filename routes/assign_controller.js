@@ -52,29 +52,9 @@ exports.asgnExisting = function(req, res){
             );
         });
         
-
-
-        // while (on_date < end_date){
-        //     //add subsequent date
-        //     var newAssign = {
-        //         chore_name: req.body.chore_name,
-        //         user_name: req.body.assignee,
-        //         due_date: on_date
-        //     };
-        //     Database.insert(
-        //         "housemates",
-        //         "assigns",
-        //         newAssign,
-        //         function(model) {
-                    
-        //         }
-        //     );
-
-        //     incrementDate(on_date, req.body.rate_frequency, rate);
-        // }
         res.redirect('chores');
     } else { //rotating
-
+        
     }
 };
 
@@ -85,12 +65,22 @@ function incrementDate(date, rate_frequency, rate){
         console.log("DATE IS....", date);
         
     } else if (rate_frequency == "weekly"){
+        xrate = rate*7
+        var x = date.getDate()+xrate;
+        date.setDate(x);
+        console.log("DATE IS....", date);
 
     } else if (rate_frequency == "monthly"){
+        var x = date.getMonth()+rate;
+        date.setMonth(x);
+        console.log("DATE IS....", date);
 
-    } else { //yearly 
+    } /*else { //yearly 
+        var x = date.getFullYear()+rate;
+        date.setFullYear(x);
+        console.log("DATE IS....", date);
 
-    }
+    }*/
     return date;
 }
 

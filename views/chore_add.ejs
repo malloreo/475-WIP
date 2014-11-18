@@ -92,12 +92,14 @@
             <option value="repeating">Repeating</option>
             <option value="rotating">Rotating</option>
           </select></br>
-          <select id="rate_frequency" name="rate_frequency">
+          <input type="radio" name="rate_frequency" value="daily" checked>Daily
+          <input type="radio" name="rate_frequency" value="weekly">Weekly
+          <input type="radio" name="rate_frequency" value="monthly">Monthly
+          <!-- <select id="rate_frequency" name="rate_frequency">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
-          </select></br>
+          </select></br> -->
           <input id="rate" name="rate" type="number" value="1"></br>
           Repeat until: <input id="end_date" name="end_date" type="date" placeholder="MM/DD/YYYY"><br>
           <input id="button1"  type="submit" value="Assign Chore"/>
