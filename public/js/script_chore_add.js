@@ -7,6 +7,36 @@ $(function() {   // when document is ready
 
 	// });
 
+	$('#chore_type').change(function(){
+		chore_type = $('#chore_type').val();
+		if (chore_type != 'onetime'){
+			$('#repeat_form').slideDown();
+		} else {
+			console.log("chore display", $('chore_type').css("display"));
+			if ($('chore_type').css("display") != "none"){
+				$('#repeat_form').slideUp();
+			}
+		}
+
+		if (chore_type == 'rotating'){
+			$('#span_assignee').html('Start with: ');
+		} else {
+			$('#span_assignee').html('Assign to: ');
+		}
+	})
+
+	$('input[name=rate_frequency]').change(function(){
+		console.log($('input[name=rate_frequency]:checked').val());
+		rf = $('input[name=rate_frequency]:checked').val();
+		if (rf == "daily"){
+			$('#span_rate').html('day');
+		} else if (rf == "weekly"){
+			$('#span_rate').html('week');
+		} else { //rf == "monthly"
+			$('#span_rate').html('month');
+		}
+	})
+
 }); //document ready
 
 function getChores(){ // function to populate drop down list with all users in db (in a house)

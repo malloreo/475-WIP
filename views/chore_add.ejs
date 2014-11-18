@@ -91,16 +91,18 @@
             <option value="repeating">Repeating</option>
             <option value="rotating">Rotating</option>
           </select></br>
-          Repeat: <input type="radio" name="rate_frequency" value="daily" checked>Daily
-          <input type="radio" name="rate_frequency" value="weekly">Weekly
-          <input type="radio" name="rate_frequency" value="monthly">Monthly<br>
-          <!-- <select id="rate_frequency" name="rate_frequency">
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select></br> -->
-          Every <input id="rate" name="rate" type="number" value="1"> <span id="span_rate">day</span>(s)</br>
-          Repeat until: <input id="end_date" name="end_date" type="date" placeholder="MM/DD/YYYY"><br>
+          <div id="repeat_form">
+            Repeat: <input type="radio" name="rate_frequency" id="rate_frequency" value="daily" checked>Daily
+            <input type="radio" name="rate_frequency" id="rate_frequency" value="weekly">Weekly
+            <input type="radio" name="rate_frequency" id="rate_frequency" value="monthly">Monthly<br>
+            <!-- <select id="rate_frequency" name="rate_frequency">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select></br> -->
+            Every <input id="rate" name="rate" type="number" value="1"> <span id="span_rate">day</span>(s)</br>
+            Repeat until: <input id="end_date" name="end_date" type="date" placeholder="MM/DD/YYYY"><br>
+          </div> <!-- repeat_form -->
           <input id="button1"  type="submit" value="Assign Chore"/>
         </form>
 
