@@ -184,6 +184,11 @@ app.get('/setupThisUser1', isLoggedIn, function(req, res){
     });
 });
 
+app.get('/getMembers', function(req, res){
+  console.log("this_user.members: ", this_user.members);
+  res.send(this_user.members);
+})
+
 // =====================================
 // DASHBOARD AND SETTINGS ==============
 // =====================================
@@ -228,7 +233,8 @@ app.get('/getChores', chore_controller.getAllChores);
 // show Chore page
 app.get('/chores', isLoggedIn, function(req, res){
   res.render('chore', {
-    user: this_user
+    user: this_user,
+    members: this_user.members
   });
 })
 

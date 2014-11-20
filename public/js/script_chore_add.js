@@ -1,5 +1,5 @@
 $(function() {   // when document is ready
-	getChores();
+	getChoresForDropdown();
 	// $("#add_chore_b").click(function(){
 	// 	console.log("clicked");
 	// 	// $("#add_chore_div").fadeIn();
@@ -37,10 +37,14 @@ $(function() {   // when document is ready
 		}
 	})
 
+	$('#button1').click(function(){
+		console.log("submitting chore add form");
+		addExistingChore();
+	});
+
 }); //document ready
 
-function getChores(){ // function to populate drop down list with all users in db (in a house)
-	console.log("running getChores in script_chore_add.js");
+function getChoresForDropdown(){ // function to populate drop down list with all users in db (in a house)
 	$.ajax({
 			url: "getChores",
 			type: "get",
@@ -57,42 +61,51 @@ function getChores(){ // function to populate drop down list with all users in d
 	return false;
 }
 
-// //gets housemates and displays them as values in a dropdown menu
-// function getHousematesAsDropdown(){
-// 	console.log("gethousematesasdropdown");
+// function getMembersForDropdown(){ // function to populate drop down list with all users in db
 // 	$.ajax({
-// 			url: "getHousemates",
-// 			type: "get",
-// 			data: {
-// 			},
-// 			success: function(data) {
-// 				$('#add_chore_d').html(data);
-// 			}
+// 		url: "getMembers",
+// 		type: "get",
+// 		data: {},
+// 		success: function(data) {
+// 			console.log("GETMEMBERS FOR DROPDOWN: ", data)
+// 			// message = "";
+// 			// data.forEach(function(chore){
+// 			// 	select = "<option value='"+chore.chore_name+"'>"+chore.chore_name+"</option>";
+// 			// 	message += select;
+// 			// })
+// 			// $('#select_chore_name').html(message);
+// 		}
 // 	});
 // 	return false;
 // }
 
 // the first function i made to fake the interaction
-// function addChore(){
-// 	console.log("----  IN ADD CHORE SCRIPT FXN ---- ")
+function addExistingChore(){
+	console.log("----  IN ADD CHORE SCRIPT FXN ---- ")
 
-// 	$.ajax({
-// 			url: "addChore",
-// 			type: "put",
-// 			data: {
-// 				chore_name: $("#chore_name").val(),
-// 				user: $("#chore_user").val(),
-// 				due_date: $("#chore_date").val()
-// 			},
-// 			success: function(data) {
-// 				date = $("#chore_date").val()
-// 				date = date.substring(5,date.length);
-// 				message = $("#chore_name").val() + " for " + $("#chore_user").val() + " to do by " + date + " has been added!"
-// 				$('#test').html(message);
-// 				$('#chore_name').val("");
-// 				$('#chore_user').val("");
-// 				$('#chore_date').val("");
-// 			}
-// 	});
-// 	return false;	
-// }
+	$.ajax({
+			url: "chore_add_existing",
+			type: "post",
+			data: {
+				chore_name: $("#select_chore_name").val(),
+				assignee: $("#assignee").val(),
+				due_date: $("#due_date").val(),
+				chore_type: $("#chore_type").val(),
+				rate_frequency: $("#rate_frequency").val(),
+				rate: $("#rate").val(),
+				end_date: $("#end_date").val()
+			},
+			success: function(data) {
+				// date = $("#chore_date").val()
+				// date = date.substring(5,date.length);
+				// message = $("#chore_name").val() + " for " + $("#chore_user").val() + " to do by " + date + " has been added!"
+				// $('#test').html(message);
+				// $('#chore_name').val("");
+				// $('#chore_user').val("");
+				// $('#chore_date').val("");
+				$('#chore_add_popup').fadeOut();
+
+			}
+	});
+	return false;	
+}

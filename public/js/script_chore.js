@@ -1,6 +1,72 @@
 $(function(){
 
 	getChores()
+	getChoresForDropdown();
+
+
+	//show chore popup
+	$('#chore_add_pg').click(function(){
+		$('#chore_add_bkgd').fadeIn();
+		$('#chore_add_popup').fadeIn();
+		$('#choices').fadeIn();
+		$('#chore_add_form').fadeOut();
+	})
+
+	//hide chore popup
+	$('#chore_add_x').click(function(){
+		$('#chore_add_bkgd').fadeOut();
+
+		//clear form fields
+	})
+	$('#chore_feedback_close').click(function(){
+		$('#chore_add_bkgd').fadeOut();
+		$('#chore_feedback_popup').fadeOut();
+		//clear form fields
+	})
+
+	//choose which type of chore form
+	$('#existing_chore').click(function(){
+		$('#choices').fadeOut();
+		// getChoresForDropdown();
+		// getMembersForDropdown();
+		$('#chore_add_form').fadeIn();
+	})
+
+	//////// CHORE ADD ////////
+	$('#chore_type').change(function(){
+		chore_type = $('#chore_type').val();
+		if (chore_type != 'onetime'){
+			$('#repeat_form').slideDown();
+		} else {
+			console.log("chore display", $('chore_type').css("display"));
+			if ($('chore_type').css("display") != "none"){
+				$('#repeat_form').slideUp();
+			}
+		}
+
+		if (chore_type == 'rotating'){
+			$('#span_assignee').html('Start with: ');
+		} else {
+			$('#span_assignee').html('Assign to: ');
+		}
+	})
+
+	$('input[name=rate_frequency]').change(function(){
+		console.log($('input[name=rate_frequency]:checked').val());
+		rf = $('input[name=rate_frequency]:checked').val();
+		if (rf == "daily"){
+			$('#span_rate').html('day');
+		} else if (rf == "weekly"){
+			$('#span_rate').html('week');
+		} else { //rf == "monthly"
+			$('#span_rate').html('month');
+		}
+	})
+
+	$('#button1').click(function(){
+		console.log("submitting chore add form");
+		addExistingChore();
+	});
 
 })
 
@@ -23,12 +89,12 @@ function getChores(){ // populate page with all chore information
 					type:"get",
 					data:{},
 					success: function(assigns){
-						console.log(assigns)
+						// console.log(assigns)
 						my_assignments = assigns["my_assignments"]
 						their_assignments = assigns["their_assignments"]
-						console.log("Parsing My ")
+						// console.log("Parsing My ")
 						my_message = parseAssignments(my_assignments, chores)
-						console.log("Parsing Their")
+						// console.log("Parsing Their")
 						their_message = parseAssignments(their_assignments, chores)
 						if (my_message.length != ""){
 							$("#my-chores").html(my_message)
@@ -53,7 +119,7 @@ function parseAssignments( assigns , chores ){
 	console.log(chores)
 	assigns.forEach(function(a){
 		chore_name = a.chore_name
-		console.log(a)
+		// console.log(a)
 		chores.forEach(function(chore){
 			if (chore.chore_name == chore_name ){
 				due_date = new Date(a.due_date);
@@ -64,4 +130,104 @@ function parseAssignments( assigns , chores ){
 		})
 	})
 	return message
+}
+
+function getChoresForDropdown(){ // function to populate drop down list with all users in db (in a house)
+	$.ajax({
+			url: "getChores",
+			type: "get",
+			data: {},
+			success: function(data) {
+				message = "";
+				data.forEach(function(chore){
+					select = "<option value='"+chore.chore_name+"'>"+chore.chore_name+"</option>";
+					message += select;
+				})
+				$('#select_chore_name').html(message);
+			}
+	});
+	return false;
+}
+
+// function getMembersForDropdown(){ // function to populate drop down list with all users in db
+// 	$.ajax({
+// 		url: "getMembers",
+// 		type: "get",
+// 		data: {},
+// 		success: function(data) {
+// 			console.log("GETMEMBERS FOR DROPDOWN: ", data)
+// 			// message = "";
+// 			// data.forEach(function(chore){
+// 			// 	select = "<option value='"+chore.chore_name+"'>"+chore.chore_name+"</option>";
+// 			// 	message += select;
+// 			// })
+// 			// $('#select_chore_name').html(message);
+// 		}
+// 	});
+// 	return false;
+// }
+
+// the first function i made to fake the interaction
+function addExistingChore(){
+	console.log("----  IN ADD CHORE SCRIPT FXN ---- ")
+	chore_name = $("#select_chore_name").val();
+	assignee = $("#assignee").val();
+	chore_type = $("#chore_type").val();
+	rate_freq = $("#rate_frequency").val();
+	rate = $("#rate").val();
+	due_date = $("#due_date").val();
+	end_date = $("#end_date").val();
+
+	$.ajax({
+			url: "chore_add_existing",
+			type: "post",
+			data: {
+				chore_name: chore_name,
+				assignee: assignee,
+				due_date: due_date,
+				chore_type: chore_type,
+				rate_frequency: rate_freq,
+				rate: rate,
+				end_date: end_date
+			},
+			success: function(data) {
+				// date = $("#chore_date").val()
+				// date = date.substring(5,date.length);
+				// message = $("#chore_name").val() + " for " + $("#chore_user").val() + " to do by " + date + " has been added!"
+				// $('#test').html(message);
+				// $('#chore_name').val("");
+				// $('#chore_user').val("");
+				// $('#chore_date').val("");
+				getChores();
+				$('#chore_add_popup').fadeOut();
+
+
+				due = new Date(due_date);
+				due.setDate(due.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
+				due = due.toDateString();
+
+				end = new Date(end_date);
+				end.setDate(end.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
+				end = end.toDateString();
+				if (chore_type == "onetime"){
+					message = chore_name + " has been assigned to " + assignee + " for " + due + "."
+				} else if (chore_type == "repeating"){
+					message = chore_name + " has been assigned to " + assignee + "to repeat every " + rate
+
+					if (rate_freq == "daily"){
+						message += "day(s) "
+					} else if (rate_freq == "weekly"){
+						message += "week(s) "
+					} else { //monthly
+						message += "month(s) "
+					}
+
+					message += "from " + due + " until " + end + "."
+				}
+				$('#chore_feedback_popup span').html(message);
+				$('#chore_feedback_popup').fadeIn();
+
+			}
+	});
+	return false;	
 }
