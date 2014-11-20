@@ -164,10 +164,17 @@ button, #complete-b, input[type='submit']{
 
 /*------------------------------- CONTENT ------------------------------*/
 
-h1{
+.name_title{
 	display: inline-block;
 	padding-left: 15px;
 	padding-right: 15px;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+h1{
+	display: inline-block;
+	padding: 0px;
 }
 
 .content-dash{
@@ -176,6 +183,7 @@ h1{
 	margin: 40px;
 	position: absolute;
 	left: 40px;
+	padding-left: 10px;
 	/*width: 100%;*/
 }
 
@@ -216,7 +224,7 @@ h1{
 	top: 0;
 	left: 0;
 	z-index: 1000;
-	/*display: none;*/
+	display: none;
 }
 
 .popup button{
@@ -240,17 +248,15 @@ h1{
 }
 
 #chore_add_pg{ /* button */
-
 }
 
 #chore_add_popup{
 	box-sizing: border-box;
 	padding: 50px;
-	display: none;
 }
 
 #chore_feedback_popup{
-	/*display: none;*/
+	display: none;
 	box-sizing: border-box;
 	padding: 50px;
 	text-align: center;
