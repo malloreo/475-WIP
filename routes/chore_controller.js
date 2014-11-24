@@ -29,35 +29,138 @@ exports.getAllChores = function(req, res){
 }
 
 exports.addNew = function(req, res){
-    console.log("REQ.BODY..", req.body);
-    if (req.body.chore_type == "onetime"){
-        new Chore({
-            chore_name:req.body.chore_name,
-            description:req.body.description,
-            active:true
-        }).save(function(err,House){
-            // name = req.body.assignee.split(" ");
-            // first_name = name[0];
-            // last_name = name[1];
-            // User.where({
-            //     'local.firstname':first_name,
-            //     'local.lastname':last_name
-            // }).findOne( function(err,obj) {
-                new Assign({
+        console.log("adding chore");
+    new Chore({
+        chore_name:req.body.chore_name,
+        active:true
+    }).save(function(err,House){
+        if (req.body.chore_type == "onetime"){
+            console.log("let me tell you one time");
+            var newAssign = {
+                chore_name: req.body.chore_name,
+                user_name: req.body.assignee,
+                due_date: req.body.due_date
+            };
+            Database.insert(
+                "housemates",
+                "assigns",
+                newAssign,
+                function(model) {
+                    res.redirect('chores');
+                }
+            );
+        } else if (req.body.chore_type == "repeating"){
+            console.log("repeating");
+            start_date = new Date(req.body.due_date);
+            on_date = new Date(req.body.due_date);    
+            end_date = new Date(req.body.end_date);
+            dates = [start_date];
+            rate = Number(req.body.rate);
+
+            incrementDate(on_date, req.body.rate_frequency, rate);
+
+            while (on_date <= end_date){
+                push_date = new Date(on_date);
+                dates.push(push_date);
+                incrementDate(on_date, req.body.rate_frequency, rate);
+            }
+
+            dates.forEach(function(date){
+                var newAssign = {
                     chore_name: req.body.chore_name,
                     user_name: req.body.assignee,
-                    due_date: req.body.due_date
-                    // chore_id:Chore._id,
-                    // user_id:obj.id
-                }).save();
-                res.redirect('chores');
-                // })
-        }); 
-    } else if (req.body.chore_type == "rotating"){ 
+                    due_date: date
+                };
+                Database.insert(
+                    "housemates",
+                    "assigns",
+                    newAssign,
+                    function(model) {
+                        
+                    }
+                );
+            });
+            
+            res.redirect('chores');
+        } else { //rotating
+            console.log("rotating");
+            start_date = new Date(req.body.due_date);
+            on_date = new Date(req.body.due_date);    
+            end_date = new Date(req.body.end_date);
+            dates = [start_date];
+            rate = Number(req.body.rate);
+            members = this_user.members;
 
-    } else { //repeating
+            //find which index the assignee is
+            on_member = members.indexOf(req.body.assignee);
+            console.log("---starting on_member: ", on_member);
+            rotation = [on_member];
 
-    }
-    
+            incrementDate(on_date, req.body.rate_frequency, rate);
+
+            while (on_date <= end_date){
+                push_date = new Date(on_date);
+                dates.push(push_date);
+                incrementDate(on_date, req.body.rate_frequency, rate);
+            }
+
+            for (var i=0; i<dates.length; i++){
+                if (on_member == this_user.members.length-1){
+                    on_member = 0;
+                } else {
+                    on_member += 1;
+                }
+                push_index = on_member;
+                rotation.push(push_index);
+            }
+            console.log("ROTATION: ", rotation);
+
+            dates.forEach(function(date){
+                console.log("...on member...", on_member);
+
+                var newAssign = {
+                    chore_name: req.body.chore_name,
+                    user_name: members[rotation[dates.indexOf(date)]],
+                    due_date: date
+                };
+                Database.insert(
+                    "housemates",
+                    "assigns",
+                    newAssign,
+                    function(model) {
+                        
+                    }
+                );
+            });
+            
+            res.redirect('chores');
+        }
+    }); 
 };
+
+function incrementDate(date, rate_frequency, rate){
+    if (rate_frequency == "daily"){
+        var x = date.getDate()+rate;
+        date.setDate(x);
+        console.log("DATE IS....", date);
+        
+    } else if (rate_frequency == "weekly"){
+        xrate = rate*7
+        var x = date.getDate()+xrate;
+        date.setDate(x);
+        console.log("DATE IS....", date);
+
+    } else if (rate_frequency == "monthly"){
+        var x = date.getMonth()+rate;
+        date.setMonth(x);
+        console.log("DATE IS....", date);
+
+    } /*else { //yearly 
+        var x = date.getFullYear()+rate;
+        date.setFullYear(x);
+        console.log("DATE IS....", date);
+
+    }*/
+    return date;
+}
 

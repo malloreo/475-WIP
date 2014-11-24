@@ -46,7 +46,7 @@
         <a href="/chat" class="tooltip" title="CHAT"><img src="images/sidebar-icon_chat.png" title=""></a>
       </div> <!-- sidebar -->
 
-      <div class="content-dash">
+      <div class="content-dash content-chores">
         <h1>Chore Management</h1>
         <!-- <form class="form" method="post" action="/chore_add_pg">
           <button type="submit" class="btn btn-primary">Add chore</button>
@@ -54,7 +54,7 @@
         <br>
         <button id="chore_add_pg" class="btn btn-primary">Assign a Chore</button>
 
-        <h2>All Chores</h2>
+        <!-- <h2>All Chores</h2>
         <div id="all-chores">
           <h3>My Chores</h3>
           <div id="my-chores"></div>
@@ -62,6 +62,48 @@
           <h3>Their Chores</h3>
           <div id="their-chores">
           </div>
+        </div> -->
+
+        <div class="tabs">
+            <ul class="tab-links">
+                <li class="active"><a href="#tab1">This Week</a></li>
+                <li><a href="#tab2">Next Week</a></li>
+                <!-- <li><a href="#tab3">My Past Payments</a></li>
+                <li><a href="#tab4">Other Payments</a></li> -->
+            </ul>
+
+            <div class="tab-content">
+              <div id = "tab1" class="tab">
+                <ul class="tabbed-links">
+                    <li class="active"><a href="#tabbed1">You</a></li>
+                    <li><a href="#tabbed2">Them</a></li>
+                    <!-- <li><a href="#tab3">My Past Payments</a></li>
+                    <li><a href="#tab4">Other Payments</a></li> -->
+                </ul>
+                <div class="tabbed-content">
+                  <div id="tabbed1" class="tab">
+                    <div id="bill-heading">Your Chores this week</div>
+                    <div id="my-chores">aefawef</div>
+                  </div>
+                  <div id="tabbed2" class="tab">
+                    <div id="bill-heading">Their Chores this week</div>
+                    <div id="their-chores">aefawef</div>
+                  </div>
+                </div>
+              </div>
+              <div id = "tab2" class="tab">
+                <div id="bill-heading">Your Chores next week</div>
+                <div id="pay-to-me">awefawef</div>
+              </div>
+              <div id="tab3" class="tab">
+                <div id="bill-heading">My Past Payments</div>
+                <div id="my-past-payments">awefawef</div>
+              </div>
+              <div id="tab4" class="tab">
+                <div id="bill-heading">Other Payments</div>
+                <div id="their-payments">awefae</div>
+              </div>
+            </div>
         </div>
 
 
@@ -69,17 +111,27 @@
       <div class="popup_bkgd" id="chore_add_bkgd">
           <div class="popup" id="chore_add_popup">
             <!-- SELECT FORM TYPE -->
-            <div id="choices">
+            <!-- <div id="choices">
               <button id="new_chore" class="btn btn-primary">Add New Chore</button>
               <button id="existing_chore" class="btn btn-primary">Reassign Existing Chore</button>
-            </div>
+            </div> -->
 
             <!-- ADD ASSIGNMENT TO EXISTING CHORE -->
+            <div class="form_title">Assign a Chore</div>
+
             <!-- <form action="/chore_add_existing" method="post" id="chore_add_form"> -->
             <div id="chore_add_form">
-              REASSIGN EXISTING CHORE<br>
-              Chore: <select id="select_chore_name" name="chore_name">
+              <select id="new_or_old" name="new_or_old">
+                <option value="new">Create New Chore</option>
+                <option value="old">Assign Existing Chore</option>
               </select><br>
+              <div id="new_chore_input">
+                Name Chore: <input id="new_chore_name" name="chore_name" type="text" placeholder="Sweeping">
+              </div>
+              <div id="old_chore">
+                Select Chore: <select id="select_chore_name" name="chore_name">
+                </select><br>
+              </div>
               <span id="span_assignee">Assign to:</span> <select id="assignee" name="assignee">
               <% for(var i=0; i<members.length; i++) {%>
               <option value="<%= members[i] %>"> <%= members[i] %> </option>
@@ -87,9 +139,9 @@
               </select><br>
               On: <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
               Occurring: <select id="chore_type" name="chore_type">
-              <option value="onetime">One Time</option>
-              <option value="repeating">Repeating</option>
-              <option value="rotating">Rotating</option>
+                <option value="onetime">One Time</option>
+                <option value="repeating">Repeating</option>
+                <option value="rotating">Rotating</option>
               </select></br>
               <div id="repeat_form">
               Repeat: <input type="radio" name="rate_frequency" id="rate_frequency" value="daily" checked>Daily
@@ -98,6 +150,7 @@
               Every <input id="rate" name="rate" type="number" value="1"> <span id="span_rate">day</span>(s)</br>
               Repeat until: <input id="end_date" name="end_date" type="date" placeholder="MM/DD/YYYY"><br>
               </div> <!-- repeat_form -->
+              <br>
               <input id="button1" type="submit" value="Assign Chore"/>
             </div>
             <!-- </form> -->

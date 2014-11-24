@@ -21,12 +21,16 @@ input:focus{ /* removes highlight when clicking on input */
 	outline: none;
 }
 
+button:focus{
+	outline:none;
+}
+
 /*------------------------------- MENU ------------------------------*/
 
 .menu {
 	font-size: 20px;
 	color: white;
-	background: #33828f;
+	background: #038693;
 	height: 50px;
 	width: 100%;
 	display: block;
@@ -120,7 +124,7 @@ input:focus{ /* removes highlight when clicking on input */
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(0,0,0,0.85);
     top: -20px;
     left: 50px;
@@ -187,6 +191,10 @@ h1{
 	/*width: 100%;*/
 }
 
+.content-chores{
+	width: 85%;
+}
+
 .dash-box{
 	width: 300px;
 	height: 350px;
@@ -195,6 +203,7 @@ h1{
 	margin: 10px;
 	margin-left: 0px;
 	padding: 15px;
+	border-radius: 5px;
 }
 
 #dash-heading{
@@ -232,6 +241,13 @@ h1{
 	color: white;
 }
 
+.form_title{
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+}
+
 /*--------------------- CHORES --------------------*/
 
 #chores-tbl table{
@@ -260,12 +276,12 @@ h1{
 	box-sizing: border-box;
 	padding: 50px;
 	text-align: center;
-	height: 200px;
+	height: 300px;
 }
 
-#new_chore, #existing_chore{
-	font-size: 13px;
-	padding: 7px;
+#button1{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #chore_add_x{
@@ -276,8 +292,16 @@ h1{
 	top: 15px;
 }
 
-#chore_add_form, #chore_new_form {
+#chore_add_form {
 	font-size: 14px;
+	/*display: none;*/
+}
+
+#chore_add_form input, #chore_add_form select{
+	margin-bottom: 5px;
+}
+
+#chore_add_form #old_chore{
 	display: none;
 }
 
@@ -291,7 +315,33 @@ h1{
 
 /*--------------------- BILLS --------------------*/
 
+.content-bill{
+	display: block;
+	float: left;
+	margin: 40px;
+	position: absolute;
+	left: 40px;
+	/*width: 100%;*/
+}
 
+.bill-box{
+	width: 540px;
+	height: 350px;
+	/*background: #efe9a5;*/
+	background: #f2daab;
+	margin: 10px;
+	margin-left: 0px;
+	padding: 15px;
+}
+
+#bill-heading{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+td{
+	padding: 7px;
+}
 
 /*------------------------------- SETTINGS ------------------------------*/
 #settings{
@@ -330,4 +380,90 @@ h1{
 #settings-prof{
 	width: 40px;
 	padding-right: 10px;
+}
+
+/*----- Tabs -----*/
+.tabs {
+    width:100%;
+    display:inline-block;
+}
+ 
+/*----- Tab Links -----*/
+/* Clearfix */
+.tab-links:after, .tabbed-links:after {
+    display:inline-block;
+    clear:both;
+    content:'';
+}
+
+.tab-links li, .tabbed-links li {
+    /*margin:0px 5px;*/
+    float:left;
+    list-style:none;
+}
+
+.tab-links a, .tabbed-links a {
+    padding:9px 15px;
+    display:inline-block;
+    border-radius:3px 3px 0px 0px;
+    background:#7FB5DA;
+    font-size:16px;
+    font-weight:600;
+    /*color:#4c4c4c;*/
+    transition:all linear 0.15s;
+}
+
+.tabbed-links a{
+	background: none;
+	font-size: 13px;
+	font-weight: normal;
+	border-radius: 15px;
+	padding: 4px 8px;
+	margin-right: 5px;
+}
+
+.tab-links a:hover, .tabbed-links a:hover {
+    background:#a7cce5;
+    text-decoration:none;
+}
+
+li.active a, li.active a:hover {
+    background: #f2daab;
+    /*color:#4c4c4c;*/
+}
+
+.tabbed-links li.active a, .tabbed-links li.active a:hover{
+	background: #c1a880;
+	
+}
+
+/*----- Content of Tabs -----*/
+.tab-content{
+    padding:15px;
+    border-top: 1px solid gray;
+    border-radius:3px;
+    /*box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
+    /*background: #f2daab;*/
+    min-height: 100px;
+    width: 100%;
+}
+
+.tabbed-content{
+	padding: 15px;
+}
+
+.tab {
+    display:none;
+}
+
+.tab.active {
+    display:block;
+}
+
+#tab1{
+	display: block;
+}
+
+#tabbed1{
+	display: block;
 }

@@ -1,6 +1,6 @@
 body {
 	font-family: 'Open Sans', sans-serif;
-	background: #33828f;
+	background: #0292A5; /*#33828f;*/
 	margin: 0px;
 	height: 100%;
 	width: 100%;
@@ -26,7 +26,7 @@ input:focus{ /* removes highlight when clicking on input */
 }
 
 #login-box{
-	background: #096f7a;
+	background: #038693;/*#096f7a;*/
 	width: 300px;
 	height: 250px;
     border-radius: 25px;
@@ -46,7 +46,7 @@ input:focus{ /* removes highlight when clicking on input */
 	width: 200px;
 	height: 30px;
 	font-size: 15px;
-	background: #044e56;
+	background: #077887;/*#044e56;*/
 	border-radius: 10px;
 	color: white;
 }
@@ -55,7 +55,7 @@ input:focus{ /* removes highlight when clicking on input */
 	margin-top: 10px;
 	margin-bottom: 10px;
 	border: none;
-	background: #33828f;
+	background: #047284;/*#33828f;*/
 	border-radius: 10px;
 	width: 50px;
 	height: 30px;
