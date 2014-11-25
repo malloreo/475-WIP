@@ -191,7 +191,7 @@ h1{
 	/*width: 100%;*/
 }
 
-.content-chores{
+.content-chores, .content-bills{
 	width: 85%;
 }
 
@@ -314,15 +314,6 @@ h1{
 }
 
 /*--------------------- BILLS --------------------*/
-
-.content-bill{
-	display: block;
-	float: left;
-	margin: 40px;
-	position: absolute;
-	left: 40px;
-	/*width: 100%;*/
-}
 
 .bill-box{
 	width: 540px;
