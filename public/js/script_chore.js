@@ -120,10 +120,10 @@ function getChores(){ // populate page with all chore information
 						their_message = parseAssignments(their_assignments, chores)
 						if (my_message.length != ""){
 							$("#my-chores").html(my_message)
-						} else{ $("#my-chores").html("You don't have any chores assigned to you.")}
+						} else{ /*$("#my-chores").html("<i>You don't have any chores assigned to you.</i>")*/}
 						if (their_message.length != ""){
 							$("#their-chores").html(their_message)
-						} else{ $("#their-chores").html("No one else has any chores assigned to them.")}
+						} else{ $("#their-chores").html("<i>No one else has any chores assigned to them.</i>")}
 					}
 				})
 				// data.forEach(function(chore){

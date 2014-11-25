@@ -80,7 +80,8 @@ button:focus{
 .sidebar{
 	display: block;
 	/*background: #422a42;*/
-	background: #452145;
+	/*background: #452145;*/
+	background: #562856;
 	width: 50px;
 	height: 800px;
 	float: left;
@@ -325,11 +326,6 @@ h1{
 	padding: 15px;
 }
 
-#bill-heading{
-	font-size: 25px;
-	font-weight: bold;
-}
-
 td{
 	padding: 7px;
 }
@@ -391,6 +387,11 @@ td{
     width:100%;
     display:inline-block;
 }
+
+#tab-heading{
+	font-size: 25px;
+	font-weight: bold;
+}
  
 /*----- Tab Links -----*/
 /* Clearfix */
@@ -401,7 +402,7 @@ td{
 }
 
 .tab-links li, .tabbed-links li {
-    /*margin:0px 5px;*/
+    margin:0px;
     float:left;
     list-style:none;
 }
@@ -409,47 +410,57 @@ td{
 .tab-links a, .tabbed-links a {
     padding:9px 15px;
     display:inline-block;
+    border: 1px solid #f2d9aa;
+    border-bottom-style: none;
     border-radius:3px 3px 0px 0px;
-    background:#7FB5DA;
-    font-size:16px;
-    font-weight:600;
-    /*color:#4c4c4c;*/
-    transition:all linear 0.15s;
+    font-size:13px;
+    transition:all linear 0.15s; 
+    text-transform: uppercase;   
 }
 
 .tabbed-links a{
-	background: none;
+	/*background: none;*/
 	font-size: 13px;
 	font-weight: normal;
 	border-radius: 15px;
 	padding: 4px 8px;
 	margin-right: 5px;
+    border: 1px solid #f2d9aa;
+    text-transform: none;
 }
 
 .tab-links a:hover, .tabbed-links a:hover {
-    background:#a7cce5;
+    background:#f8e4c6;
     text-decoration:none;
 }
 
 li.active a, li.active a:hover {
     background: #f2daab;
+    font-weight: bold;
     /*color:#4c4c4c;*/
 }
 
 .tabbed-links li.active a, .tabbed-links li.active a:hover{
-	background: #c1a880;
+    background: #f2daab;
+
 	
 }
 
 /*----- Content of Tabs -----*/
 .tab-content{
-    padding:15px;
+    padding: 15px;
     border-top: 1px solid gray;
     border-radius:3px;
     /*box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
     /*background: #f2daab;*/
     min-height: 100px;
     width: 100%;
+}
+
+.content-chores .tab-content{
+    padding: 0px 0px 15px 0px;
+    text-align: left;
+
 }
 
 .tabbed-content{
@@ -469,5 +480,9 @@ li.active a, li.active a:hover {
 }
 
 #tabbed1{
+	display: block;
+}
+
+#tabbed3{
 	display: block;
 }

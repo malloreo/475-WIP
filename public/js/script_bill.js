@@ -48,31 +48,31 @@ function getBills() {
 
 						if (pay_me_message != "") {
 							$("#pay-to-me").html(pay_me_message);
-							// console.log("1");
+							console.log("1");
 						} else{ 
 							$("#pay-to-me").html("You don't have any payments.")
-							// console.log("2");
+							console.log("2");
 						}
 						if (my_past_message != "") {
 							$("#my-past-payments").html(my_past_message)
-							// console.log("3");
+							console.log("3");
 						} else{ 
 							$("#my-past-payments").html("You haven't made any payments.")
-							// console.log("4");
+							console.log("4");
 						}
 						if (my_message != "") {
 							$("#my-payments").html(my_message)
-							// console.log("5");
+							console.log("5");
 						} else{ 
 							$("#my-payments").html("You don't have any bills assigned to you.")
-							// console.log("6");
+							console.log("6");
 						}
 						if (their_message != ""){
 							$("#their-payments").html(their_message)
-							// console.log("7");
+							console.log("7");
 						} else{
 							$("#their-payments").html("No on else has to pay any bills.")
-							// console.log("8");
+							console.log("8");
 						}
 					} 
 				})
