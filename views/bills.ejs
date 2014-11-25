@@ -9,6 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/bill.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +47,7 @@
       </div> <!-- sidebar -->
 
 
-      <div class="content-dash">
+      <div class="content-bill">
         <h1>Bill Management</h1>
         <form class="form" method="post" action="/bill_add_pg">
           <button type="submit" class="btn btn-primary"> Add Bill</button>
@@ -54,17 +55,68 @@
 
         <h2>Current Balances</h2> 
         <div id="all-bills">
-          <h3>My Current Payments</h3>
-          <div id="my-payments"></div>
-          <br>
-          <h3>My Past Payments</h3>
-          <div id="my-past-payments"></div>
-          <br>
-          <h3>Pay to Me</h3>
-          <div id="pay-to-me"></div>
+        <div id="my-balance"></div>
+
+        <div class="tabs">
+            <ul class="tab-links">
+                <li class="active"><a href="#tab1">What I Owe</a></li>
+                <li><a href="#tab2">Owed to Me</a></li>
+                <li><a href="#tab3">My Past Payments</a></li>
+                <li><a href="#tab4">Other's Payments</a></li>
+                <li><a href="#tab5">All Balances</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div id = "tab1" class="tab">
+                <div id="bill-heading">My Unpaid Payments</div>
+                <div id="my-payments"></div>
+              </div>
+              <div id = "tab2" class="tab">
+                <div id="bill-heading">Unpaid Payments to Me</div>
+                <div id="pay-to-me"></div>
+              </div>
+              <div id="tab3" class="tab">
+                <div id="bill-heading">My Past Payments</div>
+                <div id="my-past-payments"></div>
+              </div>
+              <div id="tab4" class="tab">
+                <div id="bill-heading">Other Payments</div>
+                <div id="their-payments"></div>
+              </div>
+              <div id="tab5" class="tab">
+                <div id="bill-heading">Total</div>
+                <div id="total-balance"></div>
+              </div>
+            </div>
+        </div>
+
+<!--           <table>
+            <tr>
+              <td>
+                <div id = "tab1" class="tab">
+                  <div id="bill-heading">My Current Payments</div>
+                  <div id="my-payments"></div>
+                </div>
+              </td>
+              <td>
+                <div id = "tab2" class="tab">
+                  <div id="bill-heading">Pay to Me</div>
+                  <div id="pay-to-me"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="bill-box">
+                  <div id="bill-heading">My Past Payments</div>
+                  <div id="my-past-payments"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
           <br>
           <h3>Their Payments</h3>
-          <div id="their-payments"></div>
+          <div id="their-payments"></div> -->
         </div>
 
         <br><br>

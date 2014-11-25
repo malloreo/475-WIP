@@ -343,6 +343,19 @@ td{
 	padding: 7px;
 }
 
+#totalsTbl td, #totalsTbl tr{
+	padding: 0px 30px 0px 0px;
+}
+
+#total_num{
+	font-size: 30px;
+	padding-bottom: 0px;
+}
+
+#total_person{
+	padding: 0px;
+}
+
 /*------------------------------- SETTINGS ------------------------------*/
 #settings{
 }
