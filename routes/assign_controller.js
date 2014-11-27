@@ -1,6 +1,8 @@
 var Database = require('../models/mymongo.js'),
 	Assign = require('../models/assign.js'),
-	this_user = require('../models/auth').this_user
+	this_user = require('../models/auth').this_user,
+    ObjectId = require('mongodb').ObjectID;
+
 
 exports.asgnExisting = function(req, res){
     console.log("asgnExisting");
@@ -9,7 +11,8 @@ exports.asgnExisting = function(req, res){
         var newAssign = {
             chore_name: req.body.chore_name,
             user_name: req.body.assignee,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            completed: false
         };
         Database.insert(
             "housemates",
@@ -38,7 +41,8 @@ exports.asgnExisting = function(req, res){
             var newAssign = {
                 chore_name: req.body.chore_name,
                 user_name: req.body.assignee,
-                due_date: date
+                due_date: date,
+                completed: false
             };
             Database.insert(
                 "housemates",
@@ -89,7 +93,8 @@ exports.asgnExisting = function(req, res){
             var newAssign = {
                 chore_name: req.body.chore_name,
                 user_name: members[rotation[dates.indexOf(date)]],
-                due_date: date
+                due_date: date,
+                completed: false
             };
             Database.insert(
                 "housemates",
@@ -151,3 +156,35 @@ exports.getAssignments = function(req,res){
         res.send(data)
     })
 }
+
+exports.completeChore = function(req, res){
+    console.log("ID IS: ", req.params.id);
+    id = req.params.id;
+    console.log("ID IS OF TYPE: ", typeof(id))
+    // Assign.findByIdAndUpdate(id, { completed: true }, function(err, docs){
+    //     if(err){
+    //         console.log("ERROR COMPLETING CHORE");
+    //         res.json(err);
+    //     }else{
+    //         // req.params.id
+    //         console.log("docs: ",docs);
+    //         res.redirect('chores');
+    //     }
+    // })
+
+    Assign.findById(id, function (err, doc) {
+      if (err) {
+        console.log("id is: ", id);
+        console.log("typeof(id) is: ", typeof(id));
+        return console.log("err:", err);
+      } else {
+        console.log("id is: ", id);
+        console.log("typeof(id) is: ", typeof(id));
+        console.log("DOC FOUND:", doc);
+        doc.completed = true;
+        doc.save();
+        res.redirect('chores');
+      }
+      
+    })
+};

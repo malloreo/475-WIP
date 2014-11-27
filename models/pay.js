@@ -5,6 +5,7 @@ var paySchema = new mongoose.Schema({
 	user_name			:String,
 	payer				:String,
 	partial_amount		:Number,
+	date				:Date,
 	obsolete			:String,
 	complete			:Boolean,
 	check				:Boolean

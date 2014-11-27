@@ -148,7 +148,7 @@ button:focus{
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button, #complete-b, input[type='submit']{
+button, #complete-b, #incomplete-b, input[type='submit']{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
@@ -161,10 +161,15 @@ button, #complete-b, input[type='submit']{
 	line-height: 14px;
 }
 
-#complete-b{
+#complete-b, #incomplete-b{
 	padding: 3px;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+#incomplete-b{
+	background: #e55555;
+	color: white;
 }
 
 /*------------------------------- CONTENT ------------------------------*/
@@ -312,6 +317,16 @@ h1{
 
 #repeat_form{
 	display: none;
+}
+
+/*-- chore display --*/
+#my-chores table{
+
+}
+
+#my-chores td, #my-chores th{
+	font-size: 18px;
+	padding: 10px 20px 10px 20px;
 }
 
 /*--------------------- BILLS --------------------*/

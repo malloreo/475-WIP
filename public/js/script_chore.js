@@ -119,11 +119,14 @@ function getChores(){ // populate page with all chore information
 						// console.log("Parsing Their")
 						their_message = parseAssignments(their_assignments, chores)
 						if (my_message.length != ""){
-							$("#my-chores").html(my_message)
+							my_table = "<table id='chores_tbl'><tr><th>Day</th><th>Chore</th><th></th></tr>"
+						    my_table += my_message
+						    my_table += "</table>"
+							$("#my-chores").html(my_table)
 						} else{ /*$("#my-chores").html("<i>You don't have any chores assigned to you.</i>")*/}
 						if (their_message.length != ""){
 							$("#their-chores").html(their_message)
-						} else{ $("#their-chores").html("<i>No one else has any chores assigned to them.</i>")}
+						} else{ /*$("#their-chores").html("<i>No one else has any chores assigned to them.</i>")*/}
 					}
 				})
 				// data.forEach(function(chore){
@@ -147,7 +150,20 @@ function parseAssignments( assigns , chores ){
 				due_date = new Date(a.due_date);
 				due_date.setDate(due_date.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
 				due_date = due_date.toDateString();
-				message += a.user_name +" is assigned to do " + chore.chore_name + " due on " + due_date + "<br>"
+				if (a.completed){
+					console.log("a._id: ", a._id);
+					message += "<tr id='completed-chore'><td>"+due_date.substring(0,3)+"</td>"
+					message += "<td>"+chore.chore_name+"</td>"
+					message += "<td><a id='complete-b' href='/undo-complete-chore/"+a._id+"'>Mark as Not Done</a></td>"
+					message += "</tr>"
+				} else {
+					console.log("a._id: ", a._id);
+					message += "<tr><td>"+due_date.substring(0,3)+"</td>"
+					message += "<td>"+chore.chore_name+"</td>"
+					message += "<td><a id='incomplete-b' href='/complete-chore/"+a._id+"'>Mark as Done</a></td>"
+					message += "</tr>"
+				}
+				// message += a.user_name +" is assigned to do " + chore.chore_name + " due on " + due_date + "<br>"
 			}
 		})
 	})

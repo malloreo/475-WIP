@@ -39,7 +39,8 @@ exports.addNew = function(req, res){
             var newAssign = {
                 chore_name: req.body.chore_name,
                 user_name: req.body.assignee,
-                due_date: req.body.due_date
+                due_date: req.body.due_date,
+                completed: false
             };
             Database.insert(
                 "housemates",
@@ -69,7 +70,8 @@ exports.addNew = function(req, res){
                 var newAssign = {
                     chore_name: req.body.chore_name,
                     user_name: req.body.assignee,
-                    due_date: date
+                    due_date: date,
+                    completed: false
                 };
                 Database.insert(
                     "housemates",
@@ -121,7 +123,8 @@ exports.addNew = function(req, res){
                 var newAssign = {
                     chore_name: req.body.chore_name,
                     user_name: members[rotation[dates.indexOf(date)]],
-                    due_date: date
+                    due_date: date,
+                    completed: false
                 };
                 Database.insert(
                     "housemates",
