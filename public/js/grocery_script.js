@@ -1,12 +1,33 @@
 $(function() {   // when document is ready
-console.log("ready");
-//check that username entered is email address
-$('#grocery-formb').click(addGrocery);	
-$('#grocery-remove').click(deleteGrocery);	
-$(document).ready(getGroceries);
-$(document).ready(getGroceriesNotBought);
-$(document).ready(getGroceriesBought);
-});
+// console.log("ready");
+
+	getGroceriesBought();
+	getGroceriesNotBought();
+	$('#tab2').hide()
+
+    //show grocery popup
+	$('#grocery_add_pg').click(function(){
+		$('#grocery_add_bkgd').fadeIn();
+		$('#grocery_add_popup').fadeIn();
+	})
+	//hide grocery popup
+	$('#grocery_add_x').click(function(){
+		$('#grocery_add_bkgd').fadeOut();
+
+		//clear form fields
+	})
+	$('#grocery_feedback_close').click(function(){
+		$('#grocery_add_bkgd').fadeOut();
+		$('#grocery_feedback_popup').fadeOut();
+		//clear form fields
+	})
+
+	$('#grocery-formb').click(function(){
+		addGrocery();
+	});
+
+})
+
 function addGrocery(){
 	console.log("----  IN ADD Grocery SCRIPT ---- ")
 	$.ajax({
@@ -17,8 +38,11 @@ function addGrocery(){
 				quantity: $("#quantity").val()
 			},
 			success: function(data) {
-				message = $("#quantity").val() + " " + $("#name").val() + " has been added!"
-				$('#test').html(message);
+				getGroceriesBought();
+				getGroceriesNotBought();
+				message = $("#quantity").val() + " " + $("#name").val() + " was added to the shopping list!"
+				$('#grocery_feedback_popup span').html(message);
+				$('#grocery_feedback_popup').fadeIn();
 				$('#name').val("");
 				$('#quantity').val("");
 			}
@@ -81,6 +105,7 @@ function getGroceries(){
 	return false;	
 }
 
+
 function getGroceriesNotBought() {
 	console.log("---- IN Get Groceries Not Bought SCRIPT ----")
 	$.ajax({
@@ -93,8 +118,8 @@ function getGroceriesNotBought() {
 		}
 	});
 	return false;
-}
 
+}
 function getGroceriesBought() {
 	console.log("---- IN Get Groceries Bought SCRIPT ----")
 	$.ajax({

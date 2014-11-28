@@ -46,22 +46,57 @@
       </div> <!-- sidebar -->
 
 
-      <div class="content-dash">
+      <div class="content-dash content-groceries">
         <h1> GROCERIES</h1>
-        <form class="form" id="getgrocery-form" method="post" action="/grocery_add">
-          <button type="submit" class="btn btn-primary">Add Grocery</button>
-        </form>
-        <!-- <div id="grocery-item"> -->
-        <div id="all-groceries">
-          <h2> Active Groceries </h2>
-          <div id="grocery-not-bought"></div>
-          <br>
-          <h2> Not Active Groceries </h2>
-          <div id="grocery-bought"></div>
-          <br>
-        </div>
+
+        <button id="grocery_add_pg" type="submit" class="btn btn-primary">Add Grocery</button>
         
-      </div> <!-- content-dash -->
+        <div id="all-groceries"> 
+
+        <div class="tabs">
+          <ul class="tab-links">
+            <li class="active"><a href="#tab1">Shopping List</a></li>
+            <li><a href="#tab2">Purchased</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div id= "tab1" class="tab">
+              <div id="tab-heading">Shopping List</div>
+              <div id="grocery-not-bought">
+                <br><i>You currently have no groceries to buy.</i>
+              </div>
+            </div>
+            <div id = "tab2" class"tab">
+              <div id="tab-heading">Purchased</div>
+                <div id="grocery-bought">
+                  <br><i>You have no purchased grocery items.</i>
+                </div>
+            </div>
+          </div>
+          </div> <!-- tab-content -->
+        </div> <!-- tabs --> 
+        </div><!-- all groceries-->
+      </div> <!-- content dash-->
+
+      <div class="popup_bkgd" id="grocery_add_bkgd">
+          <div class="popup" id="grocery_add_popup">
+            <div class="form_title">ADD A GROCERY ITEM</div>
+            <div id="grocery_add_form">
+              Item Name: <input id="name" type="text" placeholder="Item Name" required="required"/><br>
+              Quantity: <input id="quantity" type="number" placeholder="" required="required"/><br>
+              <input id="grocery-formb"  type="submit" value="Add Item"/>
+            </div>
+            <!-- </form> -->
+
+            <div id="grocery_add_x"><img src="images/icon_x.png" width="20px"></div>
+          </div> <!-- popup add -->
+
+          <div class="popup" id="grocery_feedback_popup">
+            <span></span>
+            <br><br>
+            <input id="grocery_feedback_close" type="submit" value="Close">
+          </div> <!-- popup feedback -->
+        </div> <!-- popup bkgd -->
     </div> <!-- wrapper -->
   </body>
 </html>

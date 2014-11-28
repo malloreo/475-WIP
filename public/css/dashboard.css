@@ -218,7 +218,7 @@ h1{
 	/*width: 100%;*/
 }
 
-.content-chores, .content-bills{
+.content-chores, .content-bills, .content-groceries{
 	width: 85%;
 }
 
@@ -427,6 +427,43 @@ h1{
 }
 
 #bill_add_form input, #bill_add_form select{
+	margin-bottom: 5px;
+}
+
+/*------------------------------- GROCERIES ------------------------------*/
+
+/*---- adding an item ----*/
+#grocery_add_pg{ /* button */
+}
+
+#grocery_add_popup{
+	box-sizing: border-box;
+	padding: 50px;
+	height: 200px;
+}
+
+#grocery_feedback_popup{
+	display: none;
+	box-sizing: border-box;
+	padding: 50px;
+	text-align: center;
+	height: 200px;
+}
+
+#grocery_add_x{
+	cursor: pointer;
+	position: absolute;
+	float: right;
+	right: 15px;
+	top: 15px;
+}
+
+#grocery_add_form {
+	font-size: 14px;
+	/*display: none;*/
+}
+
+#grocery_add_form input, #grocery_add_form select{
 	margin-bottom: 5px;
 }
 
