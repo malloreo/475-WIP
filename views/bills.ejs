@@ -48,9 +48,9 @@
 
       <div class="content-dash content-bills">
         <h1>Bill Management</h1>
-        <form class="form" method="post" action="/bill_add_pg">
-          <button type="submit" class="btn btn-primary"> Add Bill</button>
-        </form>
+        <br>
+        <button id="bill_add_pg" class="btn btn-primary">Record an Expense</button>
+        
 
         <div id="all-bills">
         <div id="my-balance"></div>
@@ -97,33 +97,6 @@
             </div>
         </div>
 
-<!--           <table>
-            <tr>
-              <td>
-                <div id = "tab1" class="tab">
-                  <div id="tab-heading">My Current Payments</div>
-                  <div id="my-payments"></div>
-                </div>
-              </td>
-              <td>
-                <div id = "tab2" class="tab">
-                  <div id="tab-heading">Pay to Me</div>
-                  <div id="pay-to-me"></div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="bill-box">
-                  <div id="tab-heading">My Past Payments</div>
-                  <div id="my-past-payments"></div>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <br>
-          <h3>Their Payments</h3>
-          <div id="their-payments"></div> -->
         </div>
 
         <br><br>
@@ -131,12 +104,37 @@
           <button type="Venmo" value="Venmo">Pay a Bill -> Venmo</button><br>
         </div>
 
-        <!-- <form class="form" method="get" action="/auth/google">
-          <button type="submit" class="btn btn-primary">Click here to log into Google Calendar</button>
-        </form> -->
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
       </div> <!-- content-dash -->
+      <div class="popup_bkgd" id="bill_add_bkgd">
+          <div class="popup" id="bill_add_popup">
+            <div class="form_title">RECORD AN EXPENSE</div>
+            <div id="bill_add_form">
+              Bill Name: <input id="bill_name" name ="bill_name" type="text" placeholder="Bill Name"/><br>
+              Total Amount of Bill: <input id="amount" name="amount" type="text" placeholder="Amount"/><br>
+              Date Paid: <input id="date" name="date" type="date" placeholder="MM/DD/YYYY"><br>
+              Paid By: <select id="user_name" name="user_name"> 
+                <% for(var i=0; i<members.length; i++) {%>
+                 <option value="<%= members[i] %>"> <%= members[i] %> </option>
+              <% } %><br>
+              </select><br>
+              Charge To: <br>
+              <% for(var i=0; i<members.length; i++) {%>
+               <input type="checkbox" value="<%= members[i] %>" name="payer" class="payer_class" checked><%= members[i] %> <br>
+              <% } %><br>
+              <input id="partial_amount" name="partial_amount" type="hidden" placeholder="Partial Amount"/><br>
+              <input id="bill-formb"  type="submit" value="Add Bill"/>
+            </div>
+            <!-- </form> -->
+
+            <div id="bill_add_x"><img src="images/icon_x.png" width="20px"></div>
+          </div> <!-- popup add -->
+
+          <div class="popup" id="bill_feedback_popup">
+            <span></span>
+            <br><br>
+            <input id="bill_feedback_close" type="submit" value="Close">
+          </div> <!-- popup feedback -->
+        </div> <!-- popup bkgd -->
     </div> <!-- wrapper -->
   </body>
 </html>

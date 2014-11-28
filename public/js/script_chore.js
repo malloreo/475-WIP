@@ -23,13 +23,13 @@ $(function(){
 		//clear form fields
 	})
 
-	//choose which type of chore form
-	$('#existing_chore').click(function(){
-		$('#choices').fadeOut();
-		// getChoresForDropdown();
-		// getMembersForDropdown();
-		$('#chore_add_form').fadeIn();
-	})
+	// //choose which type of chore form
+	// $('#existing_chore').click(function(){
+	// 	$('#choices').fadeOut();
+	// 	// getChoresForDropdown();
+	// 	// getMembersForDropdown();
+	// 	$('#chore_add_form').fadeIn();
+	// })
 
 	// $('#toggle-action').click(function(){
 	// 	console.log("clicking toggle-action")

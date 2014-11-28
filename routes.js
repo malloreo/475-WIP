@@ -290,7 +290,8 @@ app.get('/getBills', bill_controller.getAllBills);
 
 app.get('/bills', isLoggedIn, function(req, res){
   res.render('bills', {
-    user: this_user
+    user: this_user,
+    members: this_user.members
   });
 })
 

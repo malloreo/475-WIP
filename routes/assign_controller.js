@@ -195,10 +195,10 @@ function whenDate(date){
     date = new Date(date)
     date.setDate(date.getDate()+1)
     when = ""
-    console.log("today: ", today)
-    console.log("this: ", thswk)
-    console.log("next: ", nxtwk)
-    console.log("date: ", date)
+    // console.log("today: ", today)
+    // console.log("this: ", thswk)
+    // console.log("next: ", nxtwk)
+    // console.log("date: ", date)
     if (date < today){
         when = "past"
     } else if ((today <= date) && (date < thswk)){
@@ -208,7 +208,7 @@ function whenDate(date){
     } else {
         when = "future"
     }
-    console.log("when: ", when)
+    // console.log("when: ", when)
     return when
 }
 

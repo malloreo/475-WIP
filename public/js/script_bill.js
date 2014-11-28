@@ -13,6 +13,44 @@ $(function() {
         e.preventDefault();
     });
 
+    //show bill popup
+	$('#bill_add_pg').click(function(){
+		$('#bill_add_bkgd').fadeIn();
+		$('#bill_add_popup').fadeIn();
+	})
+	//hide bill popup
+	$('#bill_add_x').click(function(){
+		$('#bill_add_bkgd').fadeOut();
+
+		//clear form fields
+	})
+	$('#bill_feedback_close').click(function(){
+		$('#bill_add_bkgd').fadeOut();
+		$('#bill_feedback_popup').fadeOut();
+		//clear form fields
+	})
+
+	//submitting bill add form
+	$('#bill-formb').click(function(){
+		console.log("submitting bill add form");
+		addNewBill();
+		$("#bill_name").val("");
+		$("#amount").val("");
+		$("#date").val("");
+		//recheck all boxes? idk
+	});
+
+	$(":checkbox").click(function(){
+		console.log("clicked checkbox");
+		if ($(this).attr("checked")){
+			console.log("unchecking")
+			$(this).attr("checked", false)
+		} else {
+			console.log("checking")
+			$(this).attr("checked", true)
+		}
+	})
+
 })
 
 function getBills() {
@@ -198,5 +236,55 @@ function parseOwedPayments( pays, bills) {
 	
 	return message
 }
-//jQuery(document).ready(function() {   
-//});
+
+
+function addNewBill(){
+	console.log("----  IN ADD BILL SCRIPT FXN ---- ")
+	bill_name = $("#bill_name").val();
+	amount = $("#amount").val();
+	date = $("#date").val();
+	user_name = $('#user_name').val();
+	payer = $( ":checkbox:checked" )
+			  .map(function() {
+			    return this.value;
+			  })
+			  .get()
+	partial_amount = ""
+
+	$.ajax({
+			url: "bill_add_new",
+			type: "post",
+			data: {
+				bill_name: bill_name,
+				amount: amount,
+				date: date,
+				user_name: user_name,
+				partial_amount: partial_amount,
+				payer: payer
+			},
+			success: function(data) {
+				getBills();
+				$('#bill_add_popup').fadeOut();
+
+
+				due = new Date(date);
+				due.setDate(due.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
+				due = due.toDateString();
+				message = "The expense "+bill_name+" paid by "+user_name+" to "
+				for (var i=0; i<payer.length; i++){
+					message += payer[i]
+					if (i != payer.length-1){
+						message += ", "
+					}
+					if (i == payer.length-2){
+						message += "and "
+					}
+				}
+				message += " on "+due+" has been added."
+				$('#bill_feedback_popup span').html(message);
+				$('#bill_feedback_popup').fadeIn();
+
+			}
+	});
+	return false;
+}

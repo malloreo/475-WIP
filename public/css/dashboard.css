@@ -241,7 +241,8 @@ h1{
 .popup{
 	width: 400px;
 	height: 400px;
-	background: #0b6f7a;
+	/*background: #0b6f7a;*/
+	background: #097887;
 	color: white;
 	float: left;
 	position: absolute;
@@ -256,7 +257,7 @@ h1{
 	background: rgba(0,0,0,0.6);
 	width: 100%;
 	height: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 1000;
@@ -393,6 +394,40 @@ h1{
 
 #total_person{
 	padding: 0px;
+}
+
+/*---- adding a bill ----*/
+#bill_add_pg{ /* button */
+}
+
+#bill_add_popup{
+	box-sizing: border-box;
+	padding: 50px;
+}
+
+#bill_feedback_popup{
+	display: none;
+	box-sizing: border-box;
+	padding: 50px;
+	text-align: center;
+	height: 300px;
+}
+
+#bill_add_x{
+	cursor: pointer;
+	position: absolute;
+	float: right;
+	right: 15px;
+	top: 15px;
+}
+
+#bill_add_form {
+	font-size: 14px;
+	/*display: none;*/
+}
+
+#bill_add_form input, #bill_add_form select{
+	margin-bottom: 5px;
 }
 
 /*------------------------------- SETTINGS ------------------------------*/
