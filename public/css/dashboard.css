@@ -148,7 +148,7 @@ button:focus{
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button, #complete-b, #incomplete-b, #edit-b, #delete-b, input[type='submit'], #toggle-action{
+button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='submit'], #toggle-action{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
@@ -182,6 +182,13 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, input[type='submit'], #t
 
 #edit-b img, #delete-b img{
 	width: 17px;
+}
+
+#gitem-b{
+	color: white;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background: #6cb753;
 }
 
 #toggle-action{
@@ -467,6 +474,24 @@ h1{
 	margin-bottom: 5px;
 }
 
+#grocery-not-bought td, #grocery-bought td{
+	min-width: 50px;
+	padding: 0px 0px 0px 10px;
+}
+
+#grocery-not-bought ul, #grocery-bought ul{
+	padding: 0px;
+}
+
+#all-groceries li{
+	list-style: none;
+	padding: 5px 0px 5px 0px;
+}
+
+#grocery-item {
+	width: 170px;
+}
+
 /*------------------------------- SETTINGS ------------------------------*/
 #settings{
 }
@@ -540,6 +565,10 @@ h1{
     font-size:13px;
     transition:all linear 0.15s; 
     text-transform: uppercase;   
+}
+
+.content-groceries .tab-links a{
+	padding-bottom: 5px;
 }
 
 .tabbed-links a{

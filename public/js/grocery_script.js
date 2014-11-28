@@ -94,13 +94,25 @@ function reactivateGrocery() {
 function getGroceries(){
 	console.log("----  IN Get Groceries SCRIPT---- ")
 	$.ajax({
-			url: "getGrocerylist",
-			type: "get",
-			data: {},
-			success: function(data) {
-				message = data
-				$('#grocery-item').html(message);
-			}
+		url: "getGrocerylist",
+		type: "get",
+		data: {},
+		success: function(data) {
+			message = ""
+			if (data.length != 0) {
+				message = "<ul>"
+                for( var i =0;i< data.length;i++ ) {
+                var item = data[i];
+                message += '<li><table id="grocery-item"><tr><td>' + item.quantity + ' ' + item.name + ' </td><td> <a href="/updateGroceryAsBought/' + item._id + '">Deactivate' + '</a></td><td>  <a href="/deleteGrocery/' + item._id + '">Remove</a></td></tr></table></li>';
+                }
+                message += '</ul>';
+            } 
+            else
+            {
+                message = '<i>There are currently no groceries for you to buy. Go eat something.</i>';
+            }
+			$('#grocery-item').html(message);
+		}
 	});
 	return false;	
 }
@@ -113,7 +125,20 @@ function getGroceriesNotBought() {
 		type: "get",
 		data: {},
 		success: function(data) {
-			message = data
+			message = ""
+			if (data.length != 0) {
+				message = '<ul>'
+                for( var i =0;i< data.length;i++ ) {
+                var item = data[i];
+                message += '<li><table><tr><td id="grocery-item">' + item.quantity + ' ' + item.name + ' </td><td> <a id="gitem-b" href="/updateGroceryAsBought/' + item._id + '">Mark as Bought' + "</a></td><td><a id='delete-b' href='/deleteGrocery/'" + item._id + "><img src='images/icon_delete.png' width='20px'></a></td></tr></table></li>";
+                }
+                message = message.substring(0, message.length-3)
+                message += +'</ul>';
+            } 
+            else
+            {
+                message = '<br><i>There are currently no groceries for you to buy. Go eat something.</i>';
+            }
 			$('#grocery-not-bought').html(message);
 		}
 	});
@@ -127,7 +152,19 @@ function getGroceriesBought() {
 		type: "get",
 		data: {},
 		success: function(data) {
-			message = data
+			message = ""
+			if (data.length != 0) {
+				message = '<ul>'
+                for( var i =0;i< data.length;i++ ) {
+	                var item = data[i];
+	                message += '<li><table><tr><td id="grocery-item">' + item.quantity + ' ' + item.name + ' </td><td> <a id="gitem-b" href="/reactivateGroceryList/' + item._id + '">Add to Shopping List</a>' + "</td><td><a id='delete-b' href='/deleteGrocery/'" + item._id + "><img src='images/icon_delete.png' width='20px'></a></td></tr></table></li>";
+                }
+                message += '</ul>';
+            } 
+            else
+            {
+                message = '<br><i>There are currently no groceries for you to buy. Go eat something.</i>';
+            }
 			$('#grocery-bought').html(message);
 		}
 	});

@@ -85,20 +85,7 @@ exports.getGroceries = function(req, res){
                 res.send(err);
             else
             {
-            // check to see if theres already a user with that email
-            if (grocery.length != 0) {
-                console.log(grocery[0]); //returns undefined
-                for( var i =0;i< grocery.length;i++ ) {
-                var item = grocery[i];
-                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/updateGroceryAsBought/' + item._id + '">Deactivate' + '  <a href="/deleteGrocery/' + item._id + '">Remove</a></li>';
-                }
-                message = message +'</ul>';
-                res.send(message);
-            } 
-            else
-            {
-                res.send('<i>There are currently no groceries for you to buy. Go eat something.</i>');
-            }
+            res.send(grocery)
             }
         });    
     
@@ -112,20 +99,12 @@ exports.getGroceriesNotBought = function(req, res){
                 res.send(err);
             else
             {
-            // check to see if theres already a user with that email
-            if (grocery.length != 0) {
-                console.log(grocery[0]); //returns undefined
-                for( var i =0;i< grocery.length;i++ ) {
-                var item = grocery[i];
-                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/updateGroceryAsBought/' + item._id + '">Deactivate' + "<a id='delete-b' href='/deleteGrocery/" + item._id + "'><img src='images/icon_delete.png' width='20px'></a></li>";
+                if (err)
+                    res.send(err);
+                else
+                {
+                res.send(grocery)
                 }
-                message = message +'</ul>';
-                res.send(message);
-            } 
-            else
-            {
-                res.send('<br><i>There are currently no groceries for you to buy. Go eat something.</i>');
-            }
             }
         });    
 }
@@ -138,20 +117,12 @@ exports.getGroceriesBought = function(req, res){
                 res.send(err);
             else
             {
-            // check to see if theres already a user with that email
-            if (grocery.length != 0) {
-                console.log(grocery[0]); //returns undefined
-                for( var i =0;i< grocery.length;i++ ) {
-                var item = grocery[i];
-                message = message + '<li>' + item.quantity + ' ' + item.name + '  <a href="/reactivateGroceryList/' + item._id + '">Reactivate</a>' + "<a id='delete-b' href='/deleteGrocery/" + item._id + "'><img src='images/icon_delete.png' width='20px'></a></li>";
+                if (err)
+                    res.send(err);
+                else
+                {
+                res.send(grocery)
                 }
-                message = message +'</ul>';
-                res.send(message);
-            } 
-            else
-            {
-                res.send('<br><i>There is currently no purchased items history.</i>');
-            }
             }
         });    
 }
