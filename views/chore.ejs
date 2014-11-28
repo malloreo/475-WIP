@@ -68,6 +68,7 @@
             <ul class="tab-links">
                 <li class="active"><a href="#tab1">This Week</a></li>
                 <li><a href="#tab2">Next Week</a></li>
+                <li><a href="#tab3">Future</a></li>
                 <!-- <li><a href="#tab3">My Past Payments</a></li>
                 <li><a href="#tab4">Other Payments</a></li> -->
             </ul>
@@ -84,13 +85,14 @@
                 <div class="tabbed-content">
                   <div id="tabbed1" class="tab">
                     <div id="tab-heading">Your Chores this week</div>
-                    <div id="my-chores"> 
+                    <!-- <span id='toggle-action'>Edit</span> -->
+                    <div id="my-chores_this"> 
                       <br><i>You don't have any chores for this week.</i>
                     </div> <!-- my chores -->
                   </div>
                   <div id="tabbed2" class="tab">
                     <div id="tab-heading">Their Chores this week</div>
-                    <div id="their-chores">
+                    <div id="their-chores_this">
                       <br><i>No one else has any chores this week.</i>
                     </div>
                   </div>
@@ -107,20 +109,43 @@
                 <div class="tabbed-content">
                   <div id="tabbed3" class="tab">
                     <div id="tab-heading">Your Chores next week</div>
-                    <div id="my-chores">
+                    <div id="my-chores_next">
                       <br><i>You don't have any chores next week.</i>
                     </div>
                   </div>
                   <div id="tabbed4" class="tab">
                     <div id="tab-heading">Their Chores next week</div>
-                    <div id="their-chores">
+                    <div id="their-chores_next">
                       <br><i>No one else has any chores next week.</i>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-        </div>
+              <div id="tab3" class="tab">
+                <ul class="tabbed-links">
+                    <li class="active"><a href="#tabbed5">You</a></li>
+                    <li><a href="#tabbed6">Them</a></li>
+                    <!-- <li><a href="#tab3">My Past Payments</a></li>
+                    <li><a href="#tab4">Other Payments</a></li> -->
+                </ul>
+                <hr>
+                <div class="tabbed-content">
+                  <div id="tabbed5" class="tab">
+                    <div id="tab-heading">Your Future Chores</div>
+                    <div id="my-chores_future">
+                      <br><i>You don't have any chores after two weeks.</i>
+                    </div>
+                  </div>
+                  <div id="tabbed6" class="tab">
+                    <div id="tab-heading">Their Future Chores</div>
+                    <div id="their-chores_future">
+                      <br><i>No one else has any chores after two weeks.</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- tab-content -->
+        </div> <!-- tabs -->
 
 
       </div> <!-- content-dash -->

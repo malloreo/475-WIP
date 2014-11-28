@@ -20,6 +20,7 @@ $('#signup-form').submit(function(){
 	}
 
 
+
 });
 
 // $("#s-chores").tooltip({placement: 'right', title: 'Chores'});

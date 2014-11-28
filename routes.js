@@ -280,6 +280,7 @@ app.get('/assign_add', function(req, res){
 app.get('/getAssigns', assign_controller.getAssignments)
 
 app.get('/complete-chore/:id', assign_controller.completeChore);
+app.get('/undo-complete-chore/:id', assign_controller.undoCompleteChore);
 
 // =====================================
 // BILLS ===============================

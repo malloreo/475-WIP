@@ -148,7 +148,7 @@ button:focus{
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button, #complete-b, #incomplete-b, input[type='submit']{
+button, #complete-b, #incomplete-b, #edit-b, #delete-b, input[type='submit'], #toggle-action{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
@@ -170,6 +170,27 @@ button, #complete-b, #incomplete-b, input[type='submit']{
 #incomplete-b{
 	background: #e55555;
 	color: white;
+}
+
+#edit-b, #delete-b{
+	padding-top: 9px ;
+	padding-bottom: 2px;
+	vertical-align: center;
+	margin: 0px 0px 0px 4px;
+	/*display: none;*/
+}
+
+#edit-b img, #delete-b img{
+	width: 17px;
+}
+
+#toggle-action{
+	font-size: 10px;
+	font-weight: normal;
+}
+
+#red{
+	color: #d62d2d;
 }
 
 /*------------------------------- CONTENT ------------------------------*/
@@ -256,19 +277,6 @@ h1{
 
 /*--------------------- CHORES --------------------*/
 
-#chores-tbl table{
-	width: 600px;
-}
-
-#chores-tbl th{
-	text-align: left;
-}
-
-#chores-tbl td{
-	width: 200px;
-	vertical-align: top;
-}
-
 #chore_add_pg{ /* button */
 }
 
@@ -320,14 +328,43 @@ h1{
 }
 
 /*-- chore display --*/
-#my-chores table{
-
+#my-chores_this table, #my-chores_next table, #my-chores_future table,
+#their-chores_this table, #their-chores_next table, #their-chores_future table{
+	/*width: 600px;*/
+	margin-top: 15px;
 }
 
-#my-chores td, #my-chores th{
+#my-chores_this td, #my-chores_this th, 
+#my-chores_next td, #my-chores_next th, 
+#my-chores_future td, #my-chores_future th, 
+#their-chores_this td, #their-chores_this th, 
+#their-chores_next td, #their-chores_next th, 
+#their-chores_future td, #my-chores_futures th{
+	vertical-align: top;
+	font-size: 17px;
+	padding: 10px 20px 5px 20px;
+	margin-bottom: 10px;
+}
+
+#completed-chore {
+	/*color: gray;*/
+}
+
+/*.chores-tbl{
+	width: 600px;
+	background: black;
+}
+
+#chores-tbl th{
+	text-align: left;
+}
+
+#chores-tbl td{
+	min-width: 300px;
+	vertical-align: top;
 	font-size: 18px;
 	padding: 10px 20px 10px 20px;
-}
+}*/
 
 /*--------------------- BILLS --------------------*/
 
@@ -341,9 +378,9 @@ h1{
 	padding: 15px;
 }
 
-td{
+/*td{
 	padding: 7px;
-}
+}*/
 
 #totalsTbl td, #totalsTbl tr{
 	padding: 0px 30px 0px 0px;
@@ -499,5 +536,9 @@ li.active a, li.active a:hover {
 }
 
 #tabbed3{
+	display: block;
+}
+
+#tabbed5{
 	display: block;
 }

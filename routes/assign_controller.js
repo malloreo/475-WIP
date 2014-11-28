@@ -140,51 +140,123 @@ function incrementDate(date, rate_frequency, rate){
 exports.getAssignments = function(req,res){
     console.log("GETTING ALL Assigments..");
     var data = {
-        my_assignments : [],
-        their_assignments : []
+        my_assignments_this : [],
+        my_assignments_next : [],
+        my_assignments_future : [],
+        their_assignments_this : [],
+        their_assignments_next : [],
+        their_assignments_future : []
     };
     my_name = this_user.first_name + " " + this_user.last_name
+    
+    // console.log("today: ", today)
+    // console.log("next week: ", next_wk)
     Database.find("housemates","assigns","", function(model){
         model.forEach(function(assign){
+            when = whenDate(assign.due_date)
             if (assign.user_name == my_name){
-               data["my_assignments"].push(assign)
+                if (when == "this"){
+                    data["my_assignments_this"].push(assign)
+                } else if (when == "next"){
+                    data["my_assignments_next"].push(assign)
+                } else if (when == "future"){
+                    data["my_assignments_future"].push(assign)
+                } else if ((when == "past") && !assign.completed){ //past
+                    data["my_assignments_this"].push(assign)
+                }
             } else{
-                data["their_assignments"].push(assign)
+                if (when == "this"){
+                    data["their_assignments_this"].push(assign)
+                } else if (when == "next"){
+                    data["their_assignments_next"].push(assign)
+                } else if (when == "future"){
+                    data["their_assignments_future"].push(assign)
+                } else if ((when == "past") && !assign.completed){ //past
+                    data["their_assignments_this"].push(assign)
+                }
             }
             // data.push(chore.chore_name);
         })
+        // data["my_assignments"].sort({due_date: 1});
+        // data["their_assignments"].sort(compare_date);
         res.send(data)
     })
 }
 
+function whenDate(date){
+    days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    today = new Date();
+    today_day = days.indexOf(today.toDateString().substring(0,3));
+    console.log("today is: "+today.toDateString().substring(0,3)+" today_day: ", today_day)
+    thswk = new Date();
+    thswk.setDate(thswk.getDate()+(7-today_day));
+    nxtwk = new Date();
+    nxtwk.setDate(nxtwk.getDate()+(7-today_day+7));
+    date = new Date(date)
+    date.setDate(date.getDate()+1)
+    when = ""
+    console.log("today: ", today)
+    console.log("this: ", thswk)
+    console.log("next: ", nxtwk)
+    console.log("date: ", date)
+    if (date < today){
+        when = "past"
+    } else if ((today <= date) && (date < thswk)){
+        when = "this"
+    } else if ((thswk <= date) && (date < nxtwk)){
+        when = "next"
+    } else {
+        when = "future"
+    }
+    console.log("when: ", when)
+    return when
+}
+
 exports.completeChore = function(req, res){
-    console.log("ID IS: ", req.params.id);
+    // console.log("ID IS: ", req.params.id);
     id = req.params.id;
-    console.log("ID IS OF TYPE: ", typeof(id))
-    // Assign.findByIdAndUpdate(id, { completed: true }, function(err, docs){
-    //     if(err){
-    //         console.log("ERROR COMPLETING CHORE");
-    //         res.json(err);
-    //     }else{
-    //         // req.params.id
-    //         console.log("docs: ",docs);
-    //         res.redirect('chores');
-    //     }
-    // })
+    Assign.findById(id, function (err, doc) {
+      if (err) {
+        // console.log("id is: ", id);
+        // console.log("typeof(id) is: ", typeof(id));
+        return console.log("err:", err);
+      } else {
+        // console.log("id is: ", id);
+        // console.log("typeof(id) is: ", typeof(id));
+        // console.log("DOC FOUND:", doc);
+        doc.completed = true;
+        doc.save();
+        res.redirect('chores');
+      }
+    })
+};
+
+exports.undoCompleteChore = function(req, res){
+    // console.log("ID IS: ", req.params.id);
+    id = req.params.id;
 
     Assign.findById(id, function (err, doc) {
       if (err) {
-        console.log("id is: ", id);
-        console.log("typeof(id) is: ", typeof(id));
+        // console.log("id is: ", id);
+        // console.log("typeof(id) is: ", typeof(id));
         return console.log("err:", err);
       } else {
-        console.log("id is: ", id);
-        console.log("typeof(id) is: ", typeof(id));
-        console.log("DOC FOUND:", doc);
-        doc.completed = true;
+        // console.log("id is: ", id);
+        // console.log("typeof(id) is: ", typeof(id));
+        // console.log("DOC FOUND:", doc);
+        doc.completed = false;
         doc.save();
         res.redirect('chores');
       }
       
     })
 };
+
+function compare_date(a,b) {
+    console.log("sorting assignments");
+  if (a.date< b.date)
+     return -1;
+  if (a.date > b.date)
+    return 1;
+  return 0;
+}
