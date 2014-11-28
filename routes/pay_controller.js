@@ -11,8 +11,7 @@ exports.asgnExistingBill = function(req, res) {
 		partial_amount: req.body.partial_amount,
 		date: req.body.date,
 		obsolete: "1",
-		completed: false,
-		check: false
+		completed: false
 	};
 	Database.insert(
 		"housemates",
@@ -42,15 +41,17 @@ exports.getPays = function(req, res) {
 			// console.log("pay_controler line 37, pay..", pay);
 			if(pay.obsolete == "1"){
 				if(pay.payer == my_name || pay.user_name == my_name){
-					if(pay.completed == false && pay.payer == my_name){
-						data["my_payments"].push(pay);
-						my_balance -= pay.partial_amount;
+					if(pay.completed==false){
+						if(pay.payer==my_name){
+							data["my_payments"].push(pay);
+							my_balance -= pay.partial_amount;
+						}
+						if(pay.user_name == my_name){
+							data["pay_to_me"].push(pay);
+							my_balance += pay.partial_amount;
+						}
 					}
-					if(pay.check == false && pay.user_name == my_name){
-						data["pay_to_me"].push(pay);
-						my_balance += pay.partial_amount;
-					}
-					if(pay.check==true || pay.completed == true){
+					else{
 						data["my_past"].push(pay);
 					}
 				}
@@ -83,7 +84,7 @@ exports.getTotals = function(req, res){
 				individual_balance.push(person)
 			}
 			individual_balance.push(b)
-			// console.log("individual_balance: ", individual_balance);
+			console.log("individual_balance: ", individual_balance);
 
 			totals.push(individual_balance)
 			// console.log("totals are: ", totals);
@@ -100,19 +101,17 @@ function findBalance(person, callback){
 	Database.find("housemates","pays","", function(model) {
 		model.forEach(function(pay) {
 			if(pay.obsolete == "1"){
-				if(pay.check == false && pay.user_name==person){
-					person_balance += pay.partial_amount;
-					// console.log(person, person_balance)
-				}
-				if(pay.completed == false && pay.payer==person){
-					person_balance -= pay.partial_amount;
-					// console.log(person, person_balance)
-
+				if(pay.completed==false){
+					if (pay.user_name==person){
+						person_balance += pay.partial_amount;
+					}
+					if(pay.payer==person){
+						person_balance -= pay.partial_amount;
+					}
 				}
 			}
 		})
 		callback(person, person_balance);
-		// console.log("lastlog", person, person_balance)
 	})
 }
 
@@ -123,23 +122,6 @@ exports.completePay = function(req, res) {
 	console.log("********");
 	Pay.findByIdAndUpdate(
 		{_id: req.params.id}, {completed:true}, function(err, docs){
-		if(err)
-			res.json(err);
-		else{
-			req.params.id
-			console.log(docs);
-			res.redirect('bills');
-		}
-	});
-}
-
-//for checking off payments others paid
-exports.checkPay = function(req, res) {
-	console.log("********");
-	console.log(req.params.id);
-	console.log("********");
-	Pay.findByIdAndUpdate(
-		{_id: req.params.id}, {check:true}, function(err, docs){
 		if(err)
 			res.json(err);
 		else{

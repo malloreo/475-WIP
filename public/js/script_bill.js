@@ -50,28 +50,28 @@ function getBills() {
 							$("#pay-to-me").html(pay_me_message);
 							console.log("1");
 						} else{ 
-							$("#pay-to-me").html("You don't have any payments.")
+							// $("#pay-to-me").html("You don't have any payments.")
 							console.log("2");
 						}
 						if (my_past_message != "") {
 							$("#my-past-payments").html(my_past_message)
 							console.log("3");
 						} else{ 
-							$("#my-past-payments").html("You haven't made any payments.")
+							// $("#my-past-payments").html("You haven't made any payments.")
 							console.log("4");
 						}
 						if (my_message != "") {
 							$("#my-payments").html(my_message)
 							console.log("5");
 						} else{ 
-							$("#my-payments").html("You don't have any bills assigned to you.")
+							// $("#my-payments").html("You don't have any bills assigned to you.")
 							console.log("6");
 						}
 						if (their_message != ""){
 							$("#their-payments").html(their_message)
 							console.log("7");
 						} else{
-							$("#their-payments").html("No on else has to pay any bills.")
+							// $("#their-payments").html("No on else has to pay any bills.")
 							console.log("8");
 						}
 					} 
@@ -109,8 +109,8 @@ function parsePayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
 		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Paid By</center></b></td>'+
-		'<td><b><center>Lent To</center></b></td><td><b><center>Amount</center></b></td>'+
+		'<td><b><center>Paid From</center></b></td>'+
+		'<td><b><center>Paid To</center></b></td><td><b><center>Amount</center></b></td>'+
 		'<td><b><center>Bill</center></b></td><td><b><center>Hide?</center></b></td>'
 		pays.forEach(function(p) {
 		bill_name = p.bill_name
@@ -118,7 +118,7 @@ function parsePayments( pays, bills) {
 		bills.forEach(function(bill) {
 			if (bill.bill_name == bill_name && p.obsolete!="0"){
 				date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+p.date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
+					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
 					+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 			}
 		})
@@ -138,9 +138,9 @@ function parseMyPayments( pays, bills) {
 			bill_name = p.bill_name
 			console.log(p)
 			bills.forEach(function(bill) {
-				if (bill.bill_name == bill_name && p.obsolete=="1" && p.check==false){
+				if (bill.bill_name == bill_name && p.obsolete=="1" && p.completed==false){
 					date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+p.date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
 					+ '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
 				}
 			})
@@ -153,30 +153,20 @@ function parsePastPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
 		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Paid By</center></b></td>'+
-		'<td><b><center>Lent To</center></b></td><td><b><center>Amount</center></b></td>'+
+		'<td><b><center>Paid From</center></b></td>'+
+		'<td><b><center>Paid To</center></b></td><td><b><center>Amount</center></b></td>'+
 		'<td><b><center>Bill</center></b></td><td><b><center>Hide?</center></b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			console.log(p)
 			bills.forEach(function(bill) {
-				if (bill.bill_name == bill_name && p.obsolete!="0" && (p.check==true||p.completed==true)){
+				if (bill.bill_name == bill_name && p.obsolete!="0" && p.completed==true){
 					date = new Date(bill.date).toDateString()
-					if(p.completed==true || p.check==true){
-						//payments others people have paid me
-						if(p.check==true){
-							message += '<tr><td>'+p.date+'</td><td>You</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
-							+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
-						}
-						//payments I have made to others
-						else{
-							message += '<tr><td>'+p.date+'</td><td>'+p.payer+'</td><td>You</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
-							+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
-						}
-
+					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
+					+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 					}
 				}
-			})
+			)
 		})
 		message += '</table>'	
 	}
@@ -184,6 +174,7 @@ function parsePastPayments( pays, bills) {
 	return message
 }
 
+//what other people owe me
 function parseOwedPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
@@ -197,8 +188,8 @@ function parseOwedPayments( pays, bills) {
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete=="1"&& p.completed==false) {
 					date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+p.date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
-					+ '<td><a id="complete-b" href="/checkPay/' + p._id + '">Complete</a></td>';
+					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					+ '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
 				}
 			})
 		})
@@ -207,6 +198,5 @@ function parseOwedPayments( pays, bills) {
 	
 	return message
 }
-
 //jQuery(document).ready(function() {   
 //});

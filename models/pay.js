@@ -5,10 +5,9 @@ var paySchema = new mongoose.Schema({
 	user_name			:String,
 	payer				:String,
 	partial_amount		:Number,
-	date				:Date,
+	date				:String,
 	obsolete			:String,
-	complete			:Boolean,
-	check				:Boolean
+	completed			:Boolean
 });
 
 module.exports = mongoose.model('Pay', paySchema);
