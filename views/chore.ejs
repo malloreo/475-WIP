@@ -41,8 +41,8 @@
          <a href="/dashboard" class="tooltip" title="DASHBOARD"><img src="images/sidebar-icon_house.png" title=""></a>
         <a href="/chores" class="tooltip" title="CHORES"><img src="images/sidebar-icon_chores.png" title=""></a>
         <a href="/bills" class="tooltip" title="BILLS"><img src="images/sidebar-icon_bills.png" title=""></a>
-        <a href="/calendar" class="tooltip" title="CALENDAR"><img src="images/sidebar-icon_cal.png" title=""></a>
         <a href="/grocery" class="tooltip" title="GROCERY"><img src="images/sidebar-icon_grocery.png" title=""></a>
+        <a href="/calendar" class="tooltip" title="CALENDAR"><img src="images/sidebar-icon_cal.png" title=""></a>
         <a href="/chat" class="tooltip" title="CHAT"><img src="images/sidebar-icon_chat.png" title=""></a>
       </div> <!-- sidebar -->
 
@@ -76,7 +76,7 @@
             <div class="tab-content">
               <div id = "tab1" class="tab">
                 <ul class="tabbed-links">
-                    <li class="active"><a href="#tabbed1">You</a></li>
+                    <li class="active"><a href="#tabbed1">Me</a></li>
                     <li><a href="#tabbed2">Them</a></li>
                     <!-- <li><a href="#tab3">My Past Payments</a></li>
                     <li><a href="#tab4">Other Payments</a></li> -->
@@ -84,14 +84,14 @@
                 <hr>
                 <div class="tabbed-content">
                   <div id="tabbed1" class="tab">
-                    <div id="tab-heading">Your Chores this week</div>
+                    <div id="tab-heading">My Chores This Week</div>
                     <!-- <span id='toggle-action'>Edit</span> -->
                     <div id="my-chores_this"> 
-                      <br><i>You don't have any chores for this week.</i>
+                      <br><i>I don't have any chores for this week.</i>
                     </div> <!-- my chores -->
                   </div>
                   <div id="tabbed2" class="tab">
-                    <div id="tab-heading">Their Chores this week</div>
+                    <div id="tab-heading">Their Chores This Week</div>
                     <div id="their-chores_this">
                       <br><i>No one else has any chores this week.</i>
                     </div>
@@ -100,7 +100,7 @@
               </div>
               <div id="tab2" class="tab">
                 <ul class="tabbed-links">
-                    <li class="active"><a href="#tabbed3">You</a></li>
+                    <li class="active"><a href="#tabbed3">Me</a></li>
                     <li><a href="#tabbed4">Them</a></li>
                     <!-- <li><a href="#tab3">My Past Payments</a></li>
                     <li><a href="#tab4">Other Payments</a></li> -->
@@ -108,13 +108,13 @@
                 <hr>
                 <div class="tabbed-content">
                   <div id="tabbed3" class="tab">
-                    <div id="tab-heading">Your Chores next week</div>
+                    <div id="tab-heading">My Chores Next Week</div>
                     <div id="my-chores_next">
-                      <br><i>You don't have any chores next week.</i>
+                      <br><i>I don't have any chores next week.</i>
                     </div>
                   </div>
                   <div id="tabbed4" class="tab">
-                    <div id="tab-heading">Their Chores next week</div>
+                    <div id="tab-heading">Their Chores Next Week</div>
                     <div id="their-chores_next">
                       <br><i>No one else has any chores next week.</i>
                     </div>
@@ -123,7 +123,7 @@
               </div>
               <div id="tab3" class="tab">
                 <ul class="tabbed-links">
-                    <li class="active"><a href="#tabbed5">You</a></li>
+                    <li class="active"><a href="#tabbed5">Me</a></li>
                     <li><a href="#tabbed6">Them</a></li>
                     <!-- <li><a href="#tab3">My Past Payments</a></li>
                     <li><a href="#tab4">Other Payments</a></li> -->
@@ -131,9 +131,9 @@
                 <hr>
                 <div class="tabbed-content">
                   <div id="tabbed5" class="tab">
-                    <div id="tab-heading">Your Future Chores</div>
+                    <div id="tab-heading">My Future Chores</div>
                     <div id="my-chores_future">
-                      <br><i>You don't have any chores after two weeks.</i>
+                      <br><i>I don't have any chores after two weeks.</i>
                     </div>
                   </div>
                   <div id="tabbed6" class="tab">
@@ -175,8 +175,11 @@
               </div>
               <span id="span_assignee">Assign to:</span> <select id="assignee" name="assignee">
               <% for(var i=0; i<members.length; i++) {%>
-              <option value="<%= members[i] %>"> <%= members[i] %> </option>
-              <% } %>
+              <% if (members[i] == this_user.name){ %>
+                <option value="<%= members[i] %>"> Me </option>
+                <% } else { %>
+                <option value="<%= members[i] %>"> <%= members[i] %> </option>
+              <% }} %>
               </select><br>
               On: <input id="due_date" name="due_date" type="date" placeholder="MM/DD/YYYY"><br>
               Occurring: <select id="chore_type" name="chore_type">

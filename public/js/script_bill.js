@@ -124,11 +124,11 @@ function getBills() {
 						totalsTbl = "<table id='totalsTbl'><tr>"
 						totals.forEach(function(total){
 							if (total[1] < 0){
-								num = "-$"+Math.abs(total[1])
+								num = " id='red'> -$"+Math.abs(total[1])
 							} else {
-								num = "$"+total[1]
+								num = " id='green'> $"+total[1]
 							}
-							totalsTbl += "<td><div id='total_num'>" + num + "</div><br>" + "<div id='total_person'>" + total[0] + "</div></td>"
+							totalsTbl += "<td><div class='total_num'" + num + "</div>" + "<div id='total_person'>" + total[0] + "</div></td>"
 						})
 						totalsTbl += "</tr></table>"
 						$("#total-balance").html(totalsTbl);

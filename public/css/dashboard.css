@@ -200,6 +200,10 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='s
 	color: #d62d2d;
 }
 
+#green{
+	color: #6cb753;
+}
+
 /*------------------------------- CONTENT ------------------------------*/
 
 .name_title{
@@ -281,6 +285,33 @@ h1{
 	text-align: center;
 	margin-bottom: 10px;
 	text-transform: uppercase;
+}
+
+/*--------------------- DASHBOARD --------------------*/
+
+#dash-my-chores td{
+	width: 95px;
+	padding: 0px;
+}
+
+#dash-my-chores tr{
+	padding: 0px;
+}
+
+#dash-heading span{
+	font-size: 15px;
+}
+
+.dash-box h4{
+	margin-bottom: 0px;
+}
+
+#dash-groceries{
+	padding: 0px 0px 0px 0px;
+}
+
+#dash-groceries ul{
+	padding-left: 20px;
 }
 
 /*--------------------- CHORES --------------------*/
@@ -394,7 +425,7 @@ h1{
 	padding: 0px 30px 0px 0px;
 }
 
-#total_num{
+.total_num{
 	font-size: 30px;
 	padding-bottom: 0px;
 }
