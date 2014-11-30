@@ -351,7 +351,8 @@ app.get('/calendar/addevent', isLoggedIn, isLoggedIntoGoogle, function(req, res)
 
 app.get('/grocery', isLoggedIn, function(req, res){
   res.render('grocery', {
-    user: this_user
+    user: this_user,
+    members: this_user.members
   });
 })
 

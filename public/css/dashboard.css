@@ -152,7 +152,7 @@ button:focus{
 }*/
 
 /*------------------------------- GENERAL ------------------------------*/
-button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='submit'], #toggle-action{
+button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, .bill-b, #input[type='submit'], #toggle-action{
 	background: #c1a880;
 	border: solid;
 	border-width: 0px;
@@ -176,7 +176,7 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='s
 	color: white;
 }
 
-#edit-b, #delete-b{
+#edit-b, #delete-b, .bill-b{
 	padding-top: 9px ;
 	padding-bottom: 2px;
 	vertical-align: center;
@@ -184,7 +184,7 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='s
 	/*display: none;*/
 }
 
-#edit-b img, #delete-b img{
+#edit-b img, #delete-b img, .bill-b img{
 	width: 17px;
 }
 
@@ -207,6 +207,34 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='s
 #green{
 	color: #489b29;
 }
+
+/*------- form formatting -------*/
+
+input[type=text], input[type=number]{
+	border: none;
+	padding: 3px 5px 3px 5px;
+	border-radius: 2px;
+}
+
+input[type=date]{
+	border: none;
+	padding: 2px 5px 2px 5px;
+	border-radius: 2px;
+}
+
+#button1, #bill-formb, #grocery-formb, #gbill-formb,
+#chore_feedback_close, #bill_feedback_close, #grocery_feedback_close, #gbill_feedback_close{
+	background: #0292A5;
+	color: white;
+	border: solid;
+	border-width: 0px;
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 5px 8px 5px 8px;
+	font-size: 11px;
+	line-height: 14px;
+}
+
 
 /*------------------------------- CONTENT ------------------------------*/
 
@@ -442,12 +470,12 @@ h1{
 #bill_add_pg{ /* button */
 }
 
-#bill_add_popup{
+#bill_add_popup, #gbill_popup{
 	box-sizing: border-box;
 	padding: 50px;
 }
 
-#bill_feedback_popup{
+#bill_feedback_popup, #gbill_feedback_popup{
 	display: none;
 	box-sizing: border-box;
 	padding: 50px;
@@ -455,7 +483,7 @@ h1{
 	height: 300px;
 }
 
-#bill_add_x{
+#bill_add_x, #gbill_add_x{
 	cursor: pointer;
 	position: absolute;
 	float: right;
@@ -463,12 +491,12 @@ h1{
 	top: 15px;
 }
 
-#bill_add_form {
+#bill_add_form, #gbill_add_form {
 	font-size: 14px;
 	/*display: none;*/
 }
 
-#bill_add_form input, #bill_add_form select{
+#bill_add_form input, #bill_add_form select, #gbill_add_form input, #gbill_add_form select{
 	margin-bottom: 5px;
 }
 

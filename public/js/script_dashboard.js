@@ -47,8 +47,6 @@ function updateDashboardBills(){
 					type: "get",
 					data: {},
 					success: function(pays){
-						console.log("HELLO?!?")
-
 						// console.log("PAYS: ",pays)
 						my_balance = pays.balance
 						pays = pays.data;
@@ -68,7 +66,7 @@ function updateDashboardBills(){
 							$("#dash-pay-to-me").html("<i>No one owes me any bill payments.</i>")
 						}
 
-						if (my_balance > 0){
+						if (my_balance >= 0){
 							$('#dash-my_balance').html("My balance: <span id='green'>$"+my_balance+"</span>");
 						} else {
 							my_balance = Math.abs(my_balance)

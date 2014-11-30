@@ -127,7 +127,8 @@ exports.completePay = function(req, res) {
 		else{
 			req.params.id
 			console.log(docs);
-			res.redirect('bills');
+			// res.redirect('bills');
+			res.send();
 		}
 	});
 }

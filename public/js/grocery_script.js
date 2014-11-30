@@ -26,6 +26,31 @@ $(function() {   // when document is ready
 		addGrocery();
 	});
 
+	/*-------- adding item to bill ---------*/
+	//show grocery popup
+	// $('#gbill_pg').click(function(){
+		
+	// })
+	//hide grocery popup
+	$('#gbill_add_x').click(function(){
+		$('#gbill_bkgd').fadeOut();
+
+		//clear form fields
+	})
+	$('#gbill_close').click(function(){
+		$('#gbill_bkgd').fadeOut();
+		$('#gbill_popup').fadeOut();
+		//clear form fields
+	})
+
+	$('#gbill-formb').click(function(){
+		$(this).fadeOut();
+		addNewBill();
+		$("#bill_name").val("");
+		$("#amount").val("");
+		$("#date").val("");
+	});
+
 })
 
 function addGrocery(){
@@ -157,7 +182,7 @@ function getGroceriesBought() {
 				message = '<ul>'
                 for( var i =0;i< data.length;i++ ) {
 	                var item = data[i];
-	                message += '<li><table><tr><td id="grocery-item">' + item.quantity + ' ' + item.name + ' </td><td> <a id="gitem-b" href="/reactivateGroceryList/' + item._id + '">Add to Shopping List</a>' + "</td><td><a id='delete-b' href='/deleteGrocery/'" + item._id + "><img src='images/icon_delete.png' width='20px'></a></td></tr></table></li>";
+	                message += '<li><table><tr><td id="grocery-item">' + item.quantity + ' ' + item.name + ' </td><td> <a id="gitem-b" href="/reactivateGroceryList/' + item._id + '">Add to Shopping List</a>' + "</td><td><a class='bill-b' id='"+item.quantity+" "+item.name+"' onclick='addGroceryToBills(this);'><img src='images/icon_bills.png' width='20px'></a> <a id='delete-b' href='/deleteGrocery/'" + item._id + "><img src='images/icon_delete.png' width='20px'></a></td></tr></table></li>";
                 }
                 message += '</ul>';
             } 
@@ -183,4 +208,63 @@ function getGroceriesbyid(){
 			}
 	});
 	return false;	
+}
+
+//converting purchases to bills
+function addGroceryToBills(item){
+	// console.log("a boobadeeboobadee")
+	console.log("bill-b id: ",item.id);
+	$('#bill_name').val(item.id);
+	$('#gbill_bkgd').fadeIn();
+	$('#gbill_popup').fadeIn();
+
+}
+
+function addNewBill(){
+	console.log("----  IN ADD BILL SCRIPT FXN ---- ")
+	bill_name = $("#bill_name").val();
+	amount = $("#amount").val();
+	date = $("#date").val();
+	user_name = $('#user_name').val();
+	payer = $( ":checkbox:checked" )
+			  .map(function() {
+			    return this.value;
+			  })
+			  .get()
+	partial_amount = ""
+
+	$.ajax({
+			url: "bill_add_new",
+			type: "post",
+			data: {
+				bill_name: bill_name,
+				amount: amount,
+				date: date,
+				user_name: user_name,
+				partial_amount: partial_amount,
+				payer: payer
+			},
+			success: function(data) {
+				$('#gbill_add_popup').fadeOut();
+
+				due = new Date(date);
+				due.setDate(due.getDate()+1); //fixes weird bug where day is subtracted by one when made into new Date
+				due = due.toDateString();
+				message = "The expense "+bill_name+" paid by "+user_name+" to "
+				for (var i=0; i<payer.length; i++){
+					message += payer[i]
+					if (i != payer.length-1){
+						message += ", "
+					}
+					if (i == payer.length-2){
+						message += "and "
+					}
+				}
+				message += " on "+due+" has been added."
+				$('#gbill_feedback_popup span').html(message);
+				$('#gbill_feedback_popup').fadeIn();
+
+			}
+	});
+	return false;
 }

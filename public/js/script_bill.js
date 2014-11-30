@@ -77,8 +77,8 @@ function getBills() {
 						their_payments = pays.data["their_payments"]
 						// total_balance = pays.data["total_balance"]
 						// console.log("Parsing My ") 
-						pay_me_message = parseMyPayments(pay_to_me, bills)
-						my_message = parseOwedPayments(my_payments, bills)
+						pay_me_message = parseOwedPayments(pay_to_me, bills)
+						my_message = parseMyPayments(my_payments, bills)
 						my_past_message = parsePastPayments(my_past_payments, bills)
 						their_message = parsePayments(their_payments, bills)
 
@@ -166,24 +166,28 @@ function parsePayments( pays, bills) {
 }
 
 function parseMyPayments( pays, bills) {
-	console.log("hello");
 	var message = ""
-	if (pays.length !=0){
+	if (pays.length != 0){
 		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Lent To</center></b></td><td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Complete?</center></b></td>'
+		'<td><b><center>Lent From</center></b></td>'+
+		'<td><b><center>Amount</center></b></td>'+
+		'<td><b><center>Bill</center></b></td><td><b><center>Action</center></b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
-			console.log(p)
+			// console.log(p)
 			bills.forEach(function(bill) {
-				if (bill.bill_name == bill_name && p.obsolete=="1" && p.completed==false){
+				if (bill.bill_name == bill_name && p.obsolete=="1"&& p.completed==false) {
 					date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
-					+ '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
+					fxn = "completePay('"+p._id+"')";
+					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
+					+ '<td><a id="complete-b" onclick="' + fxn + '">Mark as Paid</a></td>';
 				}
 			})
 		})
+		message += '</table>'
 	}
+	
 	return message
 }
 
@@ -193,15 +197,16 @@ function parsePastPayments( pays, bills) {
 		message += '<table><tr><td><b><center>Date</center</b></td>'+
 		'<td><b><center>Paid From</center></b></td>'+
 		'<td><b><center>Paid To</center></b></td><td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Hide?</center></b></td>'
+		'<td><b><center>Bill</center></b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
-			console.log(p)
+			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete!="0" && p.completed==true){
 					date = new Date(bill.date).toDateString()
 					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
-					+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
+					+ '</td>'
+					// + '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 					}
 				}
 			)
@@ -214,26 +219,26 @@ function parsePastPayments( pays, bills) {
 
 //what other people owe me
 function parseOwedPayments( pays, bills) {
+	// console.log("hello");
 	var message = ""
-	if (pays.length != 0){
+	if (pays.length !=0){
 		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Lent From</center></b></td>'+
-		'<td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Complete?</center></b></td>'
+		'<td><b><center>Lent To</center></b></td><td><b><center>Amount</center></b></td>'+
+		'<td><b><center>Bill</center></b></td><td><b><center>Action</center></b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
-			console.log(p)
+			// console.log(p)
 			bills.forEach(function(bill) {
-				if (bill.bill_name == bill_name && p.obsolete=="1"&& p.completed==false) {
+				if (bill.bill_name == bill_name && p.obsolete=="1" && p.completed==false){
 					date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
-					+ '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
+					fxn = "completePay('"+p._id+"')";
+					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
+					+ '<td><a id="complete-b" onclick="' + fxn + '">Mark as Paid</a></td>';
 				}
 			})
 		})
-		message += '</table>'
 	}
-	
 	return message
 }
 
@@ -284,6 +289,20 @@ function addNewBill(){
 				$('#bill_feedback_popup span').html(message);
 				$('#bill_feedback_popup').fadeIn();
 
+			}
+	});
+	return false;
+}
+
+function completePay(id){
+	url = "/completePay/"+id;
+	$.ajax({
+			url: url,
+			type: "get",
+			data: {},
+			success: function(data) {
+				getBills();
+				console.log("WOOOOOO")
 			}
 	});
 	return false;
