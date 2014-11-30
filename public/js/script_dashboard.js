@@ -12,13 +12,16 @@ function updateDashboardGroceries(){
 			type: "get",
 			data: {},
 			success: function(data) {
-				message = "<ul>"
-				data.forEach(function(item){
-					message += "<li>"+item.quantity+" "+item.name+"</li>"
-				})
-				message += "</ul>"
+				if (data.length == 0){
+					message = "<i>There are no grocery items on the shopping list</i>"
+				} else {
+					message = "<ul>"
+					data.forEach(function(item){
+						message += "<li>"+item.quantity+" "+item.name+"</li>"
+					})
+					message += "</ul>"
+				}
 				$('#dash-groceries').html(message);
-				// updateDashboardChores()
 			}
 	});
 	
@@ -33,9 +36,9 @@ function updateDashboardBills(){
 		data: {},
 		success: function(bills) {
 			if (bills.length == 0) {
-				message1 = "I currently don't owe any money."
+				message1 = "<i>I currently don't owe any money.</i>"
 				$("#my-payments").html(message1);
-				message2 = "No one owes me any bill payments."
+				message2 = "<i>No one owes me any bill payments.</i>"
 				$("#pay-to-me").html(message2);
 			} else {
 				// console.log(bills)
@@ -44,29 +47,32 @@ function updateDashboardBills(){
 					type: "get",
 					data: {},
 					success: function(pays){
+						console.log("HELLO?!?")
+
 						// console.log("PAYS: ",pays)
 						my_balance = pays.balance
 						pays = pays.data;
 						my_payments = pays["my_payments"]
 						pay_to_me = pays["pay_to_me"]
 						if (my_payments.length != 0) {
+							console.log("a boobadee boobadee")
 							my_message = parseMyPayments(my_payments, bills)
-							$("#my-payments").html(my_message)
+							$("#dash-my-payments").html(my_message)
 						}else{
-							$("#my-payments").html("I currently don't owe any money.")
+							$("#dash-my-payments").html("<i>I currently don't owe any money.</i>")
 						}
 						if (pay_to_me.length != 0){
 							ptm_message = parsePTMPayments(pay_to_me, bills)
-							$("#pay-to-me").html(ptm_message)
+							$("#dash-pay-to-me").html(ptm_message)
 						} else{
-							$("#pay-to-me").html("No one owes me any bill payments.")
+							$("#dash-pay-to-me").html("<i>No one owes me any bill payments.</i>")
 						}
 
 						if (my_balance > 0){
-							$('#my_balance').html("My balance: $"+my_balance);
+							$('#dash-my_balance').html("My balance: <span id='green'>$"+my_balance+"</span>");
 						} else {
 							my_balance = Math.abs(my_balance)
-							$('#my_balance').html("My balance: -$"+my_balance);
+							$('#dash-my_balance').html("My balance: <span id='red'>-$"+my_balance+"</span>");
 						}
 					}
 				})
@@ -85,7 +91,7 @@ function updateDashboardChores(){
 			success: function(chores) {
 				// console.log(chores)
 				if (chores.length == 0){
-					$("#my-chores").html("There are currently no chores for me to do.")
+					$("#my-chores").html("</i>I don't have any chores to do this week.</i>")
 				}
 				else{
 					$.ajax({
@@ -100,7 +106,7 @@ function updateDashboardChores(){
 						
 						if (my_message.length != ""){
 							$("#dash-my-chores").html(my_message)
-						} else{ $("#dash-my-chores").html("I don't have any chores to do this week.")}
+						} else{ $("#dash-my-chores").html("<i>I don't have any chores to do this week.</i>")}
 						
 					}
 					})

@@ -25,6 +25,7 @@ button:focus{
 	outline:none;
 }
 
+
 /*------------------------------- MENU ------------------------------*/
 
 .menu {
@@ -83,9 +84,12 @@ button:focus{
 	/*background: #452145;*/
 	background: #562856;
 	width: 50px;
-	height: 800px;
+	/*height: 1000px;*/
 	float: left;
 	text-align: center;
+	padding-bottom: 4px;
+	padding-right: 1px;
+	border-radius: 0px 0px 7px 0px;
 }
 
 .sidebar img{
@@ -201,7 +205,7 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, #input[type='s
 }
 
 #green{
-	color: #6cb753;
+	color: #489b29;
 }
 
 /*------------------------------- CONTENT ------------------------------*/
@@ -229,13 +233,13 @@ h1{
 	/*width: 100%;*/
 }
 
-.content-chores, .content-bills, .content-groceries{
+.content-chores, .content-bills, .content-groceries, .content-about{
 	width: 85%;
 }
 
 .dash-box{
 	width: 300px;
-	height: 350px;
+	min-height: 350px;
 	/*background: #efe9a5;*/
 	background: #f2daab;
 	margin: 10px;
@@ -562,7 +566,8 @@ h1{
 	padding-right: 10px;
 }
 
-/*----- Tabs -----*/
+/*------------------------------- TABS ------------------------------*/
+
 .tabs {
     width:100%;
     display:inline-block;
@@ -634,7 +639,7 @@ li.active a, li.active a:hover {
 .tab-content{
     padding: 15px;
     border-top: 1px solid gray;
-    border-radius:3px;
+    /*border-radius:3px;*/
     /*box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
     /*background: #f2daab;*/
     min-height: 100px;
@@ -674,3 +679,67 @@ li.active a, li.active a:hover {
 #tabbed5{
 	display: block;
 }
+
+
+/*------------------------------- ABOUT ------------------------------*/
+#about-wrapper{
+
+}
+
+#about-menu, #about-content{
+	display: inline-block;
+	float: left;
+}
+
+#about-menu{
+	width: 230px;
+	border-color: gray;
+	border-right:1px solid;
+	height: 200px;
+}
+
+#about-content{
+	width: 600px;
+	margin: 0px 15px 0px 40px;
+}
+
+#about-menu ul{
+	margin-top: 0px;
+}
+
+#about-menu li{
+	list-style: none;
+	width: 120px;
+}
+
+#about-menu a{
+	padding:9px 15px;
+    display:inline-block;
+    border: 1px solid #fbfaee;
+    border-radius:3px 3px 0px 0px;
+    font-size:13px;
+    transition:all linear 0.15s; 
+    text-transform: uppercase;   
+    width: 120px;
+}
+
+#about-menu li.active a, #about-menu li.active a:hover {
+    background: #f2daab;
+    font-weight: bold;
+    border-color: #fbfaee;
+    /*color:#4c4c4c;*/
+}
+
+#about-menu a:hover, #about-menu .tabbed-links a:hover {
+    background:#f8e4c6;
+    text-decoration:none;
+}
+
+.v-tab{
+	display: none;
+}
+
+#v-tab1{
+	display: inline;
+}
+

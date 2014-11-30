@@ -209,6 +209,12 @@ app.get('/settings', isLoggedIn, function(req, res){
   })
 })
 
+app.get('/about', isLoggedIn, function(req, res) {
+  res.render('about.ejs', {
+    user : this_user // get the user out of session and pass to template
+  });
+});
+
 
 // =====================================
 // HOUSE ===============================
