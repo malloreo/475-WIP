@@ -18,11 +18,12 @@ function addMessage(){
 				message : message
 			},
 			success: function(data) {
-				date = new Date(data.date)
-				date_time_str = date.toLocaleString()
-				// date_time_str = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-				// $('#chat-messages').append(data.user.name +" <i>[" + date_time_str + "]</i> : "+ message+"<br>");
-				$('#chat-messages').append(str += "<div id='chat-me'>"+"<span>" + " <i>" + date_time_str + "</i></span><br>" + message + "</div>");
+				getChats()
+				// date = new Date(data.date)
+				// date_time_str = date.toLocaleString()
+				// // date_time_str = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+				// // $('#chat-messages').append(data.user.name +" <i>[" + date_time_str + "]</i> : "+ message+"<br>");
+				// $('#chat-messages').append(str += "<div id='chat-me'>"+"<span>" + " <i>" + date_time_str + "</i></span><br>" + message + "</div>");
 				$('#message').val("");
 				$("#message").focus()
 				document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight
@@ -62,7 +63,7 @@ function getChats(){
 				prevTime = date
 			})
 			
-			$("#chat-messages").append(str)
+			$("#chat-messages").html(str)
 			document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight
 		}
 	})
