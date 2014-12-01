@@ -79,7 +79,7 @@ exports.getTotals = function(req, res){
 		findBalance(this_user.members[i], function(person, b){
 			individual_balance = []
 			if (person == this_user.name){
-				individual_balance.push("You");
+				individual_balance.push("Me");
 			} else {
 				individual_balance.push(person)
 			}

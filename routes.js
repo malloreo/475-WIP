@@ -189,6 +189,10 @@ app.get('/getMembers', function(req, res){
   res.send(this_user.members);
 })
 
+app.get('/getUser', function(req, res){
+  res.send(this_user)
+})
+
 // =====================================
 // DASHBOARD AND SETTINGS ==============
 // =====================================

@@ -147,37 +147,37 @@ function getChores(){ // populate page with all chore information
 						    my_table += my_message_this
 						    my_table += "</table>"
 							$("#my-chores_this").html(my_table)
-						} else{ /*$("#my-chores").html("<i>You don't have any chores assigned to you.</i>")*/}
+						} else{ $("#my-chores").html("<br><i>I don't have any chores for this week.</i>")}
 						if (my_message_next.length != ""){
 							my_table = "<table class='chores_tbl'><tr><th>Day</th><th>Chore</th><th>Status</th><th>Action</th></tr>"
 						    my_table += my_message_next
 						    my_table += "</table>"
 							$("#my-chores_next").html(my_table)
-						}
+						} else { $('#my-chores_next').html("<br><i>I don't have any chores next week.</i>")}
 						if (my_message_future.length != ""){
 							my_table = "<table class='chores_tbl'><tr><th>Day</th><th>Chore</th><th>Status</th><th>Action</th></tr>"
 						    my_table += my_message_future
 						    my_table += "</table>"
 							$("#my-chores_future").html(my_table)
-						}
+						} else { $('#my-chores_future').html("<br><i>I don't have any chores after two weeks.</i>")}
 						if (their_message_this.length != ""){
 							my_table = "<table class='chores_tbl'><tr><th>Day</th><th>Chore</th><th>Housemate</th><th>Status</th><th>Action</th></tr>"
 						    my_table += their_message_this
 						    my_table += "</table>"
 							$("#their-chores_this").html(my_table)
-						} else{ /*$("#their-chores").html("<i>No one else has any chores assigned to them.</i>")*/}
+						} else{ $("#their-chores").html("<br><i>No one else has any chores this week.</i>")}
 						if (their_message_next.length != ""){
 							my_table = "<table class='chores_tbl'><tr><th>Day</th><th>Chore</th><th>Housemate</th><th>Status</th><th>Action</th></tr>"
 						    my_table += their_message_next
 						    my_table += "</table>"
 							$("#their-chores_next").html(my_table)
-						}
+						} else { $('#their-chores_next').html("<br><i>No one else has any chores next week.</i>")}
 						if (their_message_future.length != ""){
 							my_table = "<table class='chores_tbl'><tr><th>Day</th><th>Chore</th><th>Housemate</th><th>Status</th><th>Action</th></tr>"
 						    my_table += their_message_future
 						    my_table += "</table>"
 							$("#their-chores_future").html(my_table)
-						}
+						} else { $('#their-chores_future').html("<br><i>No one else has any chores after two weeks.</i>")}
 					}
 				})
 				// data.forEach(function(chore){

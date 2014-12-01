@@ -177,7 +177,7 @@ exports.getAssignments = function(req,res){
             }
             // data.push(chore.chore_name);
         })
-        // data["my_assignments"].sort({due_date: 1});
+        data["my_assignments_this"].sort(compare_date);
         // data["their_assignments"].sort(compare_date);
         res.send(data)
     })

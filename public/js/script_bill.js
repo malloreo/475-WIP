@@ -1,4 +1,5 @@
 $(function() {
+	getUser();
 	getBills();
 	jQuery("#tab1").show()
 	jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -53,6 +54,8 @@ $(function() {
 
 })
 
+var this_user = "";
+
 function getBills() {
 	console.log("running getBills in script_bill_add.js");
 	$.ajax({
@@ -70,7 +73,7 @@ function getBills() {
 					data: {},
 					success: function(pays){
 						my_balance = "Balance: $"+pays.balance.toFixed(2)
-						console.log(pays)
+						// console.log(pays)
 						pay_to_me = pays.data["pay_to_me"]
 						my_payments = pays.data["my_payments"]
 						my_past_payments = pays.data["my_past"]
@@ -88,28 +91,28 @@ function getBills() {
 							$("#pay-to-me").html(pay_me_message);
 							console.log("1");
 						} else{ 
-							// $("#pay-to-me").html("You don't have any payments.")
+							$("#pay-to-me").html("<br><i>Others don't currently owe me any money.</i>")
 							console.log("2");
 						}
 						if (my_past_message != "") {
 							$("#my-past-payments").html(my_past_message)
 							console.log("3");
 						} else{ 
-							// $("#my-past-payments").html("You haven't made any payments.")
+							$("#my-past-payments").html("<br><i>I have no payment history.</i>")
 							console.log("4");
 						}
 						if (my_message != "") {
 							$("#my-payments").html(my_message)
 							console.log("5");
 						} else{ 
-							// $("#my-payments").html("You don't have any bills assigned to you.")
+							$("#my-payments").html("<br><i>I currently don't owe any money.</i>")
 							console.log("6");
 						}
 						if (their_message != ""){
 							$("#their-payments").html(their_message)
 							console.log("7");
 						} else{
-							// $("#their-payments").html("No on else has to pay any bills.")
+							$("#their-payments").html("<br><i>Others don't currently owe each other money.</i>")
 							console.log("8");
 						}
 					} 
@@ -120,13 +123,13 @@ function getBills() {
 					type: "get",
 					data: {},
 					success: function(totals){
-						console.log("---TOTALS: ", totals);
+						// console.log("---TOTALS: ", totals);
 						totalsTbl = "<table id='totalsTbl'><tr>"
 						totals.forEach(function(total){
 							if (total[1] < 0){
-								num = " id='red'> -$"+Math.abs(total[1])
+								num = " id='red'> -$"+Math.abs(total[1]).toFixed(2)
 							} else {
-								num = " id='green'> $"+total[1]
+								num = " id='green'> $"+total[1].toFixed(2)
 							}
 							totalsTbl += "<td><div class='total_num'" + num + "</div>" + "<div id='total_person'>" + total[0] + "</div></td>"
 						})
@@ -146,17 +149,18 @@ function getBills() {
 function parsePayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Paid From</center></b></td>'+
-		'<td><b><center>Paid To</center></b></td><td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Hide?</center></b></td>'
+		message += '<table><tr><td><b>Date</b></td>'+
+		'<td><b>Paid From</b></td>'+
+		'<td><b>Paid To</b></td><td><b>Amount</b></td>'+
+		'<td><b>Bill</b></td>'
 		pays.forEach(function(p) {
 		bill_name = p.bill_name
-		console.log(p)
+		// console.log(p)
 		bills.forEach(function(bill) {
 			if (bill.bill_name == bill_name && p.obsolete!="0"){
-				date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
+				date = new Date(bill.date)
+					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount.toFixed(2) + '</td><td>' + bill.bill_name
 					+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 			}
 		})
@@ -168,20 +172,21 @@ function parsePayments( pays, bills) {
 function parseMyPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Lent From</center></b></td>'+
-		'<td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Action</center></b></td>'
+		message += '<table><tr><td><b>Date</center</b></td>'+
+		'<td><b>Lent From</b></td>'+
+		'<td><b>Amount</b></td>'+
+		'<td><b>Bill</b></td><td><b>Action</b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete=="1"&& p.completed==false) {
-					date = new Date(bill.date).toDateString()
+					date = new Date(bill.date)
+					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
 					fxn = "completePay('"+p._id+"')";
-					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount.toFixed(2) + '</td><td>' + bill.bill_name + '</td>'
 					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
-					+ '<td><a id="complete-b" onclick="' + fxn + '">Mark as Paid</a></td>';
+					+ '<td><a id="complete-b" onclick="' + fxn + '">Mark as Paid</a></td></tr>';
 				}
 			})
 		})
@@ -194,17 +199,29 @@ function parseMyPayments( pays, bills) {
 function parsePastPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Paid From</center></b></td>'+
-		'<td><b><center>Paid To</center></b></td><td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td>'
+		message += '<table><tr><td><b>Date</center</b></td>'+
+		'<td><b>Paid From</b></td>'+
+		'<td><b>Paid To</b></td><td><b>Amount</b></td>'+
+		'<td><b>Bill</b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete!="0" && p.completed==true){
-					date = new Date(bill.date).toDateString()
-					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount + '</td><td>' + bill.bill_name
+					date = new Date(bill.date)
+					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					if (p.payer == this_user){
+						payer = "Me"
+					} else {
+						payer = p.payer
+					}
+
+					if (p.user_name == this_user){
+						user_name = "Me"
+					} else {
+						user_name = p.user_name
+					}
+					message += '<tr><td>'+date+'</td><td>'+payer+'</td><td>'+user_name+'</td><td>$' + p.partial_amount.toFixed(2) + '</td><td>' + bill.bill_name
 					+ '</td>'
 					// + '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 					}
@@ -222,17 +239,19 @@ function parseOwedPayments( pays, bills) {
 	// console.log("hello");
 	var message = ""
 	if (pays.length !=0){
-		message += '<table><tr><td><b><center>Date</center</b></td>'+
-		'<td><b><center>Lent To</center></b></td><td><b><center>Amount</center></b></td>'+
-		'<td><b><center>Bill</center></b></td><td><b><center>Action</center></b></td>'
+		message += '<table><tr><td><b>Date</center</b></td>'+
+		'<td><b>Lent To</b></td><td><b>Amount</b></td>'+
+		'<td><b>Bill</b></td><td><b>Action</b></td>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete=="1" && p.completed==false){
-					date = new Date(bill.date).toDateString()
+				// if (p.obsolete=="1" && p.completed==false){
+					date = new Date(p.date)
+					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
 					fxn = "completePay('"+p._id+"')";
-					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount + '</td><td>' + bill.bill_name + '</td>'
+					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount.toFixed(2) + '</td><td>' + p.bill_name + '</td>'
 					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
 					+ '<td><a id="complete-b" onclick="' + fxn + '">Mark as Paid</a></td>';
 				}
@@ -302,8 +321,18 @@ function completePay(id){
 			data: {},
 			success: function(data) {
 				getBills();
-				console.log("WOOOOOO")
 			}
 	});
 	return false;
+}
+
+function getUser(){
+	$.ajax({
+		url: "getUser",
+		type: "get",
+		data: {},
+		success: function(data){
+			this_user = data.name
+		}
+	})
 }
