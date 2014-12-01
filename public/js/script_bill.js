@@ -1,7 +1,8 @@
 $(function() {
 	getUser();
 	getBills();
-	jQuery("#tab1").show()
+	jQuery("#tab5").show()
+	jQuery("#tab1").hide()
 	jQuery('.tabs .tab-links a').on('click', function(e)  {
         var currentAttrValue = jQuery(this).attr('href');
  
@@ -149,19 +150,20 @@ function getBills() {
 function parsePayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b>Date</b></td>'+
-		'<td><b>Paid From</b></td>'+
-		'<td><b>Paid To</b></td><td><b>Amount</b></td>'+
-		'<td><b>Bill</b></td>'
+		message += '<table><tr><th>Date</th>'+
+		'<th>Paid by</th>'+'<th>To</th>'+
+		'<th>Amount</th>'+
+		'<th>Expense</th><tr>'
 		pays.forEach(function(p) {
 		bill_name = p.bill_name
 		// console.log(p)
 		bills.forEach(function(bill) {
 			if (bill.bill_name == bill_name && p.obsolete!="0"){
 				date = new Date(bill.date)
-					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					date = (date.getMonth()+1)+"/"+(date.getDate()+1)+"/"+date.getFullYear()
 					message += '<tr><td>'+date+'</td><td>'+p.payer+'</td><td>'+p.user_name+'</td><td>$' + p.partial_amount.toFixed(2) + '</td><td>' + bill.bill_name
-					+ '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
+					+ '</td></tr>';
+					// + '</td>' + '<td><a id="complete-b" href="/hidePay/' + p._id + '">Hide</a>'+'</td></tr>';
 			}
 		})
 	})
@@ -172,17 +174,17 @@ function parsePayments( pays, bills) {
 function parseMyPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b>Date</center</b></td>'+
-		'<td><b>Lent From</b></td>'+
-		'<td><b>Amount</b></td>'+
-		'<td><b>Bill</b></td><td><b>Action</b></td>'
+		message += '<table><tr><th>Date</th>'+
+		'<th>Lent From</th>'+
+		'<th>Amount</th>'+
+		'<th>Expense</th><th>Action</th>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete=="1"&& p.completed==false) {
 					date = new Date(bill.date)
-					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					date = (date.getMonth()+1)+"/"+(date.getDate()+1)+"/"+date.getFullYear()
 					fxn = "completePay('"+p._id+"')";
 					message += '<tr><td>'+date+'</td><td>'+ p.user_name + '</td><td> $' + p.partial_amount.toFixed(2) + '</td><td>' + bill.bill_name + '</td>'
 					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';
@@ -199,17 +201,17 @@ function parseMyPayments( pays, bills) {
 function parsePastPayments( pays, bills) {
 	var message = ""
 	if (pays.length != 0){
-		message += '<table><tr><td><b>Date</center</b></td>'+
-		'<td><b>Paid From</b></td>'+
-		'<td><b>Paid To</b></td><td><b>Amount</b></td>'+
-		'<td><b>Bill</b></td>'
+		message += '<table><tr><th>Date</th>'+
+		'<th>Paid by</th>'+
+		'<th>To</th><th>Amount</th>'+
+		'<th>Expense</th>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
 			bills.forEach(function(bill) {
 				if (bill.bill_name == bill_name && p.obsolete!="0" && p.completed==true){
 					date = new Date(bill.date)
-					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					date = (date.getMonth()+1)+"/"+(date.getDate()+1)+"/"+date.getFullYear()
 					if (p.payer == this_user){
 						payer = "Me"
 					} else {
@@ -239,9 +241,9 @@ function parseOwedPayments( pays, bills) {
 	// console.log("hello");
 	var message = ""
 	if (pays.length !=0){
-		message += '<table><tr><td><b>Date</center</b></td>'+
-		'<td><b>Lent To</b></td><td><b>Amount</b></td>'+
-		'<td><b>Bill</b></td><td><b>Action</b></td>'
+		message += '<table><tr><th>Date</th>'+
+		'<th>Lent To</th><th>Amount</th>'+
+		'<th>Expense</th><th>Action</th></tr>'
 		pays.forEach(function(p) {
 			bill_name = p.bill_name
 			// console.log(p)
@@ -249,7 +251,7 @@ function parseOwedPayments( pays, bills) {
 				if (bill.bill_name == bill_name && p.obsolete=="1" && p.completed==false){
 				// if (p.obsolete=="1" && p.completed==false){
 					date = new Date(p.date)
-					date = date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()
+					date = (date.getMonth()+1)+"/"+(date.getDate()+1)+"/"+date.getFullYear()
 					fxn = "completePay('"+p._id+"')";
 					message += '<tr><td>'+date+'</td><td>'+ p.payer + '</td><td> $' + p.partial_amount.toFixed(2) + '</td><td>' + p.bill_name + '</td>'
 					// + '<td><a id="complete-b" href="/completePay/' + p._id + '">Complete</a></td>';

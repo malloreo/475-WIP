@@ -48,19 +48,20 @@ function updateDashboardBills(){
 					data: {},
 					success: function(pays){
 						// console.log("PAYS: ",pays)
-						my_balance = pays.balance
+						my_balance = pays.balance.toFixed(2)
 						pays = pays.data;
 						my_payments = pays["my_payments"]
 						pay_to_me = pays["pay_to_me"]
+						owe = 0
+						lent = 0
 						if (my_payments.length != 0) {
-							console.log("a boobadee boobadee")
-							my_message = parseMyPayments(my_payments, bills)
+							my_message = parseMyPayments(my_payments, bills)[0]
 							$("#dash-my-payments").html(my_message)
 						}else{
 							$("#dash-my-payments").html("<i>I currently don't owe any money.</i>")
 						}
 						if (pay_to_me.length != 0){
-							ptm_message = parsePTMPayments(pay_to_me, bills)
+							ptm_message = parsePTMPayments(pay_to_me, bills)[0]
 							$("#dash-pay-to-me").html(ptm_message)
 						} else{
 							$("#dash-pay-to-me").html("<i>No one owes me any bill payments.</i>")
@@ -190,30 +191,43 @@ function whenDate(date){
 
 function parseMyPayments( pays, bills) {
 	message2 = ""
+	owe = 0;
 	console.log(bills)
 	pays.forEach(function(p) {
 		bill_name = p.bill_name
 		bills.forEach(function(bill) {
 			if (bill.bill_name == bill_name) {
 				date = new Date(bill.date).toDateString()
-				message2 += "I owe " + bill.user_name + " $" + p.partial_amount + " for " + bill.bill_name + " bill <br>"
+				add = "$" + p.partial_amount + " to " + bill.user_name.split(" ")[0] + " - " + bill.bill_name
+				if (add.length > 40){
+					add = add.substring(0, 38) + "...<br>"
+				} else { add += "<br>"}
+				message2 += add
+				owe += p.partial_amount
 			}
 		})
 	})
-	return message2
+	return [message2,owe]
 }
 
 function parsePTMPayments( pays, bills) {
 	message2 = ""
+	lent = 0
 	console.log(bills)
 	pays.forEach(function(p) {
 		bill_name = p.bill_name
 		bills.forEach(function(bill) {
 			if (bill.bill_name == bill_name) {
 				date = new Date(bill.date).toDateString()
-				message2 += p.payer +" owes me $" + p.partial_amount + " for " + bill.bill_name + " bill <br>"
+				add = "$"+p.partial_amount+" to "+ p.payer.split(" ")[0] +" - " + bill.bill_name
+
+				if (add.length > 40){
+					add = add.substring(0, 38) + "...<br>"
+				} else { add += "<br>"}
+				message2 += add
+				lent += p.partial_amount
 			}
 		})
 	})
-	return message2
+	return [message2,lent]
 }

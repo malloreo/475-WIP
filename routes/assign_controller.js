@@ -254,9 +254,9 @@ exports.undoCompleteChore = function(req, res){
 
 function compare_date(a,b) {
     console.log("sorting assignments");
-  if (a.date< b.date)
+  if (a.due_date< b.due_date)
      return -1;
-  if (a.date > b.date)
+  if (a.due_date > b.due_date)
     return 1;
   return 0;
 }

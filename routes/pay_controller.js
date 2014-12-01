@@ -65,6 +65,7 @@ exports.getPays = function(req, res) {
 		data["my_payments"].sort(compare_date);
 		data["pay_to_me"].sort(compare_date);
 		data["my_past"].sort(compare_date);
+		data["their_payments"].sort(compare_date);
 
 		res.send({data:data, balance:my_balance})
 	})

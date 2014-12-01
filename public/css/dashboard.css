@@ -509,24 +509,22 @@ h1{
 	margin-bottom: 5px;
 }
 
-#my-chores_this table, #my-chores_next table, #my-chores_future table,
-#their-chores_this table, #their-chores_next table, #their-chores_future table{
+#my_payments table, #pay-to-me table, #my-past-payments table,
+#their-payments table{
 	/*width: 600px;*/
 	margin-top: 15px;
 }
 
-#my-chores_this td, #my-chores_this th, 
-#my-chores_next td, #my-chores_next th, 
-#my-chores_future td, #my-chores_future th, 
-#their-chores_this td, #their-chores_this th, 
-#their-chores_next td, #their-chores_next th, 
-#their-chores_future td, #my-chores_futures th{
+#my-payments td, #my-payments th, 
+#pay-to-me td, #pay-to-me th, 
+#my-past-payments td, #my-past-payments th,
+#their-payments td, #their-payments th{
 	vertical-align: top;
 	font-size: 17px;
 	padding: 10px 20px 5px 20px;
 	margin-bottom: 10px;
+	text-align: left;
 }
-
 /*------------------------------- GROCERIES ------------------------------*/
 
 /*---- adding an item ----*/
