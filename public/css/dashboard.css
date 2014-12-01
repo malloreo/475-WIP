@@ -31,7 +31,8 @@ button:focus{
 .menu {
 	font-size: 20px;
 	color: white;
-	background: #038693;
+	/*background: #038693;*/
+	background: #04899b;
 	height: 50px;
 	width: 100%;
 	display: block;
@@ -82,8 +83,10 @@ button:focus{
 	display: block;
 	/*background: #422a42;*/
 	/*background: #452145;*/
-	background: #562856;
-	width: 50px;
+	/*background: #562856;*/ /*purple */
+	/*background: #4d58db;*/ /*periwinkle*/
+	background: #0e4ba5;
+	width: 55px;
 	/*height: 1000px;*/
 	float: left;
 	text-align: center;
@@ -132,7 +135,7 @@ button:focus{
     border-radius: 8px;
     background: rgba(0,0,0,0.85);
     top: -20px;
-    left: 50px;
+    left: 55px;
     color: white;
     pointer-events: none;
 
@@ -244,6 +247,7 @@ input[type=date]{
 	padding-right: 15px;
 	font-size: 2em;
 	font-weight: bold;
+	/*color: #002e66;*/
 }
 
 h1{
@@ -256,7 +260,7 @@ h1{
 	float: left;
 	margin: 40px;
 	position: absolute;
-	left: 40px;
+	left: 50px;
 	padding-left: 10px;
 	/*width: 100%;*/
 }
@@ -269,7 +273,8 @@ h1{
 	width: 300px;
 	min-height: 350px;
 	/*background: #efe9a5;*/
-	background: #f2daab;
+	/*background: #f2daab;*/ /*yellower */
+	background: #edd7b0;
 	margin: 10px;
 	margin-left: 0px;
 	padding: 15px;
@@ -279,6 +284,10 @@ h1{
 #dash-heading{
 	font-size: 25px;
 	font-weight: bold;
+}
+
+#dash-heading a{
+	/*color: #002e66;*/
 }
 
 .popup{
@@ -500,6 +509,24 @@ h1{
 	margin-bottom: 5px;
 }
 
+#my-chores_this table, #my-chores_next table, #my-chores_future table,
+#their-chores_this table, #their-chores_next table, #their-chores_future table{
+	/*width: 600px;*/
+	margin-top: 15px;
+}
+
+#my-chores_this td, #my-chores_this th, 
+#my-chores_next td, #my-chores_next th, 
+#my-chores_future td, #my-chores_future th, 
+#their-chores_this td, #their-chores_this th, 
+#their-chores_next td, #their-chores_next th, 
+#their-chores_future td, #my-chores_futures th{
+	vertical-align: top;
+	font-size: 17px;
+	padding: 10px 20px 5px 20px;
+	margin-bottom: 10px;
+}
+
 /*------------------------------- GROCERIES ------------------------------*/
 
 /*---- adding an item ----*/
@@ -623,7 +650,7 @@ h1{
 .tab-links a, .tabbed-links a {
     padding:9px 15px;
     display:inline-block;
-    border: 1px solid #f2d9aa;
+    border: 1px solid #edd7b0; /*#f2d9aa;*/
     border-bottom-style: none;
     border-radius:3px 3px 0px 0px;
     font-size:13px;
@@ -642,23 +669,23 @@ h1{
 	border-radius: 15px;
 	padding: 4px 8px;
 	margin-right: 5px;
-    border: 1px solid #f2d9aa;
+    border: 1px solid #edd7b0; /*#f2d9aa;*/
     text-transform: none;
 }
 
 .tab-links a:hover, .tabbed-links a:hover {
-    background:#f8e4c6;
+    background: #f4e8d3; /*#f8e4c6;*/
     text-decoration:none;
 }
 
 li.active a, li.active a:hover {
-    background: #f2daab;
+    background: #edd7b0; /*#f2daab;*/
     font-weight: bold;
     /*color:#4c4c4c;*/
 }
 
 .tabbed-links li.active a, .tabbed-links li.active a:hover{
-    background: #f2daab;
+    background: #edd7b0; /*#f2daab;*/
 
 	
 }
@@ -752,14 +779,14 @@ li.active a, li.active a:hover {
 }
 
 #about-menu li.active a, #about-menu li.active a:hover {
-    background: #f2daab;
+    background: #edd7b0; /*#f2daab;*/
     font-weight: bold;
     border-color: #fbfaee;
     /*color:#4c4c4c;*/
 }
 
 #about-menu a:hover, #about-menu .tabbed-links a:hover {
-    background:#f8e4c6;
+    background: #f4e8d3; /*#f8e4c6;*/
     text-decoration:none;
 }
 
