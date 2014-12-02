@@ -6,5 +6,5 @@ routes.js
 public/js/script_chore.js
 views/calendar.ejs
 view/chores.ejs
-GoogleCalendar.js
+GoogleCalendar.js (new)
 css/dashboard.js
