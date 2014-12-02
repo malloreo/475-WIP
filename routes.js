@@ -11,6 +11,7 @@ var express = require('express'),
     bill_controller = require('./routes/bill_controller'),
     pay_controller = require('./routes/pay_controller'),
     chat_controller = require('./routes/chat_controller'),
+    gcal = require('./GoogleCalendar'),
 
 
     Database = require("./models/mymongo.js"),
@@ -99,34 +100,89 @@ app.post('/login', passport.authenticate('local-login', {
 // =====================================
 // GOOGLE ==============================
 // =====================================
-//google login
-app.get('/login-google', function(req, res){
-  // if (isLoggedIn){
-  //   gapi.auth.signOut();
-  // }else{
-    res.redirect('/auth/google');
-  // } 
-});
 
-// app.get('/auth/google',
-//   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-//                                             'https://www.googleapis.com/auth/userinfo.email',
-//                                             'https://www.googleapis.com/auth/calendar',
-//                                             'https://www.googleapis.com/auth/calendar.readonly'] }),
-//   function(req, res){
-//     // The request will be redirected to Google for authentication, so this
-//     // function will not be called.
+app.all('/addReminder', isLoggedIn, function(req,res){
+  console.log("in add reminder....")
+  if (req.body.chore){
+    console.log("in if req.body")
+    chore = req.body.chore
+    date = req.body.due_date
+    start_t = req.body.start_time
+    end_t = req.body.end_time
+  }
+  console.log(chore)
+  console.log(date)
+  console.log("start", start_t)
+  console.log("end", end_t)
+  start = new Date(date + " " + start_t)
+  end = new Date(date + " " +end_t)
+  console.log(start)
+  console.log(end)
+
+  if(!req.session.access_token) return res.redirect('/auth');
+  var accessToken = req.session.access_token;
+  // gcal(accessToken).calendarList.list(function(err, data) {
+  //   if(err) return res.send(500,err);
+  //   return res.send(data);
+  // });
+  // res.redirect('/addReminder')
+  // var accessToken     = req.session.access_token;
+  var calendarId  = "primary";
+  var event = {
+              "description": "chore was created from Homies", 
+              "summary":chore,
+              "end": {
+                "dateTime": end
+              },
+             "start": {
+              "dateTime": start
+            }
+  }
+  gcal(accessToken).events.insert(calendarId, event, function(err, data) {
+    if(err) return res.send(500,err);
+    return res.redirect('/chores');
+  });
+
+})
+
+app.get('/auth',
+  passport.authenticate('google', { session: false }));
+
+app.get('/auth/callback', 
+  passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+  function(req, res) { 
+    req.session.access_token = req.user.accessToken;
+    res.redirect('/addReminder');
+  });
+
+// app.get('/addReminder', isLoggedIn, function(req,res){
+//   console.log("add reminder..")
+//   console.log(req)
+//   console.log(req.body)
+//   var accessToken     = req.session.access_token;
+//   var calendarId      = req.params.calendarId;
+//   // var text            = req.query.text || 'Hello World';
+//   var event      = {"description": "chore was created from Homies", 
+//               "summary":"Sweeping",
+//                "end": {
+//               "dateTime": "2014-12-03T17:30:00-04:00"
+//              },
+//              "start": {
+//               "dateTime": "2014-12-03T16:30:00-04:00"
+//             }
+//           }
+// })
+// app.get('/addReminder/:chorename/:duedate', function(req, res){
+//   if(!req.session.access_token) return res.redirect('/googleauth');
+  
+//   var accessToken     = req.session.access_token;
+//   var calendarId      = req.params.calendarId;
+  
+//   gcal(accessToken).events.list(calendarId, function(err, data) {
+//     if(err) return res.send(500,err);
+//     return res.send(data);
+//   });
 // });
-
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/login-google' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     // res.redirect('/');
-//     res.redirect('/settings'); //<< uncomment this
-//     // getCalendarInformation(req, res);
-// });
-
 
 // =====================================
 // LOGOUT ==============================
@@ -330,23 +386,37 @@ app.get('/completePay/:id', pay_controller.completePay);
 // CALENDAR ============================
 // =====================================
 
+app.get('/calendar/:chorename/:duedate', isLoggedIn, function(req, res){
+  res.render('calendar',{
+    user: this_user
+  })
+  // console.log("in calendar....")
+  
+  // res.redirect('calendar', {
+  //   user: this_user,
+  //   chore:req.params.chorename,
+  //   duedate:req.params.duedate
+  // });
+// res.redirect('calendar')
+})
+
 app.get('/calendar', isLoggedIn, function(req, res){
   res.render('calendar', {
     user: this_user
-  });
+  })
 })
 
-app.get('/calendar/addevent', isLoggedIn, isLoggedIntoGoogle, function(req, res){
-  var query = url.parse(req.url, true).query;
-  var event_name = query.event_name;
-  console.log("QUERY: ", query);
-  console.log('POOOOOOOOOOOP.. start_date: ', query.start_date, +", end_date: "+ query.end_date);
-  var start_date = new Date();
-  var end_date = new Date();
-  end_date.setHours(end_date.getHours() + 1);
-  console.log("RANDOM EVENT: start_date: ", start_date, +", end_date: "+end_date);
-  createEvent(req, req, "random event tester", start_date, end_date);
-})
+// app.get('/calendar/addevent', isLoggedIn, isLoggedIntoGoogle, function(req, res){
+//   var query = url.parse(req.url, true).query;
+//   var event_name = query.event_name;
+//   console.log("QUERY: ", query);
+//   console.log('POOOOOOOOOOOP.. start_date: ', query.start_date, +", end_date: "+ query.end_date);
+//   var start_date = new Date();
+//   var end_date = new Date();
+//   end_date.setHours(end_date.getHours() + 1);
+//   console.log("RANDOM EVENT: start_date: ", start_date, +", end_date: "+end_date);
+//   createEvent(req, req, "random event tester", start_date, end_date);
+// })
 
 
 // =====================================

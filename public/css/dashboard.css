@@ -227,7 +227,7 @@ input[type=date]{
 
 #button1, #bill-formb, #grocery-formb, #gbill-formb,
 #chore_feedback_close, #bill_feedback_close, 
-#grocery_feedback_close, #gbill_feedback_close,
+#grocery_feedback_close, #gbill_feedback_close, #reminder-button,
 #chat-button{
 	background: #0292A5;
 	color: white;
@@ -362,7 +362,7 @@ h1{
 #chore_add_pg{ /* button */
 }
 
-#chore_add_popup{
+#chore_add_popup, #chore_add_reminder_popup{
 	box-sizing: border-box;
 	padding: 50px;
 }
@@ -380,7 +380,7 @@ h1{
 	margin-right: auto;
 }
 
-#chore_add_x{
+#chore_add_x, #chore_add_reminder_x{
 	cursor: pointer;
 	position: absolute;
 	float: right;
@@ -388,20 +388,20 @@ h1{
 	top: 15px;
 }
 
-#chore_add_form {
+#chore_add_form, #chore_add_reminder_form {
 	font-size: 14px;
 	/*display: none;*/
 }
 
-#chore_add_form input, #chore_add_form select{
+#chore_add_form input, #chore_add_form select, #chore_add_reminder_form input, {
 	margin-bottom: 5px;
 }
 
-#chore_add_form #old_chore{
+#chore_add_form #old_chore #chore_add_reminder_form{
 	display: none;
 }
 
-#chore_add_form #rate{
+#chore_add_form #rate #chore_add_reminder_form{
 	width: 30px;
 }
 
